@@ -1,0 +1,35 @@
+@import "~src/scss/variables";
+
+
+:host {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+
+  .side-bar {
+    overflow: hidden;
+    width: $side-bar-width;
+    background-color: red;
+    height: 100vh;
+  }
+
+  .main-bar {
+    height: 100%;
+    overflow: hidden;
+    flex: 1;
+
+    .toolbar {
+      height: $tool-bar-height;
+      width: 100%;
+      background-color: blue;
+    }
+
+    .content {
+      height: calc(100% - #{$tool-bar-height});
+      overflow: auto;
+      background-color: green;
+    }
+  }
+}
+
+
