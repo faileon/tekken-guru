@@ -1,8 +1,27 @@
 @import "./variables";
+
+
 body {
   margin: 0;
   overflow: hidden;
   height: 100vh;
-
+  font-size: 14px;
+  color: whitesmoke;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: $scrollbar-width; /* width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: $primary-color; /* color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $primary-color-light ; /* color of the scroll thumb */
+}
+
+.tg-container {
+  max-width: 1275px;
 }

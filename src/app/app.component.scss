@@ -6,11 +6,33 @@
   flex-direction: row;
   height: 100%;
 
+  .logo {
+    font-family: Tarrget;
+    font-size: 2rem;
+    &.small {
+      font-size: 1.25rem;
+    }
+
+
+  }
+
   .side-bar {
     overflow: hidden;
     width: $side-bar-width;
-    background-color: red;
+    background-color: $primary-color;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .side-bar-mobile {
+    z-index: 99999;
+    position: absolute;
+    background-color: $primary-color;
+    top: 0;
+    left: 0;
+    width: $side-bar-mobile-width;
+    bottom: 0;
   }
 
   .main-bar {
@@ -21,13 +43,19 @@
     .toolbar {
       height: $tool-bar-height;
       width: 100%;
-      background-color: blue;
+      background-color: $primary-color-light;
+      display: flex;
+
+      .right-menu {
+        padding: $sm-padding;
+        margin-left: auto;
+      }
     }
 
     .content {
       height: calc(100% - #{$tool-bar-height});
       overflow: auto;
-      background-color: green;
+      background-color: $primary-color-dark;
     }
   }
 }

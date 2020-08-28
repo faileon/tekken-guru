@@ -1,0 +1,21 @@
+@import "~src/scss/variables";
+
+
+:host {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: center;
+
+
+  .character-card {
+    width: 60px;
+    background-color: darkred;
+    height: 90px;
+    margin: $xs-margin;
+    cursor: pointer;
+
+    &:hover {
+      background-color: green;
+    }
+  }
+}

@@ -1,15 +1,41 @@
 <div class="side-bar" fxShow="true" fxHide.lt-md="true">
-sidebar
+  <div style="width: 60px; height: 50px; display: flex; justify-content: center; align-items: center">
+    <span class="logo small">TG</span>
+  </div>
+
+  <div style="width: 60px; height: 50px; display: flex; justify-content: center; align-items: center"
+       *ngFor="let menuItem of menuItems">
+    {{menuItem.icon}}
+  </div>
+
+</div>
+
+<div class="side-bar-mobile" *ngIf="isMobileSidebarOpen" [@inOutAnimation]>
+  <button (click)="isMobileSidebarOpen = false">
+    close
+  </button>
+
+  <div *ngFor="let menuItem of menuItems">
+    {{menuItem.icon}} | {{menuItem.text}}
+  </div>
 </div>
 
 <div class="main-bar">
   <div class="toolbar">
-    <button mat-icon-button fxShow fxHide.gt-sm>
-      <mat-icon>menu</mat-icon>
-    </button>
+    <div fxShow fxHide.gt-sm>
+      <button (click)="isMobileSidebarOpen = true">
+        menu
+      </button>
+      <span class="logo">TG</span>
+    </div>
+
+    <div class="right-menu">
+      <tg-button text="SIGN IN"></tg-button>
+    </div>
   </div>
+
   <div class="content">
-    <div style="height: 1500px">router content hereee</div>
+    <!-- todo router outlet here -->
+    <tg-character-select></tg-character-select>
   </div>
 </div>
-

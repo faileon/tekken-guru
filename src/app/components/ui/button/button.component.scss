@@ -1,0 +1,19 @@
+@import "~src/scss/variables";
+
+
+:host {
+  div {
+    color: whitesmoke;
+    border-radius: 0.3rem;
+    padding: $sm-padding $md-padding;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: $primary-color;
+  }
+
+
+  .outlined {
+    border: 1px solid whitesmoke;
+    background-color: transparent;
+  }
+}

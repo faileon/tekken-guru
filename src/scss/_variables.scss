@@ -1,9 +1,24 @@
 $side-bar-width: 60px;
+$side-bar-mobile-width: 150px;
 $tool-bar-height: 50px;
 
+$xs-margin: 0.25rem;
 $sm-margin: 0.5rem;
 $md-margin: 1rem;
 $lg-margin: 1.5rem;
 
-$primary-color: blue;
-//...
+$xs-padding: 0.25rem;
+$sm-padding: 0.5rem;
+$md-padding: 1rem;
+$lg-padding: 1.5rem;
+
+$scrollbar-width: 8px;
+
+/*----------------------------------------------------------
+# COLOURS
+----------------------------------------------------------*/
+$primary-color-dark: #291043;
+$primary-color: #582B85;
+$primary-color-light: #9046DC;
+
+$secondary-color: #D07505;
