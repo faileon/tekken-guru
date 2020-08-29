@@ -1,5 +1,12 @@
 <a *ngFor="let character of characters">
   <div class="character-card" (click)="onCharacterClick(character)">
-    {{character.name}}
+    <table>
+      <tr>
+        <td>{{character._id}}</td>
+      </tr>
+      <tr>
+        <td>{{character.fullName}}</td>
+      </tr>
+    </table>
   </div>
 </a>

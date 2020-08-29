@@ -12,15 +12,15 @@ import {animate, style, transition, trigger} from '@angular/animations';
         transition(
           ':enter',
           [
-            style({ width: 0}),
-            animate('175ms ease-out', style({ width: '*'}))
+            style({width: 0}),
+            animate('175ms ease-out', style({width: '*'}))
           ]
         ),
         transition(
           ':leave',
           [
-            style({ width: '*'}),
-            animate('175ms ease-in', style({ width: 0 }))
+            style({width: '*'}),
+            animate('175ms ease-in', style({width: 0}))
           ]
         )
       ]
@@ -39,6 +39,10 @@ export class AppComponent implements OnInit {
       icon: 'characters'
     }
   ];
+
+  constructor() {
+  }
+
   ngOnInit(): void {
   }
 }

@@ -14,7 +14,7 @@ export class CharacterGridComponent {
    */
 
   @Input()
-  public characters!: Character[];
+  public characters!: Character[] | null;
 
   @Output()
   public characterSelected = new EventEmitter<Character>();

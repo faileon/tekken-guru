@@ -1,3 +1,10 @@
+import {Move} from './move.type';
+
 export type Character = {
-  name: string;
+  _id: string;
+  fullName: string;
+  position: number;
+  avatar: string;
+  difficulty: number;
+  movelist?: Move[];
 };
