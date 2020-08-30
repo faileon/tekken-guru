@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Character} from '../../types';
+import {Character} from '../../../../types';
 
 @Component({
   selector: 'tg-character-grid',
@@ -14,7 +14,7 @@ export class CharacterGridComponent {
    */
 
   @Input()
-  public characters!: Character[] | null;
+  public characters!: Character[] | null; // todo null?
 
   @Output()
   public characterSelected = new EventEmitter<Character>();

@@ -32,11 +32,13 @@ export class AppComponent implements OnInit {
   public readonly menuItems = [
     {
       text: 'Dashboard',
-      icon: 'dashboard'
+      icon: 'dashboard',
+      to: '/dashboard'
     },
     {
       text: 'Characters',
-      icon: 'characters'
+      icon: 'characters',
+      to: '/characters'
     }
   ];
 
