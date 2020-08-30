@@ -1,1 +1,5 @@
 <tg-character-header [character]="selectedCharacter$ | async"></tg-character-header>
+
+<tg-tabs [tabs]="tabs" (tabSelected)="onTabSelected($event)"></tg-tabs>
+
+<router-outlet></router-outlet>

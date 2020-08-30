@@ -1,0 +1,3 @@
+<div *ngFor="let tab of tabs" [class.active]="tab.active" (click)="onTabClicked(tab)">
+  {{tab.title}}
+</div>

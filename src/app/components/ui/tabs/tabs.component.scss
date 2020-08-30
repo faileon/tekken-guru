@@ -1,0 +1,18 @@
+@import "~src/scss/variables";
+
+
+:host {
+  display: flex;
+  justify-content: space-evenly;
+
+  > div {
+    flex: 1 1 0;
+    padding: $md-padding;
+    text-align: center;
+    cursor: pointer;
+    &.active {
+      background-color: red;
+
+    }
+  }
+}

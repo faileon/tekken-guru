@@ -15,8 +15,8 @@ const routes: Routes = [
     component: CharacterSelectScreenComponent,
   },
   {
-    path: 'characters/:character/movelist',
-    component: CharacterDetailScreenComponentComponent
+    path: 'characters/:_id/:activeTab',
+    component: CharacterDetailScreenComponentComponent,
   },
   {
     path: 'dashboard',

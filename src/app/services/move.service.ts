@@ -13,7 +13,7 @@ export class MoveService {
   constructor(private firestore: AngularFirestore) {
   }
 
-  public getMovelist(characterId: string): Observable<Move[]> {
+  public getMovelist$(characterId: string): Observable<Move[]> {
     return this.firestore.collection<Move>(`characters/${characterId}/movelist`)
       .valueChanges();
   }
