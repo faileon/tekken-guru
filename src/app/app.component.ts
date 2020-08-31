@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {faUsers, faTh} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'tg-root',
@@ -32,12 +33,12 @@ export class AppComponent implements OnInit {
   public readonly menuItems = [
     {
       text: 'Dashboard',
-      icon: 'dashboard',
+      icon: faTh,
       to: '/dashboard'
     },
     {
       text: 'Characters',
-      icon: 'characters',
+      icon: faUsers,
       to: '/characters'
     }
   ];

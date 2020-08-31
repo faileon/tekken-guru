@@ -1,4 +1,23 @@
-<ng-container *ngIf="character">
-  <h1>{{character.fullName}}</h1>
-  <span>{{character.difficulty}}</span>
-</ng-container>
+<div class="avatar">
+  <img [src]="character.avatar | characterAvatarSrc"/>
+</div>
+
+<div class="info">
+  <!-- FULLNAME -->
+  <div class="title">
+    {{character.fullName}}
+  </div>
+
+  <!-- DIFFICULTY -->
+  <div class="difficulty">
+    <span
+      class="dot"
+      [class.easy]="character.difficulty === 1"
+      [class.medium]="character.difficulty === 2"
+      [class.hard]="character.difficulty === 3"
+    >
+  </span>
+    <div class="text">{{character.difficulty | characterDifficulty}}</div>
+  </div>
+
+</div>

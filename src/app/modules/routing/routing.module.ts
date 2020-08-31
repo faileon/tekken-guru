@@ -5,6 +5,9 @@ import {CharacterSelectScreenComponent} from '../../screens/character/select/cha
 import {CharacterDetailScreenComponentComponent} from '../../screens/character/detail/character-detail-screen-component.component';
 import {CharacterMovelistScreenComponent} from '../../screens/character/detail/subscreens/movelist-screen/character-movelist-screen.component';
 import {CharacterCombosScreenComponent} from '../../screens/character/detail/subscreens/character-combos-screen/character-combos-screen.component';
+import {CharacterKeyMovesScreenComponent} from '../../screens/character/detail/subscreens/key-moves-screen/character-key-moves-screen.component';
+import {CharacterPunishesScreenComponent} from '../../screens/character/detail/subscreens/punishes-screen/character-punishes-screen.component';
+import {CharacterOverviewScreenComponent} from '../../screens/character/detail/subscreens/overview-screen/character-overview-screen.component';
 
 const routes: Routes = [
   {
@@ -25,8 +28,20 @@ const routes: Routes = [
         component: CharacterMovelistScreenComponent
       },
       {
+        path: 'keymoves',
+        component: CharacterKeyMovesScreenComponent,
+      },
+      {
         path: 'combos',
         component: CharacterCombosScreenComponent,
+      },
+      {
+        path: 'punishes',
+        component: CharacterPunishesScreenComponent,
+      },
+      {
+        path: 'overview',
+        component: CharacterOverviewScreenComponent,
       },
       {
         path: '**',

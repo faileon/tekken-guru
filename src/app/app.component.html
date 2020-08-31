@@ -1,16 +1,20 @@
+<!-- DESKTOP SIDEBAR -->
 <div class="side-bar" fxShow="true" fxHide.lt-md="true">
   <div style="width: 60px; height: 50px; display: flex; justify-content: center; align-items: center">
     <span class="logo small">TG</span>
   </div>
 
   <div style="width: 60px; height: 50px; display: flex; justify-content: center; align-items: center"
+       routerLinkActive="active"
        *ngFor="let menuItem of menuItems">
-    <a style="color: white" [routerLink]="menuItem.to">{{menuItem.text}}</a>
+    <a style="color: white" [routerLink]="menuItem.to" >
+      <fa-icon [icon]="menuItem.icon" size="2x"></fa-icon>
+    </a>
   </div>
-
 </div>
 
-<div class="side-bar-mobile" *ngIf="isMobileSidebarOpen" [@inOutAnimation]>
+<!-- MOBILE SIDEBAR -->
+<div class="side-bar mobile" *ngIf="isMobileSidebarOpen" [@inOutAnimation]>
   <button (click)="isMobileSidebarOpen = false">
     close
   </button>
@@ -20,7 +24,9 @@
   </div>
 </div>
 
+<!-- MAIN CONTAINER -->
 <div class="main-bar">
+  <!-- TOOLBAR -->
   <div class="toolbar">
     <div fxShow fxHide.gt-sm>
       <button (click)="isMobileSidebarOpen = true">
@@ -34,8 +40,8 @@
     </div>
   </div>
 
+  <!-- CONTENT -->
   <div class="content">
-    <!-- todo router outlet here -->
     <router-outlet></router-outlet>
   </div>
 </div>

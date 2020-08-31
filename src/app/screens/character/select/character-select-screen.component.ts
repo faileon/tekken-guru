@@ -18,7 +18,7 @@ export class CharacterSelectScreenComponent implements OnInit {
 
   public onCharacterSelected(character: Character): void {
     // console.log('selected', character);
-    this.router.navigateByUrl(`characters/${character._id}/movelist`);
+    this.router.navigateByUrl(`characters/${character._id}/movelist`); // todo rework via routerlink
 
   }
 }

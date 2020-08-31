@@ -9,7 +9,7 @@ import {Character} from '../../../../types';
 export class CharacterHeaderComponent implements OnInit {
 
   @Input()
-  public character?: Character | null;
+  public character!: Character;
 
   constructor() {
   }

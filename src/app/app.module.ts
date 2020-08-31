@@ -21,6 +21,12 @@ import {MoveGridComponent} from './components/move/grid/move-grid.component';
 import {TabsComponent} from './components/ui/tabs/tabs.component';
 import {CharacterMovelistScreenComponent} from './screens/character/detail/subscreens/movelist-screen/character-movelist-screen.component';
 import {CharacterCombosScreenComponent} from './screens/character/detail/subscreens/character-combos-screen/character-combos-screen.component';
+import {CharacterKeyMovesScreenComponent} from './screens/character/detail/subscreens/key-moves-screen/character-key-moves-screen.component';
+import {CharacterPunishesScreenComponent} from './screens/character/detail/subscreens/punishes-screen/character-punishes-screen.component';
+import {CharacterOverviewScreenComponent} from './screens/character/detail/subscreens/overview-screen/character-overview-screen.component';
+import {CharacterDifficultyPipe} from './pipes/character-difficulty.pipe';
+import {CharacterAvatarSrcPipe} from './pipes/character-avatar-src.pipe';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -40,6 +46,11 @@ import {CharacterCombosScreenComponent} from './screens/character/detail/subscre
     TabsComponent,
     CharacterMovelistScreenComponent,
     CharacterCombosScreenComponent,
+    CharacterKeyMovesScreenComponent,
+    CharacterPunishesScreenComponent,
+    CharacterOverviewScreenComponent,
+    CharacterDifficultyPipe,
+    CharacterAvatarSrcPipe,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +61,8 @@ import {CharacterCombosScreenComponent} from './screens/character/detail/subscre
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

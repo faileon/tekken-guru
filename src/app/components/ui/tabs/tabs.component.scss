@@ -3,16 +3,21 @@
 
 :host {
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
+  @media(min-width: $bp-mobile) {
+    flex-direction: row;
+  }
 
   > div {
     flex: 1 1 0;
     padding: $md-padding;
     text-align: center;
     cursor: pointer;
-    &.active {
-      background-color: red;
+    border-bottom: 1px solid $secondary-color;
 
+    &.active {
+      border-bottom: 4px solid $secondary-color;
     }
   }
 }

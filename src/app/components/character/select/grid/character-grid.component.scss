@@ -8,9 +8,9 @@
 
 
   .character-card {
-    width: 60px;
+    width: $character-avatar-width;
     background-color: darkred;
-    height: 90px;
+    height: $character-avatar-height;
     margin: $xs-margin;
     cursor: pointer;
 

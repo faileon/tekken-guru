@@ -23,16 +23,20 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-  }
 
-  .side-bar-mobile {
-    z-index: 99999;
-    position: absolute;
-    background-color: $primary-color;
-    top: 0;
-    left: 0;
-    width: $side-bar-mobile-width;
-    bottom: 0;
+    &.mobile {
+      z-index: 99999;
+      position: absolute;
+      background-color: $primary-color;
+      top: 0;
+      left: 0;
+      width: $side-bar-mobile-width;
+      bottom: 0;
+    }
+
+    .active {
+      background-color: $primary-color-light;
+    }
   }
 
   .main-bar {
