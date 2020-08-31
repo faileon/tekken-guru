@@ -1,5 +1,5 @@
-<tg-character-header [character]="selectedCharacter$ | async"></tg-character-header>
+<tg-character-header [character]="characterService.selectedCharacter$ | async"></tg-character-header>
 
-<tg-tabs [tabs]="tabs" (tabSelected)="onTabSelected($event)"></tg-tabs>
+<tg-tabs [tabs$]="tabService.characterTabs$"></tg-tabs>
 
 <router-outlet></router-outlet>

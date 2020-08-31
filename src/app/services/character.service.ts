@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Character} from '../types';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {filter, map} from 'rxjs/operators';
+import {filter, find, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ import {filter, map} from 'rxjs/operators';
 export class CharacterService {
 
   public readonly characters$: Observable<Character[]>;
+  public selectedCharacter$?: Observable<Character | undefined>;
 
   constructor(private firestore: AngularFirestore) {
     this.characters$ = this.firestore
@@ -19,13 +20,9 @@ export class CharacterService {
       .valueChanges({idField: '_id'});
   }
 
-  // todo fix return type?
-  public getSelectedCharacter$(_id: string): Observable<Character | undefined> {
-    return this.firestore.collection<Character>(`characters`)
-      .doc<Character>(_id)
-      .valueChanges()
-      .pipe(
-        filter(character => character !== undefined)
-      );
+  public setSelectedCharacterById(_id: string): void {
+    this.selectedCharacter$ = this.characters$.pipe(
+      map(characters => characters.find(char => char._id === _id))
+    );
   }
 }

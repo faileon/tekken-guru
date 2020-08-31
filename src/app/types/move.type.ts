@@ -1,6 +1,7 @@
 import {Property} from './property.type';
 
 export type Move = {
+  _id: string;
   name: string;
   notation: string;
   hit: {

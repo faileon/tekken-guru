@@ -1,3 +1,5 @@
-<div *ngFor="let tab of tabs" [class.active]="tab.active" (click)="onTabClicked(tab)">
+<div *ngFor="let tab of tabs"
+     [class.active]="tab.active"
+     [routerLink]="tab.routeTo">
   {{tab.title}}
 </div>

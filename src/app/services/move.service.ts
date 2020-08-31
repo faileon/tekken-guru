@@ -15,6 +15,6 @@ export class MoveService {
 
   public getMovelist$(characterId: string): Observable<Move[]> {
     return this.firestore.collection<Move>(`characters/${characterId}/movelist`)
-      .valueChanges();
+      .valueChanges({idField: '_id'});
   }
 }
