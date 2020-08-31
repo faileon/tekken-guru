@@ -1,7 +1,9 @@
-export interface TGTab {
-  routeTo: 'movelist' | 'keymoves' | 'combos' | 'punishes' | 'overview';
+import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
+
+export interface TGMenuItem {
+  routeTo: string;
   title: string;
-  active: boolean;
+  icon?: IconDefinition;
 }
 
 

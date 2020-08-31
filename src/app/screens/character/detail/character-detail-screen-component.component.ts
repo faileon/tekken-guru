@@ -1,12 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {filter, map, switchMap, take, takeUntil} from 'rxjs/operators';
-import {Character, CharacterParams, Move} from '../../../types';
+import {ActivatedRoute} from '@angular/router';
+import {take} from 'rxjs/operators';
+import {CharacterParams} from '../../../types';
 import {CharacterService} from '../../../services/character.service';
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
-import {MoveService} from '../../../services/move.service';
-import {TGTab} from '../../../types/ui.types';
-import {TabService} from '../../../services/tab.service';
+import {Subject} from 'rxjs';
+import {DEFAULT_CHARACTER_TABS} from '../../../utils/menu-constants';
+import {TGMenuItem} from '../../../types/ui.types';
 
 @Component({
   selector: 'tg-character-detail-screen-component',
@@ -14,16 +13,12 @@ import {TabService} from '../../../services/tab.service';
   styleUrls: ['./character-detail-screen-component.component.scss']
 })
 export class CharacterDetailScreenComponentComponent implements OnInit, OnDestroy {
-
-  private isDestroyed$: Subject<boolean> = new Subject<boolean>();
-
-  public movelist$?: Observable<Move[]>;
+  // private isDestroyed$: Subject<boolean> = new Subject<boolean>();
+  public tabs: TGMenuItem[] = DEFAULT_CHARACTER_TABS;
 
   constructor(
-    public tabService: TabService,
     private route: ActivatedRoute,
     public characterService: CharacterService) {
-
     // subscribe to route params
     this.route.params.pipe(
       take(1),
@@ -37,48 +32,8 @@ export class CharacterDetailScreenComponentComponent implements OnInit, OnDestro
   }
 
   ngOnDestroy(): void {
-    this.isDestroyed$.next(true);
-    this.isDestroyed$.unsubscribe();
+    // this.isDestroyed$.next(true);
+    // this.isDestroyed$.unsubscribe();
   }
-
-/*  /!**
-   * Observe tab changes. Based on active tab prepares the observable with data for child components;
-   *!/
-  private observeTabChanges(characterId: string): void {
-    this.tabService.characterTabs$.pipe(
-      takeUntil(this.isDestroyed$),
-      map(tabs => tabs.filter(tab => tab.active)[0]),
-      filter(tab => tab !== undefined)
-    ).subscribe(tab => {
-      console.log('active tab', tab.routeTo);
-      this.getDataObservableFromActiveTab(tab.routeTo, characterId);
-    });
-  }
-
-  private getDataObservableFromActiveTab(activeTab: TGTab['routeTo'], characterId: string): void {
-    switch (activeTab) {
-      case 'movelist':
-        if (!this.movelist$) {
-          console.log('getting movelist$ for', characterId);
-          this.movelist$ = this.moveService.getMovelist$(characterId);
-        }
-        return;
-      case 'combos':
-        // todo set combos$
-        break;
-      case 'keymoves':
-        // todo set keymoves$
-        break;
-      case 'overview':
-        // todo set overview$
-        break;
-      case 'punishes':
-        // todo set punishes$
-        break;
-      default:
-        console.error(`Unknown active tab ${activeTab}.`);
-        return;
-    }
-  }*/
 
 }

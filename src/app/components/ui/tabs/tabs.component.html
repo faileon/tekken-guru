@@ -1,5 +1,5 @@
-<div *ngFor="let tab of tabs"
-     [class.active]="tab.active"
+<a *ngFor="let tab of tabs"
+     routerLinkActive="active"
      [routerLink]="tab.routeTo">
   {{tab.title}}
-</div>
+</a>

@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TabService} from '../../../../../services/tab.service';
 import {CharacterService} from '../../../../../services/character.service';
 import {filter, take, takeUntil} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
@@ -15,11 +14,10 @@ export class CharacterMovelistScreenComponent implements OnInit, OnDestroy {
   private isDestroyed$ = new Subject<boolean>();
   public movelist$?: Observable<Move[]>;
 
-  constructor(private tabService: TabService, private characterService: CharacterService, private moveService: MoveService) {
+  constructor(private characterService: CharacterService, private moveService: MoveService) {
   }
 
   ngOnInit(): void {
-    this.tabService.setActiveTab('movelist');
 
     this.characterService.selectedCharacter$?.pipe(
       takeUntil(this.isDestroyed$),

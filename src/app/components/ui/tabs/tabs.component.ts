@@ -1,31 +1,19 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {TGTab} from '../../../types/ui.types';
-import {Observable, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {Component, Input, OnInit} from '@angular/core';
+import {TGMenuItem} from '../../../types/ui.types';
 
 @Component({
   selector: 'tg-tabs',
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.scss']
 })
-export class TabsComponent implements OnInit, OnDestroy {
-  private isDestroyed$: Subject<boolean> = new Subject<boolean>();
-
+export class TabsComponent implements OnInit {
   @Input()
-  public tabs$!: Observable<TGTab[]> | null;
-
-  public tabs: TGTab[] = [];
+  public tabs!: TGMenuItem[];
 
   ngOnInit(): void {
-    this.tabs$?.pipe(
-      takeUntil(this.isDestroyed$)
-    ).subscribe(tabs => this.tabs = tabs);
   }
 
-  ngOnDestroy(): void {
-    this.isDestroyed$.next(true);
-    this.isDestroyed$.unsubscribe();
-  }
+
 
 }
 

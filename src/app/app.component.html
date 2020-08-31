@@ -1,26 +1,25 @@
 <!-- DESKTOP SIDEBAR -->
 <div class="side-bar" fxShow="true" fxHide.lt-md="true">
-  <div style="width: 60px; height: 50px; display: flex; justify-content: center; align-items: center">
+  <div class="item">
     <span class="logo small">TG</span>
   </div>
 
-  <div style="width: 60px; height: 50px; display: flex; justify-content: center; align-items: center"
+  <a class="item"
        routerLinkActive="active"
+       [routerLink]="menuItem.routeTo"
        *ngFor="let menuItem of menuItems">
-    <a style="color: white" [routerLink]="menuItem.to" >
-      <fa-icon [icon]="menuItem.icon" size="2x"></fa-icon>
-    </a>
-  </div>
+    <fa-icon *ngIf="menuItem.icon" [icon]="menuItem.icon" size="2x"></fa-icon>
+  </a>
 </div>
 
 <!-- MOBILE SIDEBAR -->
 <div class="side-bar mobile" *ngIf="isMobileSidebarOpen" [@inOutAnimation]>
   <button (click)="isMobileSidebarOpen = false">
-    close
+    <fa-icon [icon]="closeIcon"></fa-icon>
   </button>
 
   <div *ngFor="let menuItem of menuItems">
-    <a style="color: white" [routerLink]="menuItem.to">{{menuItem.text}}</a>
+    <a style="color: white" [routerLink]="menuItem.routeTo">{{menuItem.title}}</a>
   </div>
 </div>
 
@@ -30,7 +29,7 @@
   <div class="toolbar">
     <div fxShow fxHide.gt-sm>
       <button (click)="isMobileSidebarOpen = true">
-        menu
+        <fa-icon [icon]="menuIcon"></fa-icon>
       </button>
       <span class="logo">TG</span>
     </div>

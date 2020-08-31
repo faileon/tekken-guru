@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {faUsers, faTh} from '@fortawesome/free-solid-svg-icons';
+import {APP_MENU} from './utils/menu-constants';
+import {TGMenuItem} from './types/ui.types';
+import {faBars, faTimes} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'tg-root',
@@ -30,18 +32,11 @@ import {faUsers, faTh} from '@fortawesome/free-solid-svg-icons';
 })
 export class AppComponent implements OnInit {
   public isMobileSidebarOpen = false;
-  public readonly menuItems = [
-    {
-      text: 'Dashboard',
-      icon: faTh,
-      to: '/dashboard'
-    },
-    {
-      text: 'Characters',
-      icon: faUsers,
-      to: '/characters'
-    }
-  ];
+  public readonly menuItems: TGMenuItem[] = APP_MENU;
+
+  // todo use faLibrary - https://github.com/FortAwesome/angular-fontawesome/blob/master/docs/usage/icon-library.md
+  public readonly menuIcon = faBars;
+  public readonly closeIcon = faTimes;
 
   constructor() {
   }

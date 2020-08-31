@@ -28,6 +28,10 @@ body {
   flex-direction: column;
   flex: 1;
   padding: $md-padding;
+
+  > *:not(router-outlet) {
+    margin-bottom: $md-margin;
+  }
 }
 
 .title {
