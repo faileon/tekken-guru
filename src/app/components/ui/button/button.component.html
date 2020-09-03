@@ -1,4 +1,6 @@
 <div
-  [class.outlined]="outlined">
-  {{text}}
+  [class.outlined]="outlined"
+  [class.icon]="icon !== undefined">
+  <fa-icon *ngIf="icon" [icon]="icon" [size]="iconSize"></fa-icon>
+  <span *ngIf="text" class="text">{{text}}</span>
 </div>

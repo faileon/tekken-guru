@@ -8,19 +8,15 @@
 
   .logo {
     font-family: Tarrget;
-    font-size: 2rem;
-
+    font-size: 1.75rem;
     &.small {
       font-size: 1.25rem;
     }
-
-
   }
 
   .side-bar {
     overflow: hidden;
     width: $side-bar-width;
-    padding-right: $xs-padding;
     background-color: $primary-color;
     height: 100vh;
     display: flex;
@@ -39,12 +35,19 @@
 
 
     .item {
-      width: $side-bar-width;
-      height: 50px;
       display: flex;
       justify-content: center;
       align-items: center;
       color: whitesmoke;
+
+      &.mobile {
+        padding: $sm-padding 0;
+      }
+
+      &.fixed-size {
+        height: 50px;
+        min-width: 40px;
+      }
 
       &.active {
         background-color: $primary-color-light;
@@ -65,10 +68,18 @@
       background-color: $primary-color-light;
       display: flex;
 
-      .right-menu {
+      .menu {
+        display: flex;
+        align-items: center;
         padding: $sm-padding;
-        margin-left: auto;
+        &.right {
+          margin-left: auto;
+        }
+
+        &.left {
+        }
       }
+
     }
 
     .content {

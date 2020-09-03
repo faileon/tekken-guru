@@ -1,0 +1,9 @@
+@import "~src/scss/variables";
+
+:host {
+  video {
+    &.fixed-height {
+      max-height: $card-height;
+    }
+  }
+}

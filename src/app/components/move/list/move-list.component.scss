@@ -1,0 +1,87 @@
+@import "~src/scss/variables";
+
+:host {
+  display: flex;
+  flex-direction: column;
+
+  > tg-card:not(:last-child) {
+    margin-bottom: $md-margin;
+  }
+
+  .header {
+    display: flex;
+    flex: 1;
+    padding: $xs-padding;
+    .title {
+      flex: 1;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 1rem;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex: 1;
+    padding: 0 $xs-padding $xs-padding $xs-padding;
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-width: 52.5px;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+
+      .notation {
+        margin: auto 0;
+      }
+
+      .hits {
+        font-family: 'Roboto Condensed', sans-serif;
+
+        .move {
+          color: yellow;
+        }
+
+        .damage {
+          color: red;
+        }
+      }
+    }
+
+    tg-video {
+      margin-top: -$lg-margin;
+    }
+
+    .frame-data {
+      min-width: 150px;
+      margin-top: auto;
+      padding: 0 $xs-padding;
+
+      font-family: Roboto Condensed, "Helvetica Neue", sans-serif;
+      font-weight: 300;
+
+      > table {
+
+        > tr {
+          > td:nth-child(2) {
+            text-align: right;
+          }
+        }
+
+        .positive {
+          color: deepskyblue;
+        }
+
+        .negative {
+          color: red;
+        }
+      }
+    }
+  }
+
+}

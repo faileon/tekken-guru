@@ -8,6 +8,11 @@ body {
   font-size: 14px;
   color: whitesmoke;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  a {
+    color: whitesmoke;
+    text-decoration: none;
+  }
 }
 
 ::-webkit-scrollbar {

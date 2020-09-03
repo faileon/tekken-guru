@@ -9,7 +9,7 @@ import {Move} from '../../../types';
 export class MoveListComponent implements OnInit {
 
   @Input()
-  public moves?: Move[] | null;
+  public moves!: Move[];
 
   constructor() {
   }

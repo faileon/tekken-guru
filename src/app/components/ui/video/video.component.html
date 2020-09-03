@@ -1,0 +1,8 @@
+<video preload="auto"
+       #videoElement
+       [controls]="false"
+       [class.fixed-height]="fixedHeight"
+       (click)="playVideo()"
+>
+  <source [src]="src" [type]="mediaType">
+</video>

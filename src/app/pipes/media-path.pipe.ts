@@ -1,11 +1,11 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
-  name: 'characterAvatarSrc'
+  name: 'mediaPath'
 })
-export class CharacterAvatarSrcPipe implements PipeTransform {
+export class MediaPathPipe implements PipeTransform {
 
-  transform(url: string): unknown {
+  transform(url: string): string {
     return `https://firebasestorage.googleapis.com/v0/b/tekken-guru.appspot.com/o/${encodeURIComponent(url)}?alt=media`;
   }
 

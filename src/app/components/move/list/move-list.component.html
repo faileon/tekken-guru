@@ -1,3 +1,81 @@
-<div *ngFor="let move of moves">
-  {{move.name}}
-</div>
+<tg-card
+  *ngFor="let move of moves"
+  [isFixedHeight]="false"
+  [title]="move._id"
+>
+
+  <!-- move name -->
+  <div class="header" header>
+    <div class="title">{{move.name}}</div>
+    <div class="properties">[P]</div>
+  </div>
+
+  <div class="content" content>
+    <!-- actions for auth user - favorite -->
+    <div class="actions">
+      <tg-button [outlined]="false" [icon]="['far','star']" iconSize="2x"></tg-button>
+    </div>
+
+    <!-- main content with name, notation and hits -->
+    <div class="main">
+      <!-- move notation -->
+      <div class="notation">{{move.notation}}</div>
+      <!-- move hits -->
+      <div class="hits">
+        <div class="move">{{move.hit.move | hitMove}}</div>
+        <div class="damage">{{move.hit.damage | hitDamage}}</div>
+      </div>
+    </div>
+
+
+    <!-- video with the move -->
+    <tg-video [src]="move.video | mediaPath"></tg-video>
+
+    <!--frame data -->
+    <div class="frame-data">
+        <table>
+          <tr>
+            <td>Start frame:</td>
+            <td>{{move.frames.startUp}}
+            </td>
+          </tr>
+
+          <tr>
+            <td>On block:</td>
+            <td
+              [class.positive]="move.frames.onBlock > 0"
+              [class.negative]="move.frames.onBlock < 0">
+              {{move.frames.onBlock}}
+            </td>
+            <td *ngIf="move.hit.onBlock">
+              ({{move.hit.onBlock}})
+            </td>
+          </tr>
+
+          <tr>
+            <td>On hit:</td>
+            <td
+              [class.positive]="move.frames.onHit > 0"
+              [class.negative]="move.frames.onHit < 0">
+              {{move.frames.onHit}}
+            </td>
+            <td *ngIf="move.hit.onHit">
+              ({{move.hit.onHit}})
+            </td>
+          </tr>
+
+          <tr>
+            <td>On counter hit:</td>
+            <td [class.positive]="move.frames.onCounterHit > 0"
+                [class.negative]="move.frames.onCounterHit < 0">
+              {{move.frames.onCounterHit}}
+            </td>
+            <td *ngIf="move.hit.onCounterHit">
+              ({{move.hit.onCounterHit}})
+            </td>
+          </tr>
+        </table>
+      </div>
+
+  </div>
+</tg-card>

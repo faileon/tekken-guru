@@ -7,12 +7,6 @@ import {Character} from '../../../../types';
   styleUrls: ['./character-grid.component.scss']
 })
 export class CharacterGridComponent {
-  /*
-  todo remember:
-  this is a dummy component, it sonly displays and emits. leave fetching and other to the parent (smart) component
-  this will most likely be the screen directly.
-   */
-
   @Input()
   public characters?: Character[] | null;
 

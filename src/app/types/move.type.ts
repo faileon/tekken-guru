@@ -18,4 +18,7 @@ export type Move = {
     startUp: number;
   }
   properties?: Property[];
+  isKeyMove?: boolean;
+  isPunish?: boolean;
+  video: string;
 };

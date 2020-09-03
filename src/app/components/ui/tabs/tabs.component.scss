@@ -15,8 +15,6 @@
     text-align: center;
     cursor: pointer;
     border-bottom: 1px solid $secondary-color;
-    color: whitesmoke;
-    text-decoration: none;
 
     &.active {
       border-bottom: 4px solid $secondary-color;

@@ -1,10 +1,10 @@
 <!-- DESKTOP SIDEBAR -->
 <div class="side-bar" fxShow="true" fxHide.lt-md="true">
-  <div class="item">
+  <div class="item fixed-size">
     <span class="logo small">TG</span>
   </div>
 
-  <a class="item"
+  <a class="item fixed-size"
        routerLinkActive="active"
        [routerLink]="menuItem.routeTo"
        *ngFor="let menuItem of menuItems">
@@ -14,27 +14,30 @@
 
 <!-- MOBILE SIDEBAR -->
 <div class="side-bar mobile" *ngIf="isMobileSidebarOpen" [@inOutAnimation]>
-  <button (click)="isMobileSidebarOpen = false">
-    <fa-icon [icon]="closeIcon"></fa-icon>
-  </button>
-
-  <div *ngFor="let menuItem of menuItems">
-    <a style="color: white" [routerLink]="menuItem.routeTo">{{menuItem.title}}</a>
+  <div style="display: flex; align-items: center;">
+    <div class="item fixed-size">
+      <tg-button [outlined]="false" icon="times" iconSize="2x" (click)="isMobileSidebarOpen = false"></tg-button>
+    </div>
+    <span style="margin-left: 3px" class="logo">TG</span>
   </div>
+  <a class="item mobile"
+     routerLinkActive="active"
+     [routerLink]="menuItem.routeTo"
+     *ngFor="let menuItem of menuItems">
+    <tg-button [outlined]="false" [icon]="menuItem.icon" iconSize="2x" [text]="menuItem.title"></tg-button>
+  </a>
 </div>
 
 <!-- MAIN CONTAINER -->
 <div class="main-bar">
   <!-- TOOLBAR -->
   <div class="toolbar">
-    <div fxShow fxHide.gt-sm>
-      <button (click)="isMobileSidebarOpen = true">
-        <fa-icon [icon]="menuIcon"></fa-icon>
-      </button>
+    <div fxShow fxHide.gt-sm class="menu left">
+      <tg-button [outlined]="false" icon="bars" iconSize="2x" (click)="isMobileSidebarOpen = true"></tg-button>
       <span class="logo">TG</span>
     </div>
 
-    <div class="right-menu">
+    <div class="menu right">
       <tg-button text="SIGN IN"></tg-button>
     </div>
   </div>

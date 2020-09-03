@@ -1,12 +1,5 @@
-<a *ngFor="let character of characters">
+<a *ngFor="let character of characters" [routerLink]="character._id + '/movelist'">
   <div class="character-card" (click)="onCharacterClick(character)">
-    <table>
-      <tr>
-        <td>{{character._id}}</td>
-      </tr>
-      <tr>
-        <td>{{character.fullName}}</td>
-      </tr>
-    </table>
+    {{character.fullName}}
   </div>
 </a>

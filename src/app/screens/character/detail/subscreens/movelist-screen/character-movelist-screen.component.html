@@ -1,1 +1,1 @@
-<tg-move-list [moves]="movelist$ | async"></tg-move-list>
+<tg-move-list *ngIf="movelist$ | async as movelist" [moves]="movelist"></tg-move-list>

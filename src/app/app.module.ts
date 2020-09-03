@@ -25,8 +25,14 @@ import {CharacterKeyMovesScreenComponent} from './screens/character/detail/subsc
 import {CharacterPunishesScreenComponent} from './screens/character/detail/subscreens/punishes-screen/character-punishes-screen.component';
 import {CharacterOverviewScreenComponent} from './screens/character/detail/subscreens/overview-screen/character-overview-screen.component';
 import {CharacterDifficultyPipe} from './pipes/character-difficulty.pipe';
-import {CharacterAvatarSrcPipe} from './pipes/character-avatar-src.pipe';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {MediaPathPipe} from './pipes/media-path.pipe';
+import {FaConfig, FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {faBars, faStar as fasStar, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStar} from '@fortawesome/free-regular-svg-icons';
+import {CardComponent} from './components/ui/card/card.component';
+import {HitMovePipe} from './pipes/hit-move.pipe';
+import {HitDamagePipe} from './pipes/hit-damage.pipe';
+import { VideoComponent } from './components/ui/video/video.component';
 
 
 @NgModule({
@@ -50,7 +56,11 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     CharacterPunishesScreenComponent,
     CharacterOverviewScreenComponent,
     CharacterDifficultyPipe,
-    CharacterAvatarSrcPipe,
+    MediaPathPipe,
+    CardComponent,
+    HitMovePipe,
+    HitDamagePipe,
+    VideoComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,10 +72,16 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
     AngularFirestoreModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+
+  constructor(iconLibrary: FaIconLibrary, faConfig: FaConfig) {
+    // create icon library to use in app
+    iconLibrary.addIcons(faBars, faTimes, fasStar, farStar);
+    faConfig.fixedWidth = true;
+  }
 }
