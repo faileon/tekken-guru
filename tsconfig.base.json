@@ -16,6 +16,7 @@
       "dom"
     ],
     "strict": true,
+    "strictNullChecks": false,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": false,
     "paths": {

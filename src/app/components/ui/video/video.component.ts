@@ -29,11 +29,18 @@ export class VideoComponent implements OnInit {
 
   public playVideo(): void {
     if (!this.isPlaying) {
-      this.videoElement.nativeElement.play();
+      // play and on success set playing to true
+      this.videoElement.nativeElement.play().then(_ => this.isPlaying = true);
+
+      // hookup onended function to turn off isPlaying
+      this.videoElement.nativeElement.onended = () => {
+        this.isPlaying = false;
+      };
     } else {
+      // pause and turn off isPlaying
       this.videoElement.nativeElement.pause();
+      this.isPlaying = false;
     }
-    this.isPlaying = !this.isPlaying;
   }
 
 }

@@ -1,0 +1,12 @@
+@import "~src/scss/variables";
+
+
+:host {
+  >*:not(:last-child) {
+    margin-bottom: $md-margin;
+  }
+
+  .filters {
+    display: flex;
+  }
+}

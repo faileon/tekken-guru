@@ -58,9 +58,10 @@
     }
 
     .frame-data {
-      min-width: 150px;
+      min-width: 170px;
       margin-top: auto;
-      padding: 0 $xs-padding;
+      padding-left: $xs-padding;
+      // padding: 0 $xs-padding;
 
       font-family: Roboto Condensed, "Helvetica Neue", sans-serif;
       font-weight: 300;

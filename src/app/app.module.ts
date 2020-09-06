@@ -27,12 +27,16 @@ import {CharacterOverviewScreenComponent} from './screens/character/detail/subsc
 import {CharacterDifficultyPipe} from './pipes/character-difficulty.pipe';
 import {MediaPathPipe} from './pipes/media-path.pipe';
 import {FaConfig, FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {faBars, faStar as fasStar, faTimes} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faStar as fasStar, faTimes, faFilter, faSearch} from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 import {CardComponent} from './components/ui/card/card.component';
 import {HitMovePipe} from './pipes/hit-move.pipe';
 import {HitDamagePipe} from './pipes/hit-damage.pipe';
 import { VideoComponent } from './components/ui/video/video.component';
+import { FilterComponent } from './components/ui/filter/filter.component';
+import { SearchBarComponent } from './components/ui/search-bar/search-bar.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {Ng5SliderModule} from 'ng5-slider';
 
 
 @NgModule({
@@ -61,6 +65,8 @@ import { VideoComponent } from './components/ui/video/video.component';
     HitMovePipe,
     HitDamagePipe,
     VideoComponent,
+    FilterComponent,
+    SearchBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +79,8 @@ import { VideoComponent } from './components/ui/video/video.component';
     AngularFirestoreModule.enablePersistence(),
     AngularFirestoreModule,
     FontAwesomeModule,
+    ReactiveFormsModule,
+    Ng5SliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -81,7 +89,7 @@ export class AppModule {
 
   constructor(iconLibrary: FaIconLibrary, faConfig: FaConfig) {
     // create icon library to use in app
-    iconLibrary.addIcons(faBars, faTimes, fasStar, farStar);
+    iconLibrary.addIcons(faBars, faTimes, fasStar, farStar, faFilter, faSearch);
     faConfig.fixedWidth = true;
   }
 }

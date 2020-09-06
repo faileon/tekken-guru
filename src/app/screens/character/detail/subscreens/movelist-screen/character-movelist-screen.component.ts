@@ -34,4 +34,15 @@ export class CharacterMovelistScreenComponent implements OnInit, OnDestroy {
   }
 
 
+  public filterByStartUpFrame(): void {
+    this.moveService.startUpFilter = {from: 10, to: 12};
+  }
+
+  public filterByBlockFrame(): void {
+    this.moveService.blockFilter = {from: -9, to: 2};
+  }
+
+  public onTextSearch(text: string): void {
+    console.log('searching for', text);
+  }
 }

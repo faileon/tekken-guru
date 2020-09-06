@@ -19,6 +19,5 @@ export type Move = {
   }
   properties?: Property[];
   isKeyMove?: boolean;
-  isPunish?: boolean;
   video: string;
 };
