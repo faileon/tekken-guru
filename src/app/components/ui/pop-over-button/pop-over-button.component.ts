@@ -8,7 +8,7 @@ import {IconProp} from '@fortawesome/fontawesome-svg-core';
 })
 export class PopOverButtonComponent implements OnInit {
 
-  public isOpen = true;
+  public isOpen = false;
 
   @Input()
   public icon!: IconProp;
