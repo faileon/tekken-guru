@@ -31,17 +31,17 @@ export class MoveService {
       this._startUpFilter,
       this._blockFilter
     ]).pipe(
-      switchMap(([startUp, block]) =>
+      switchMap(([startUpRange, blockRange]) =>
         this.firestore.collection<Move>(`characters/${characterId}/movelist`)
           .valueChanges({idField: '_id'}).pipe(
           map(moves => {
             // in memory filtering because firebase sucks monkey balls
-            if (startUp) {
-              moves = filterByRange<Move>(moves, 'frames.startUp', startUp);
+            if (startUpRange) {
+              moves = filterByRange<Move>(moves, 'frames.startUp', startUpRange);
             }
 
-            if (block) {
-              moves = filterByRange<Move>(moves, 'frames.onBlock', block);
+            if (blockRange) {
+              moves = filterByRange<Move>(moves, 'frames.onBlock', blockRange);
             }
             return moves;
           })

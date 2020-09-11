@@ -1,0 +1,10 @@
+<tg-button
+  [icon]="icon"
+  [outlined]="false"
+  (click)="isOpen = !isOpen"
+></tg-button>
+
+<div *ngIf="isOpen" class="content">
+  <ng-content></ng-content>
+</div>
+

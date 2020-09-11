@@ -24,7 +24,7 @@
      routerLinkActive="active"
      [routerLink]="menuItem.routeTo"
      *ngFor="let menuItem of menuItems">
-    <tg-button [outlined]="false" [icon]="menuItem.icon" iconSize="2x" [text]="menuItem.title"></tg-button>
+    <tg-button [outlined]="false" [icon]="menuItem.icon" iconSize="2x">{{menuItem.title}}</tg-button>
   </a>
 </div>
 
@@ -38,7 +38,7 @@
     </div>
 
     <div class="menu right">
-      <tg-button text="SIGN IN"></tg-button>
+      <tg-button>SIGN IN</tg-button>
     </div>
   </div>
 

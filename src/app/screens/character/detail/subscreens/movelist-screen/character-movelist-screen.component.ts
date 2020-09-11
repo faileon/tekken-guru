@@ -34,8 +34,9 @@ export class CharacterMovelistScreenComponent implements OnInit, OnDestroy {
   }
 
 
-  public filterByStartUpFrame(): void {
-    this.moveService.startUpFilter = {from: 10, to: 12};
+  public filterByStartUpFrame(minValue: number): void {
+    console.log(minValue);
+    // this.moveService.startUpFilter = {from: 10, to: 12};
   }
 
   public filterByBlockFrame(): void {

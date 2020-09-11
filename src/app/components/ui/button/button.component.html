@@ -2,5 +2,7 @@
   [class.outlined]="outlined"
   [class.icon]="icon !== undefined">
   <fa-icon *ngIf="icon" [icon]="icon" [size]="iconSize"></fa-icon>
-  <span *ngIf="text" class="text">{{text}}</span>
+  <span class="text">
+    <ng-content></ng-content>
+  </span>
 </div>

@@ -1,0 +1,42 @@
+@import "~src/scss/variables";
+
+:host {
+  // re-skin the ng-5 slider
+  ::ng-deep {
+
+    .ng5-slider .ng5-slider-selection {
+      background: $secondary-color;
+    }
+
+    .ng5-slider .ng5-slider-pointer {
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+      top: -6px;
+      background-color: $primary-color-light;
+      z-index: 3;
+      border-radius: 50%;
+
+      &:after {
+        display: none;
+      }
+
+      &:focus {
+        outline: none;
+        border: 1px solid whitesmoke;
+      }
+    }
+
+    .ng5-slider .ng5-slider-bubble {
+      bottom: 14px;
+      color: $secondary-color;
+      font-weight: 700;
+    }
+
+    .ng5-slider .ng5-slider-limit {
+      font-weight: 300;
+      color: whitesmoke;
+    }
+
+  }
+}

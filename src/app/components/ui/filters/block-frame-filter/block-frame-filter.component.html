@@ -1,0 +1,11 @@
+Block frame:
+<div style="display: flex">
+  <tg-button (click)="setSafeFrames()">SAFE</tg-button>
+  <tg-button (click)="setPlusFrames()">PLUS</tg-button>
+</div>
+<tg-slider
+  [minValue]="minValue"
+  [maxValue]="maxValue"
+  [options]="options">
+</tg-slider>
+

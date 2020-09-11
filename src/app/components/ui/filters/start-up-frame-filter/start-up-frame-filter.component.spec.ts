@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FilterComponent } from './filter.component';
+import { StartUpFrameFilterComponent } from './start-up-frame-filter.component';
 
-describe('FilterComponent', () => {
-  let component: FilterComponent;
-  let fixture: ComponentFixture<FilterComponent>;
+describe('StartUpFrameFilterComponent', () => {
+  let component: StartUpFrameFilterComponent;
+  let fixture: ComponentFixture<StartUpFrameFilterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FilterComponent ]
+      declarations: [ StartUpFrameFilterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FilterComponent);
+    fixture = TestBed.createComponent(StartUpFrameFilterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

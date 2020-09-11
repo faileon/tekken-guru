@@ -33,10 +33,13 @@ import {CardComponent} from './components/ui/card/card.component';
 import {HitMovePipe} from './pipes/hit-move.pipe';
 import {HitDamagePipe} from './pipes/hit-damage.pipe';
 import { VideoComponent } from './components/ui/video/video.component';
-import { FilterComponent } from './components/ui/filter/filter.component';
+import { PopOverButtonComponent } from './components/ui/pop-over-button/pop-over-button.component';
 import { SearchBarComponent } from './components/ui/search-bar/search-bar.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Ng5SliderModule} from 'ng5-slider';
+import { StartUpFrameFilterComponent } from './components/ui/filters/start-up-frame-filter/start-up-frame-filter.component';
+import { SliderComponent } from './components/ui/slider/slider.component';
+import { BlockFrameFilterComponent } from './components/ui/filters/block-frame-filter/block-frame-filter.component';
 
 
 @NgModule({
@@ -65,8 +68,11 @@ import {Ng5SliderModule} from 'ng5-slider';
     HitMovePipe,
     HitDamagePipe,
     VideoComponent,
-    FilterComponent,
+    PopOverButtonComponent,
     SearchBarComponent,
+    StartUpFrameFilterComponent,
+    SliderComponent,
+    BlockFrameFilterComponent,
   ],
   imports: [
     BrowserModule,

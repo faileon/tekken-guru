@@ -1,5 +1,9 @@
 <div class="filters">
   <tg-search-bar (searched)="onTextSearch($event)"></tg-search-bar>
-  <tg-filter></tg-filter>
+  <tg-pop-over-button icon="filter">
+    <tg-start-up-frame-filter></tg-start-up-frame-filter>
+    <tg-block-frame-filter></tg-block-frame-filter>
+
+  </tg-pop-over-button>
 </div>
 <tg-move-list *ngIf="movelist$ | async as movelist" [moves]="movelist"></tg-move-list>

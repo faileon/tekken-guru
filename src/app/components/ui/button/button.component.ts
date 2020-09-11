@@ -8,9 +8,6 @@ import {IconProp, SizeProp} from '@fortawesome/fontawesome-svg-core';
 })
 export class ButtonComponent implements OnInit {
   @Input()
-  public text?: string;
-
-  @Input()
   public icon?: IconProp;
 
   @Input()

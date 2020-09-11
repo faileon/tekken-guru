@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {take} from 'rxjs/operators';
 import {CharacterParams} from '../../../types';
 import {CharacterService} from '../../../services/character.service';
-import {Subject} from 'rxjs';
+
 import {DEFAULT_CHARACTER_TABS} from '../../../utils/menu-constants';
 import {TGMenuItem} from '../../../types/ui.types';
 
