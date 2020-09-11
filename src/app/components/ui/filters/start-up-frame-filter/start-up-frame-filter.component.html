@@ -1,7 +1,7 @@
 Start frame:
 <tg-slider
-  [minValue]="minValue"
-  [maxValue]="maxValue"
+  [range]="range"
+  (rangeChange)="rangeChange.emit($event)"
   [options]="options">
 </tg-slider>
 

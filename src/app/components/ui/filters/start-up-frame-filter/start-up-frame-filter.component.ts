@@ -1,8 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Options} from 'ng5-slider';
 import {DEF_STARTUP_MAX_VAL, DEF_STARTUP_MIN_VAL} from '../../../../config/default-frames.config';
 import {FormControl, FormGroup} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
+import {NumberRange} from '../../../../types';
 
 @Component({
   selector: 'tg-start-up-frame-filter',
@@ -11,8 +12,11 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class StartUpFrameFilterComponent implements OnInit {
 
-  minValue = DEF_STARTUP_MIN_VAL;
-  maxValue = DEF_STARTUP_MAX_VAL;
+  @Input()
+  public range!: NumberRange;
+
+  @Output()
+  public rangeChange = new EventEmitter<NumberRange>();
 
   public options: Options = {
     floor: DEF_STARTUP_MIN_VAL,

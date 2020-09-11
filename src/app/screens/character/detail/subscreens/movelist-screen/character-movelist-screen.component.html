@@ -1,9 +1,22 @@
 <div class="filters">
+  <!-- search bar -->
   <tg-search-bar (searched)="onTextSearch($event)"></tg-search-bar>
-  <tg-pop-over-button icon="filter">
-    <tg-start-up-frame-filter></tg-start-up-frame-filter>
-    <tg-block-frame-filter></tg-block-frame-filter>
 
+  <!-- filters -->
+  <tg-pop-over-button [tgBadge]="(moveService.activeFiltersCount$ | async)" [tgBadgeHidden]="(moveService.activeFiltersCount$ | async) === 0" icon="filter">
+    <!-- startup frame filter -->
+    <tg-start-up-frame-filter
+      [range]="moveService.startupFilter$ | async"
+      (rangeChange)="filterByStartUpFrame($event)"
+    ></tg-start-up-frame-filter>
+
+    <!-- block frame filter -->
+    <tg-block-frame-filter
+      [range]="moveService.blockFilter$ | async"
+      (rangeChange)="filterByBlockFrame($event)"
+    ></tg-block-frame-filter>
   </tg-pop-over-button>
 </div>
+
+<!-- movelist -->
 <tg-move-list *ngIf="movelist$ | async as movelist" [moves]="movelist"></tg-move-list>

@@ -3,7 +3,7 @@ import {CharacterService} from '../../../../../services/character.service';
 import {filter, take, takeUntil} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
 import {MoveService} from '../../../../../services/move.service';
-import {Move} from '../../../../../types';
+import {Move, NumberRange} from '../../../../../types';
 
 @Component({
   selector: 'tg-movelist-screen',
@@ -14,7 +14,7 @@ export class CharacterMovelistScreenComponent implements OnInit, OnDestroy {
   private isDestroyed$ = new Subject<boolean>();
   public movelist$?: Observable<Move[]>;
 
-  constructor(private characterService: CharacterService, private moveService: MoveService) {
+  constructor(private characterService: CharacterService, public moveService: MoveService) {
   }
 
   ngOnInit(): void {
@@ -34,13 +34,12 @@ export class CharacterMovelistScreenComponent implements OnInit, OnDestroy {
   }
 
 
-  public filterByStartUpFrame(minValue: number): void {
-    console.log(minValue);
-    // this.moveService.startUpFilter = {from: 10, to: 12};
+  public filterByStartUpFrame(range: NumberRange): void {
+    this.moveService.startUpFilter = range;
   }
 
-  public filterByBlockFrame(): void {
-    this.moveService.blockFilter = {from: -9, to: 2};
+  public filterByBlockFrame(range: NumberRange): void {
+    this.moveService.blockFilter = range;
   }
 
   public onTextSearch(text: string): void {

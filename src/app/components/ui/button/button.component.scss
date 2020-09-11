@@ -17,6 +17,10 @@
 
   .text {
     margin: $sm-margin $md-margin;
+
+    &:empty {
+      display: none;
+    }
   }
 
 

@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Options} from 'ng5-slider';
 import {DEF_BLOCK_MAX_VAL, DEF_BLOCK_MIN_VAL} from '../../../../config/default-frames.config';
+import {NumberRange} from '../../../../types';
 
 
 @Component({
@@ -9,8 +10,12 @@ import {DEF_BLOCK_MAX_VAL, DEF_BLOCK_MIN_VAL} from '../../../../config/default-f
   styleUrls: ['./block-frame-filter.component.scss']
 })
 export class BlockFrameFilterComponent implements OnInit {
-  minValue = DEF_BLOCK_MIN_VAL;
-  maxValue = DEF_BLOCK_MAX_VAL;
+  @Input()
+  public range!: NumberRange;
+
+  @Output()
+  public rangeChange = new EventEmitter<NumberRange>();
+
   options: Options = {
     floor: DEF_BLOCK_MIN_VAL,
     ceil: DEF_BLOCK_MAX_VAL,
@@ -34,13 +39,12 @@ export class BlockFrameFilterComponent implements OnInit {
   }
 
   public setSafeFrames(): void {
-    this.minValue = -9;
-    this.maxValue = DEF_BLOCK_MAX_VAL;
+    this.rangeChange.emit({from: -9, to: DEF_BLOCK_MAX_VAL});
   }
 
   public setPlusFrames(): void {
-    this.minValue = 1;
-    this.maxValue = DEF_BLOCK_MAX_VAL;
+    this.rangeChange.emit({from: 1, to: DEF_BLOCK_MAX_VAL});
+
   }
 
 }

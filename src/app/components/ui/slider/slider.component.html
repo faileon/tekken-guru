@@ -1,6 +1,7 @@
 <ng5-slider
   class="custom-slider"
-  [(value)]="minValue"
-  [(highValue)]="maxValue"
+  [(value)]="range.from"
+  [(highValue)]="range.to"
+  (highValueChange)="onRangeChange()"
   [options]="options">
 </ng5-slider>

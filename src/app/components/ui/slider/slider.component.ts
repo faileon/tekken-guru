@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Options} from 'ng5-slider';
+import {NumberRange} from '../../../types';
+import {getDebouncedFilterRange} from '../../../utils/common';
 
 @Component({
   selector: 'tg-slider',
@@ -9,13 +11,15 @@ import {Options} from 'ng5-slider';
 export class SliderComponent implements OnInit {
 
   @Input()
-  public minValue!: number;
+  public range!: NumberRange;
 
-  @Input()
-  public maxValue!: number;
+  @Output()
+  public rangeChange = new EventEmitter<NumberRange>();
 
   @Input()
   public options!: Options;
+
+
 
   constructor() {
   }
@@ -23,5 +27,12 @@ export class SliderComponent implements OnInit {
   ngOnInit(): void {
 
   }
+
+  public onRangeChange(): void {
+    getDebouncedFilterRange(this.range).then(range => {
+      this.rangeChange.emit(range);
+    });
+  }
+
 
 }

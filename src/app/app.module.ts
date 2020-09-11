@@ -40,6 +40,7 @@ import {Ng5SliderModule} from 'ng5-slider';
 import { StartUpFrameFilterComponent } from './components/ui/filters/start-up-frame-filter/start-up-frame-filter.component';
 import { SliderComponent } from './components/ui/slider/slider.component';
 import { BlockFrameFilterComponent } from './components/ui/filters/block-frame-filter/block-frame-filter.component';
+import { BadgeDirective } from './directives/badge.directive';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { BlockFrameFilterComponent } from './components/ui/filters/block-frame-f
     StartUpFrameFilterComponent,
     SliderComponent,
     BlockFrameFilterComponent,
+    BadgeDirective,
   ],
   imports: [
     BrowserModule,

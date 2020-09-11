@@ -2,11 +2,16 @@
 
 
 :host {
-  >*:not(:last-child) {
+  > *:not(:last-child) {
     margin-bottom: $md-margin;
   }
 
   .filters {
     display: flex;
+    align-items: center;
+
+    > *:not(:last-child) {
+      margin-right: $sm-margin;
+    }
   }
 }

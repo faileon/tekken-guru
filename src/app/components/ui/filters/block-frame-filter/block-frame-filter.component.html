@@ -4,8 +4,8 @@ Block frame:
   <tg-button (click)="setPlusFrames()">PLUS</tg-button>
 </div>
 <tg-slider
-  [minValue]="minValue"
-  [maxValue]="maxValue"
+  [range]="range"
+  (rangeChange)="rangeChange.emit($event)"
   [options]="options">
 </tg-slider>
 

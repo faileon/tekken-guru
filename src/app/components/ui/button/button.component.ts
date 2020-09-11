@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {IconProp, SizeProp} from '@fortawesome/fontawesome-svg-core';
 
 @Component({
@@ -20,6 +20,7 @@ export class ButtonComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
 }

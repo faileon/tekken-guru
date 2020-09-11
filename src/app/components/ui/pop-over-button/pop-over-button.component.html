@@ -4,7 +4,7 @@
   (click)="isOpen = !isOpen"
 ></tg-button>
 
-<div *ngIf="isOpen" class="content">
+<div class="content" [class.open]="isOpen">
   <ng-content></ng-content>
 </div>
 

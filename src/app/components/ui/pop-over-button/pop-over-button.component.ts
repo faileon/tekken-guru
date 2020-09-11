@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, OnInit} from '@angular/core';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
 @Component({
@@ -13,7 +13,14 @@ export class PopOverButtonComponent implements OnInit {
   @Input()
   public icon!: IconProp;
 
-  constructor() {
+  @HostListener('document:click', ['$event'])
+  public outsideClick(event: MouseEvent): void {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.isOpen = false;
+    }
+  }
+
+  constructor(private elementRef: ElementRef) {
   }
 
   ngOnInit(): void {
