@@ -6,11 +6,13 @@ import {CharacterService} from '../../../services/character.service';
 
 import {DEFAULT_CHARACTER_TABS} from '../../../utils/menu-constants';
 import {TGMenuItem} from '../../../types/ui.types';
+import {MoveService} from '../../../services/move.service';
 
 @Component({
   selector: 'tg-character-detail-screen-component',
   templateUrl: './character-detail-screen-component.component.html',
-  styleUrls: ['./character-detail-screen-component.component.scss']
+  styleUrls: ['./character-detail-screen-component.component.scss'],
+  providers: [MoveService]
 })
 export class CharacterDetailScreenComponentComponent implements OnInit, OnDestroy {
   // private isDestroyed$: Subject<boolean> = new Subject<boolean>();
@@ -32,6 +34,7 @@ export class CharacterDetailScreenComponentComponent implements OnInit, OnDestro
   }
 
   ngOnDestroy(): void {
+    console.log('destroyed char detail');
     // this.isDestroyed$.next(true);
     // this.isDestroyed$.unsubscribe();
   }

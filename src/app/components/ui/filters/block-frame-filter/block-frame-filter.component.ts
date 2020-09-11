@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Options} from 'ng5-slider';
 import {DEF_BLOCK_MAX_VAL, DEF_BLOCK_MIN_VAL} from '../../../../config/default-frames.config';
 import {NumberRange} from '../../../../types';
+import {getDebouncedFilterRange} from '../../../../utils/common';
 
 
 @Component({
@@ -9,7 +10,7 @@ import {NumberRange} from '../../../../types';
   templateUrl: './block-frame-filter.component.html',
   styleUrls: ['./block-frame-filter.component.scss']
 })
-export class BlockFrameFilterComponent implements OnInit {
+export class BlockFrameFilterComponent {
   @Input()
   public range!: NumberRange;
 
@@ -31,11 +32,9 @@ export class BlockFrameFilterComponent implements OnInit {
     }
   };
 
-  constructor() {
-  }
 
-  ngOnInit(): void {
-
+  public setUnsafeFrames(): void {
+    this.rangeChange.emit({from: DEF_BLOCK_MIN_VAL, to: -10});
   }
 
   public setSafeFrames(): void {
@@ -44,7 +43,12 @@ export class BlockFrameFilterComponent implements OnInit {
 
   public setPlusFrames(): void {
     this.rangeChange.emit({from: 1, to: DEF_BLOCK_MAX_VAL});
+  }
 
+  public onRangeChange(range: NumberRange): void {
+    getDebouncedFilterRange().then(() => {
+      this.rangeChange.emit(range);
+    });
   }
 
 }

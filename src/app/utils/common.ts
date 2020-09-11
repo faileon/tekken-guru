@@ -14,4 +14,4 @@ export const debounce = <F extends (...args: any[]) => any>(func: F, waitFor: nu
     });
 };
 
-export const getDebouncedFilterRange = debounce((range: NumberRange) => range, 500);
+export const getDebouncedFilterRange = debounce(() => {}, 500);

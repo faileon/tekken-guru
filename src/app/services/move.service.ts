@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Move, NumberRange} from '../types';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
@@ -6,14 +6,9 @@ import {map, switchMap} from 'rxjs/operators';
 import {filterByRange} from '../utils/query-filters';
 import {DEF_BLOCK_MAX_VAL, DEF_BLOCK_MIN_VAL, DEF_STARTUP_MAX_VAL, DEF_STARTUP_MIN_VAL} from '../config/default-frames.config';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class MoveService {
+@Injectable()
+export class MoveService implements OnDestroy {
 
-  /***************
-   * FILTERS
-   ***************/
   private _startUpFilter: BehaviorSubject<NumberRange>;
   public startupFilter$: Observable<NumberRange>;
 
@@ -48,13 +43,14 @@ export class MoveService {
 
   public getMovelist$(characterId: string): Observable<Move[]> {
     return combineLatest([
-      this._startUpFilter,
-      this._blockFilter
+      this.startupFilter$,
+      this.blockFilter$
     ]).pipe(
       switchMap(([startUpRange, blockRange]) =>
         this.firestore.collection<Move>(`characters/${characterId}/movelist`)
           .valueChanges({idField: '_id'}).pipe(
           map(moves => {
+            console.table({startUp: startUpRange, block: blockRange});
             let activeFilters = 0;
             // in memory filtering because firebase sucks monkey balls
             if (startUpRange.from !== DEF_STARTUP_MIN_VAL || startUpRange.to !== DEF_STARTUP_MAX_VAL) {
@@ -67,12 +63,16 @@ export class MoveService {
               activeFilters += 1;
             }
 
+            // set number of active filters
             this.activeFiltersCount = activeFilters;
-            console.log('hello', this._activeFiltersCount.getValue());
             return moves;
           })
         )
       )
     );
+  }
+
+  ngOnDestroy(): void {
+    console.log('moveservice destroyed');
   }
 }

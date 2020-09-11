@@ -1,11 +1,12 @@
 Block frame:
 <div style="display: flex">
+  <tg-button (click)="setUnsafeFrames()">UNSAFE</tg-button>
   <tg-button (click)="setSafeFrames()">SAFE</tg-button>
   <tg-button (click)="setPlusFrames()">PLUS</tg-button>
 </div>
 <tg-slider
   [range]="range"
-  (rangeChange)="rangeChange.emit($event)"
+  (rangeChange)="onRangeChange($event)"
   [options]="options">
 </tg-slider>
 

@@ -1,16 +1,15 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Options} from 'ng5-slider';
 import {DEF_STARTUP_MAX_VAL, DEF_STARTUP_MIN_VAL} from '../../../../config/default-frames.config';
-import {FormControl, FormGroup} from '@angular/forms';
-import {BehaviorSubject} from 'rxjs';
 import {NumberRange} from '../../../../types';
+import {getDebouncedFilterRange} from '../../../../utils/common';
 
 @Component({
   selector: 'tg-start-up-frame-filter',
   templateUrl: './start-up-frame-filter.component.html',
   styleUrls: ['./start-up-frame-filter.component.scss']
 })
-export class StartUpFrameFilterComponent implements OnInit {
+export class StartUpFrameFilterComponent {
 
   @Input()
   public range!: NumberRange;
@@ -25,11 +24,10 @@ export class StartUpFrameFilterComponent implements OnInit {
     translate: value => value >= DEF_STARTUP_MAX_VAL ? '+All' : `${value}`
   };
 
-  constructor() {
-  }
-
-  ngOnInit(): void {
-
+  public onRangeChange(range: NumberRange): void {
+    getDebouncedFilterRange().then(() => {
+      this.rangeChange.emit(range);
+    });
   }
 
 }

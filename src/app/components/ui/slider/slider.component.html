@@ -1,7 +1,7 @@
 <ng5-slider
   class="custom-slider"
-  [(value)]="range.from"
-  [(highValue)]="range.to"
-  (highValueChange)="onRangeChange()"
+  [value]="range.from"
+  [highValue]="range.to"
+  (userChange)="onRangeChange($event)"
   [options]="options">
 </ng5-slider>

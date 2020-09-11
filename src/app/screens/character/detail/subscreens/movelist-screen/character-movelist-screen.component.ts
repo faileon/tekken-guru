@@ -1,20 +1,22 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, Optional, SkipSelf} from '@angular/core';
 import {CharacterService} from '../../../../../services/character.service';
-import {filter, take, takeUntil} from 'rxjs/operators';
+import {takeUntil} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
 import {MoveService} from '../../../../../services/move.service';
 import {Move, NumberRange} from '../../../../../types';
+import {DEF_BLOCK_MAX_VAL, DEF_BLOCK_MIN_VAL, DEF_STARTUP_MAX_VAL, DEF_STARTUP_MIN_VAL} from '../../../../../config/default-frames.config';
 
 @Component({
   selector: 'tg-movelist-screen',
   templateUrl: './character-movelist-screen.component.html',
   styleUrls: ['./character-movelist-screen.component.scss'],
+
 })
 export class CharacterMovelistScreenComponent implements OnInit, OnDestroy {
   private isDestroyed$ = new Subject<boolean>();
   public movelist$?: Observable<Move[]>;
 
-  constructor(private characterService: CharacterService, public moveService: MoveService) {
+  constructor(private characterService: CharacterService, @SkipSelf() public moveService: MoveService) {
   }
 
   ngOnInit(): void {
@@ -40,6 +42,11 @@ export class CharacterMovelistScreenComponent implements OnInit, OnDestroy {
 
   public filterByBlockFrame(range: NumberRange): void {
     this.moveService.blockFilter = range;
+  }
+
+  public resetFilters(): void {
+    this.moveService.startUpFilter = {from: DEF_STARTUP_MIN_VAL, to: DEF_STARTUP_MAX_VAL};
+    this.moveService.blockFilter = {from: DEF_BLOCK_MIN_VAL, to: DEF_BLOCK_MAX_VAL};
   }
 
   public onTextSearch(text: string): void {
