@@ -3,7 +3,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {Move, NumberRange} from '../types';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
-import {filterByRange} from '../utils/query-filters';
+import {filterByRange, shouldFilterBlock, shouldFilterStartup} from '../utils/query-filters';
 import {DEF_BLOCK_MAX_VAL, DEF_BLOCK_MIN_VAL, DEF_STARTUP_MAX_VAL, DEF_STARTUP_MIN_VAL} from '../config/default-frames.config';
 
 @Injectable()
@@ -51,15 +51,18 @@ export class MoveService implements OnDestroy {
           .valueChanges({idField: '_id'}).pipe(
           map(moves => {
             console.table({startUp: startUpRange, block: blockRange});
+            // init active filters
             let activeFilters = 0;
-            // in memory filtering because firebase sucks monkey balls
-            if (startUpRange.from !== DEF_STARTUP_MIN_VAL || startUpRange.to !== DEF_STARTUP_MAX_VAL) {
-              moves = filterByRange<Move>(moves, 'frames.startUp', startUpRange);
+
+            // filter by start up frames if they are different from defaults
+            if (shouldFilterStartup(startUpRange)) {
+              moves = filterByRange<Move>(moves, 'frames.startUp', startUpRange, DEF_STARTUP_MIN_VAL, DEF_STARTUP_MAX_VAL);
               activeFilters += 1;
             }
 
-            if (blockRange.from !== DEF_BLOCK_MIN_VAL || blockRange.to !== DEF_BLOCK_MAX_VAL) {
-              moves = filterByRange<Move>(moves, 'frames.onBlock', blockRange);
+            // filter by block frames if they are different from defaults
+            if (shouldFilterBlock(blockRange)) {
+              moves = filterByRange<Move>(moves, 'frames.onBlock', blockRange, DEF_BLOCK_MIN_VAL, DEF_BLOCK_MAX_VAL);
               activeFilters += 1;
             }
 

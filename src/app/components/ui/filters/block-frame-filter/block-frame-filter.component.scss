@@ -1,0 +1,11 @@
+@import "src/scss/variables";
+
+:host {
+  .presets {
+    display: flex;
+    margin: $sm-margin 0;
+    >*:not(:last-child) {
+      margin-right: $sm-margin;
+    }
+  }
+}

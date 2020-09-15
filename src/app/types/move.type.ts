@@ -12,9 +12,9 @@ export type Move = {
     onHit?: string;
   };
   frames: {
-    onBlock: number;
-    onCounterHit: number;
-    onHit: number;
+    onBlock?: number;
+    onCounterHit?: number;
+    onHit?: number;
     startUp: number;
   }
   properties?: Property[];

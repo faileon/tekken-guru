@@ -42,6 +42,10 @@ body {
   font-size: 1.75rem;
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700;
+
+  &.small {
+    font-size: 1rem;
+  }
 }
 
 .tg-badge {
@@ -62,3 +66,15 @@ body {
     display: none;
   }
 }
+
+
+.filters {
+  .section {
+    padding: $md-padding;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $primary-color;
+    }
+  }
+}
+

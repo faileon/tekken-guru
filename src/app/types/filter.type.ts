@@ -1,4 +1,4 @@
 export interface NumberRange {
   from: number;
-  to?: number;
+  to: number;
 }

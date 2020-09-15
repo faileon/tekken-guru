@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Options} from 'ng5-slider';
+import {LabelType, Options} from 'ng5-slider';
 import {DEF_BLOCK_MAX_VAL, DEF_BLOCK_MIN_VAL} from '../../../../config/default-frames.config';
 import {NumberRange} from '../../../../types';
 import {getDebouncedFilterRange} from '../../../../utils/common';
@@ -21,13 +21,14 @@ export class BlockFrameFilterComponent {
     floor: DEF_BLOCK_MIN_VAL,
     ceil: DEF_BLOCK_MAX_VAL,
     animate: false,
-    translate: value => {
-      if (value >= DEF_BLOCK_MAX_VAL) {
-        return '+All';
-      } else if (value <= DEF_BLOCK_MIN_VAL) {
-        return '-All';
-      } else {
-        return `${value}`;
+    translate: (value, label) => {
+      switch (label) {
+        case LabelType.Low:
+          return value <= DEF_BLOCK_MIN_VAL ? '-All' : `${value}`;
+        case LabelType.High:
+          return value >= DEF_BLOCK_MAX_VAL ? 'All' : `${value}`;
+        default:
+          return `${value}`;
       }
     }
   };

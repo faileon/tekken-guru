@@ -1,22 +1,39 @@
-<div class="filters">
+<div class="option-bar">
   <!-- search bar -->
   <tg-search-bar (searched)="onTextSearch($event)"></tg-search-bar>
 
   <!-- filters -->
-  <tg-pop-over-button [tgBadge]="(moveService.activeFiltersCount$ | async)" [tgBadgeHidden]="(moveService.activeFiltersCount$ | async) === 0" icon="filter">
-    <!-- startup frame filter -->
-    <tg-start-up-frame-filter
-      [range]="moveService.startupFilter$ | async"
-      (rangeChange)="filterByStartUpFrame($event)"
-    ></tg-start-up-frame-filter>
+  <tg-pop-over-button
+    [tgBadge]="(moveService.activeFiltersCount$ | async)"
+    [tgBadgeHidden]="(moveService.activeFiltersCount$ | async) === 0"
+    icon="filter"
+  >
 
-    <!-- block frame filter -->
-    <tg-block-frame-filter
-      [range]="moveService.blockFilter$ | async"
-      (rangeChange)="filterByBlockFrame($event)"
-    ></tg-block-frame-filter>
+    <div class="filters">
+      <!-- startup frame filter -->
+      <div class="section">
+        <tg-start-up-frame-filter
+          [range]="moveService.startupFilter$ | async"
+          (rangeChange)="filterByStartUpFrame($event)"
+        ></tg-start-up-frame-filter>
+      </div>
 
-    <tg-button (click)="resetFilters()">RESET FILTERS</tg-button>
+
+      <!-- block frame filter -->
+      <div class="section">
+        <tg-block-frame-filter
+          [range]="moveService.blockFilter$ | async"
+          (rangeChange)="filterByBlockFrame($event)"
+        ></tg-block-frame-filter>
+      </div>
+
+      <div class="section" style="display: flex; justify-content: flex-end">
+        <tg-button (click)="resetFilters()">RESET FILTERS</tg-button>
+      </div>
+    </div>
+
+
+
   </tg-pop-over-button>
 </div>
 
