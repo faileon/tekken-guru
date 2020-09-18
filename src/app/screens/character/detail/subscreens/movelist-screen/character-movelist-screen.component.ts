@@ -3,7 +3,7 @@ import {CharacterService} from '../../../../../services/character.service';
 import {takeUntil} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
 import {MoveService} from '../../../../../services/move.service';
-import {Move, NumberRange} from '../../../../../types';
+import {HitProperty, Move, NumberRange} from '../../../../../types';
 import {DEF_BLOCK_MAX_VAL, DEF_BLOCK_MIN_VAL, DEF_STARTUP_MAX_VAL, DEF_STARTUP_MIN_VAL} from '../../../../../config/default-frames.config';
 
 @Component({
@@ -28,6 +28,9 @@ export class CharacterMovelistScreenComponent implements OnInit, OnDestroy {
         this.movelist$ = this.moveService.getMovelist$(selectedCharacter._id);
       }
     });
+
+
+    this.moveService.normalProps$.subscribe(props => console.log('props', props));
   }
 
   ngOnDestroy(): void {
@@ -42,6 +45,14 @@ export class CharacterMovelistScreenComponent implements OnInit, OnDestroy {
 
   public filterByBlockFrame(range: NumberRange): void {
     this.moveService.blockFilter = range;
+  }
+
+  public filterByNormalFrame(range: NumberRange): void {
+    this.moveService.normalFilter = range;
+  }
+
+  public setNormalHitProperties(properties: HitProperty[]): void {
+    this.moveService.normalProps = properties;
   }
 
   public resetFilters(): void {

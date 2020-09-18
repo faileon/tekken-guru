@@ -19,12 +19,22 @@
       </div>
 
 
-      <!-- block frame filter -->
+      <!-- block hit frame filter -->
       <div class="section">
         <tg-block-frame-filter
           [range]="moveService.blockFilter$ | async"
           (rangeChange)="filterByBlockFrame($event)"
         ></tg-block-frame-filter>
+      </div>
+
+      <!-- normal hit frame filter -->
+      <div class="section">
+        <tg-normal-frame-filter
+          [range]="moveService.normalFilter$ | async"
+          (rangeChange)="filterByNormalFrame($event)"
+          [hitProperties]="moveService.normalProps$ | async"
+          (hitPropertiesChange)="setNormalHitProperties($event)"
+        ></tg-normal-frame-filter>
       </div>
 
       <div class="section" style="display: flex; justify-content: flex-end">

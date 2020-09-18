@@ -13,7 +13,7 @@ export class PopOverButtonComponent implements OnInit {
   @Input()
   public icon!: IconProp;
 
-  @HostListener('document:click', ['$event'])
+  @HostListener('document:mousedown', ['$event'])
   public outsideClick(event: MouseEvent): void {
     if (!this.elementRef.nativeElement.contains(event.target)) {
       this.isOpen = false;

@@ -1,11 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {APP_MENU} from './utils/menu-constants';
 import {TGMenuItem} from './types/ui.types';
-import {faBars, faTimes} from '@fortawesome/free-solid-svg-icons';
-import {AngularFirestore} from '@angular/fire/firestore';
-import {Character} from './types';
-import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'tg-root',
@@ -36,6 +32,16 @@ import {take} from 'rxjs/operators';
 export class AppComponent implements OnInit {
   public isMobileSidebarOpen = false;
   public readonly menuItems: TGMenuItem[] = APP_MENU;
+
+  @ViewChild('mobileNav')
+  private mobileNav!: ElementRef;
+
+  @HostListener('document:mousedown', ['$event'])
+  public outsideClick(event: MouseEvent): void {
+    if (!this.mobileNav?.nativeElement.contains(event.target)) {
+      this.isMobileSidebarOpen = false;
+    }
+  }
 
   constructor(/*private firestore: AngularFirestore*/) {
     // todo example to get cache first

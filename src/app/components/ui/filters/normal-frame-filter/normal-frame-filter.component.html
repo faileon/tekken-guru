@@ -1,0 +1,21 @@
+<span class="small title">Normal hit frame:</span>
+<div class="presets">
+  <span class="subtitle">Presets:</span>
+  <div class="buttons">
+    <tg-button (click)="setMinusFrames()">MINUS</tg-button>
+    <tg-button (click)="setNeutralFrames()">NEUTRAL</tg-button>
+    <tg-button (click)="setPlusFrames()">PLUS</tg-button>
+  </div>
+</div>
+<tg-slider
+  [range]="range"
+  (rangeChange)="onRangeChange($event)"
+  [options]="options">
+</tg-slider>
+<div class="presets">
+  <span class="subtitle">Properties:</span>
+  <div class="buttons">
+    <tg-button (click)="toggleKnockDownProperty()" [active]="hitProperties.includes('KND')">KND</tg-button>
+    <tg-button (click)="toggleLaunchProperty()" [active]="hitProperties.includes('LAUNCH')">LAUNCH</tg-button>
+  </div>
+</div>

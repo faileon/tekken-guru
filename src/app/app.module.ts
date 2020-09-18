@@ -41,6 +41,7 @@ import { StartUpFrameFilterComponent } from './components/ui/filters/start-up-fr
 import { SliderComponent } from './components/ui/slider/slider.component';
 import { BlockFrameFilterComponent } from './components/ui/filters/block-frame-filter/block-frame-filter.component';
 import { BadgeDirective } from './directives/badge.directive';
+import {NormalFrameFilterComponent} from './components/ui/filters/normal-frame-filter/normal-frame-filter.component';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { BadgeDirective } from './directives/badge.directive';
     StartUpFrameFilterComponent,
     SliderComponent,
     BlockFrameFilterComponent,
+    NormalFrameFilterComponent,
     BadgeDirective,
   ],
   imports: [

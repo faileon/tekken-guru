@@ -1,8 +1,11 @@
-<span class="small title">Block frame:</span>
+<span class="small title">Block hit frame:</span>
 <div class="presets">
-  <tg-button (click)="setUnsafeFrames()">UNSAFE</tg-button>
-  <tg-button (click)="setSafeFrames()">SAFE</tg-button>
-  <tg-button (click)="setPlusFrames()">PLUS</tg-button>
+  <span class="subtitle">Presets:</span>
+  <div class="buttons">
+    <tg-button (click)="setUnsafeFrames()">UNSAFE</tg-button>
+    <tg-button (click)="setSafeFrames()">SAFE</tg-button>
+    <tg-button (click)="setPlusFrames()">PLUS</tg-button>
+  </div>
 </div>
 <tg-slider
   [range]="range"

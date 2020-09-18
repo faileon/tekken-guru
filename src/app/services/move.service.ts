@@ -1,10 +1,17 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {Move, NumberRange} from '../types';
+import {HitProperty, Move, NumberRange} from '../types';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {filterByRange, shouldFilterBlock, shouldFilterStartup} from '../utils/query-filters';
-import {DEF_BLOCK_MAX_VAL, DEF_BLOCK_MIN_VAL, DEF_STARTUP_MAX_VAL, DEF_STARTUP_MIN_VAL} from '../config/default-frames.config';
+import {
+  DEF_BLOCK_MAX_VAL,
+  DEF_BLOCK_MIN_VAL,
+  DEF_NORMAL_MAX_VAL,
+  DEF_NORMAL_MIN_VAL,
+  DEF_STARTUP_MAX_VAL,
+  DEF_STARTUP_MIN_VAL
+} from '../config/default-frames.config';
 
 @Injectable()
 export class MoveService implements OnDestroy {
@@ -14,6 +21,12 @@ export class MoveService implements OnDestroy {
 
   private _blockFilter: BehaviorSubject<NumberRange>;
   public blockFilter$: Observable<NumberRange>;
+
+  private _normalFilter: BehaviorSubject<NumberRange>;
+  public normalFilter$: Observable<NumberRange>;
+
+  private _normalProps: BehaviorSubject<HitProperty[]>;
+  public normalProps$: Observable<HitProperty[]>;
 
   private _activeFiltersCount: BehaviorSubject<number>;
   public activeFiltersCount$: Observable<number>;
@@ -26,6 +39,14 @@ export class MoveService implements OnDestroy {
     this._blockFilter.next(range);
   }
 
+  set normalFilter(range: NumberRange) {
+    this._normalFilter.next(range);
+  }
+
+  set normalProps(properties: HitProperty[]) {
+    this._normalProps.next(properties);
+  }
+
   set activeFiltersCount(count: number) {
     this._activeFiltersCount.next(count);
   }
@@ -36,6 +57,12 @@ export class MoveService implements OnDestroy {
 
     this._blockFilter = new BehaviorSubject<NumberRange>({from: DEF_BLOCK_MIN_VAL, to: DEF_BLOCK_MAX_VAL} as NumberRange);
     this.blockFilter$ = this._blockFilter.asObservable();
+
+    this._normalFilter = new BehaviorSubject<NumberRange>({from: DEF_NORMAL_MIN_VAL, to: DEF_NORMAL_MAX_VAL} as NumberRange);
+    this.normalFilter$ = this._normalFilter.asObservable();
+
+    this._normalProps = new BehaviorSubject<HitProperty[]>([]);
+    this.normalProps$ = this._normalProps.asObservable();
 
     this._activeFiltersCount = new BehaviorSubject(0);
     this.activeFiltersCount$ = this._activeFiltersCount.asObservable();
@@ -54,13 +81,11 @@ export class MoveService implements OnDestroy {
             // init active filters
             let activeFilters = 0;
 
-            // filter by start up frames if they are different from defaults
             if (shouldFilterStartup(startUpRange)) {
               moves = filterByRange<Move>(moves, 'frames.startUp', startUpRange, DEF_STARTUP_MIN_VAL, DEF_STARTUP_MAX_VAL);
               activeFilters += 1;
             }
 
-            // filter by block frames if they are different from defaults
             if (shouldFilterBlock(blockRange)) {
               moves = filterByRange<Move>(moves, 'frames.onBlock', blockRange, DEF_BLOCK_MIN_VAL, DEF_BLOCK_MAX_VAL);
               activeFilters += 1;

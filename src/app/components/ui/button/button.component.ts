@@ -16,6 +16,9 @@ export class ButtonComponent implements OnInit {
   @Input()
   public outlined = true;
 
+  @Input()
+  public active: boolean;
+
   constructor() {
   }
 

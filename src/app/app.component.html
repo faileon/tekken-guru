@@ -13,7 +13,7 @@
 </div>
 
 <!-- MOBILE SIDEBAR -->
-<div class="side-bar mobile" *ngIf="isMobileSidebarOpen" [@inOutAnimation]>
+<div class="side-bar mobile" *ngIf="isMobileSidebarOpen" [@inOutAnimation] #mobileNav>
   <div style="display: flex; align-items: center;">
     <div class="item fixed-size">
       <tg-button [outlined]="false" icon="times" iconSize="2x" (click)="isMobileSidebarOpen = false"></tg-button>

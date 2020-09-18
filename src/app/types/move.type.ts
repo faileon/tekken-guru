@@ -7,9 +7,9 @@ export type Move = {
   hit: {
     damage: number[];
     move: string[];
-    onBlock?: string;
-    onCounterHit?: string;
-    onHit?: string;
+    onBlock?: HitProperty;
+    onCounterHit?: HitProperty;
+    onHit?: HitProperty;
   };
   frames: {
     onBlock?: number;
@@ -21,3 +21,5 @@ export type Move = {
   isKeyMove?: boolean;
   video: string;
 };
+
+export type HitProperty = 'KND' | 'LAUNCH';
