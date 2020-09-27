@@ -1,16 +1,16 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {LabelType, Options} from 'ng5-slider';
-import {DEF_NORMAL_MAX_VAL, DEF_NORMAL_MIN_VAL} from '../../../../config/default-frames.config';
+import {DEF_COUNTER_MAX_VAL, DEF_COUNTER_MIN_VAL} from '../../../../config/default-frames.config';
 import {HitProperty, NumberRange} from '../../../../types';
 import {getDebouncedFilterRange, getToggleProperties} from '../../../../utils/common';
 
 
 @Component({
-  selector: 'tg-normal-frame-filter',
-  templateUrl: './normal-frame-filter.component.html',
-  styleUrls: ['./normal-frame-filter.component.scss']
+  selector: 'tg-counter-frame-filter',
+  templateUrl: './counter-frame-filter.component.html',
+  styleUrls: ['./counter-frame-filter.component.scss']
 })
-export class NormalFrameFilterComponent {
+export class CounterFrameFilterComponent {
   @Input()
   public range!: NumberRange;
 
@@ -24,15 +24,15 @@ export class NormalFrameFilterComponent {
   public hitPropertiesChange = new EventEmitter<HitProperty[]>();
 
   options: Options = {
-    floor: DEF_NORMAL_MIN_VAL,
-    ceil: DEF_NORMAL_MAX_VAL,
+    floor: DEF_COUNTER_MIN_VAL,
+    ceil: DEF_COUNTER_MAX_VAL,
     animate: false,
     translate: (value, label) => {
       switch (label) {
         case LabelType.Low:
-          return value <= DEF_NORMAL_MIN_VAL ? '-All' : `${value}`;
+          return value <= DEF_COUNTER_MIN_VAL ? '-All' : `${value}`;
         case LabelType.High:
-          return value >= DEF_NORMAL_MAX_VAL ? 'All' : `${value}`;
+          return value >= DEF_COUNTER_MAX_VAL ? 'All' : `${value}`;
         default:
           return `${value}`;
       }
@@ -41,7 +41,7 @@ export class NormalFrameFilterComponent {
 
 
   public setMinusFrames(): void {
-    this.rangeChange.emit({from: DEF_NORMAL_MIN_VAL, to: -1});
+    this.rangeChange.emit({from: DEF_COUNTER_MIN_VAL, to: -1});
   }
 
   public setNeutralFrames(): void {
@@ -49,7 +49,7 @@ export class NormalFrameFilterComponent {
   }
 
   public setPlusFrames(): void {
-    this.rangeChange.emit({from: 1, to: DEF_NORMAL_MAX_VAL});
+    this.rangeChange.emit({from: 1, to: DEF_COUNTER_MAX_VAL});
   }
 
   public onRangeChange(range: NumberRange): void {

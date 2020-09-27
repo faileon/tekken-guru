@@ -37,6 +37,16 @@
         ></tg-normal-frame-filter>
       </div>
 
+      <!-- normal hit frame filter -->
+      <div class="section">
+        <tg-counter-frame-filter
+          [range]="moveService.counterFilter$ | async"
+          (rangeChange)="filterByCounterFrame($event)"
+          [hitProperties]="moveService.counterProps$ | async"
+          (hitPropertiesChange)="setCounterHitProperties($event)"
+        ></tg-counter-frame-filter>
+      </div>
+
       <div class="section" style="display: flex; justify-content: flex-end">
         <tg-button (click)="resetFilters()">RESET FILTERS</tg-button>
       </div>

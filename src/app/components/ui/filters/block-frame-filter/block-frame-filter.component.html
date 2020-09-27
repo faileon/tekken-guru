@@ -1,15 +1,12 @@
-<span class="small title">Block hit frame:</span>
-<div class="presets">
-  <span class="subtitle">Presets:</span>
-  <div class="buttons">
+<tg-filter-template
+  title="Block hit frame:"
+  [sliderOptions]="options"
+  [range]="range"
+  (rangeChange)="onRangeChange(range)"
+>
+  <ng-container frame-presets>
     <tg-button (click)="setUnsafeFrames()">UNSAFE</tg-button>
     <tg-button (click)="setSafeFrames()">SAFE</tg-button>
     <tg-button (click)="setPlusFrames()">PLUS</tg-button>
-  </div>
-</div>
-<tg-slider
-  [range]="range"
-  (rangeChange)="onRangeChange($event)"
-  [options]="options">
-</tg-slider>
-
+  </ng-container>
+</tg-filter-template>

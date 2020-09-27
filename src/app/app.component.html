@@ -5,9 +5,9 @@
   </div>
 
   <a class="item fixed-size"
-       routerLinkActive="active"
-       [routerLink]="menuItem.routeTo"
-       *ngFor="let menuItem of menuItems">
+     routerLinkActive="active"
+     [routerLink]="menuItem.routeTo"
+     *ngFor="let menuItem of menuItems">
     <fa-icon *ngIf="menuItem.icon" [icon]="menuItem.icon" size="2x"></fa-icon>
   </a>
 </div>

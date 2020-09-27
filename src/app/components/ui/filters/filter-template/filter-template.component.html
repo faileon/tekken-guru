@@ -1,0 +1,18 @@
+<span class="small title">{{title}}</span>
+<div class="presets" [class.hidden]="!showFramePresets">
+  <span class="subtitle">Presets:</span>
+  <div class="buttons" #framePresets>
+    <ng-content select="[frame-presets]"></ng-content>
+  </div>
+</div>
+<tg-slider
+  [range]="range"
+  (rangeChange)="rangeChange.emit($event)"
+  [options]="sliderOptions">
+</tg-slider>
+<div class="presets" [class.hidden]="!showHitPropsPresets">
+  <span class="subtitle">Properties:</span>
+  <div class="buttons" #hitPropsPresets>
+    <ng-content select="[properties-presets]"></ng-content>
+  </div>
+</div>

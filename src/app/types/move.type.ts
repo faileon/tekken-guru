@@ -1,4 +1,4 @@
-import {Property} from './property.type';
+import {HitProperty, MoveProperty} from './property.type';
 
 export type Move = {
   _id: string;
@@ -17,9 +17,7 @@ export type Move = {
     onHit?: number;
     startUp: number;
   }
-  properties?: Property[];
+  properties?: MoveProperty[];
   isKeyMove?: boolean;
   video: string;
 };
-
-export type HitProperty = 'KND' | 'LAUNCH';

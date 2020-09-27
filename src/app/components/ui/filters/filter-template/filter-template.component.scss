@@ -1,0 +1,25 @@
+@import "src/scss/variables";
+
+:host {
+  .presets {
+    display: flex;
+    flex-direction: column;
+    margin: $sm-margin 0;
+
+    .subtitle {
+      margin-bottom: $xs-margin;
+    }
+
+    &.hidden {
+      display: none;
+    }
+
+    .buttons {
+      display: flex;
+
+      >*:not(:last-child) {
+        margin-right: $sm-margin;
+      }
+    }
+  }
+}
