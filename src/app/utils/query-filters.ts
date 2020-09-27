@@ -9,47 +9,26 @@ import {
 } from '../config/default-frames.config';
 
 
-// tslint:disable:no-any
-export const filterByRange = <T extends { [key: string]: any }>(
-  array: T[],
-  path: keyof T | string,
-  range: NumberRange,
-  lowerBound: number,
-  upperBound: number) => {
-  // destructure the number range
+export const satisfiesRangeFilter = (range: NumberRange, property: number, lowerBound: number, upperBound: number): boolean => {
   const {to, from} = range;
 
-  // get parts from the path ("hit.onBlock" -> [hit, onBlock])
-  const parts = (path as string).split('.');
-
-  // filter array depending depending on the interval
   // (-inf, to>
   if (from === lowerBound && to !== upperBound) {
-    return array.filter(element => getPropertyByPath(element, parts) <= to);
+    return property <= to;
   }
   // <from, +inf)
   else if (from !== lowerBound && to === upperBound) {
-    return array.filter(element => getPropertyByPath(element, parts) >= from);
+    return property >= from;
   }
   // <from, to>
   else {
-    return array.filter(element => {
-      const property = getPropertyByPath(element, parts);
-      return property >= from && property <= to;
-    });
+    return property >= from && property <= to;
   }
 };
 
-export const filterByHitProperty = <T extends { [key: string]: any }>(
-  array: T[],
-  path: keyof T | string,
-  hitProperties: HitProperty[],
-) => {
-  const parts = (path as string).split('.');
-  return array.filter(element => {
-    const property = getPropertyByPath(element, parts);
-    return hitProperties.includes(property as HitProperty);
-  });
+
+export const satisfiesHitPropertyFilter = (hitProperties: HitProperty[], moveHitProperty: HitProperty): boolean => {
+  return hitProperties.includes(moveHitProperty);
 };
 
 // tslint:disable-next-line:no-any

@@ -4,8 +4,8 @@ import {HitProperty, Move, NumberRange} from '../types';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {
-  filterByHitProperty,
-  filterByRange,
+  satisfiesHitPropertyFilter,
+  satisfiesRangeFilter,
   shouldFilterBlockFrame,
   shouldFilterByHitProperties, shouldFilterCounterFrame,
   shouldFilterNormalFrame,
@@ -134,55 +134,55 @@ export class MoveService implements OnDestroy {
             .valueChanges({idField: '_id'})
             .pipe(
               map(moves => {
-                /*console.table({
-                  startUp: startUpRange,
-                  block: blockRange,
-                  normal: normalRange,
-                  counter: counterRange,
+                // determine what will be filtered
+                const byStartupFrame = shouldFilterStartupFrame(startUpRange);
+                const byNormalFrame = shouldFilterNormalFrame(normalRange);
+                const byCounterFrame = shouldFilterCounterFrame(counterRange);
+                const byBlockFrame = shouldFilterBlockFrame(blockRange);
+                const byNormalProps = shouldFilterByHitProperties(normalProps);
+                const byCounterProps = shouldFilterByHitProperties(counterProps);
+
+                // calculate the number of active filters
+                this.activeFiltersCount = [
+                  byStartupFrame,
+                  byNormalFrame,
+                  byCounterFrame,
+                  byBlockFrame,
+                  byNormalProps,
+                  byCounterProps
+                ].filter(f => f).length;
+
+                return moves.filter(move => {
+                  const satisfiesFilter: boolean[] = [];
+                  const {startUp, onHit, onCounterHit, onBlock} = move.frames;
+
+                  if (byStartupFrame) {
+                    satisfiesFilter.push(satisfiesRangeFilter(startUpRange, startUp, DEF_STARTUP_MIN_VAL, DEF_STARTUP_MAX_VAL));
+                  }
+
+                  if (byNormalFrame) {
+                    satisfiesFilter.push(satisfiesRangeFilter(normalRange, onHit, DEF_NORMAL_MIN_VAL, DEF_NORMAL_MAX_VAL));
+                  }
+
+                  if (byCounterFrame) {
+                    satisfiesFilter.push(satisfiesRangeFilter(counterRange, onCounterHit, DEF_COUNTER_MIN_VAL, DEF_COUNTER_MAX_VAL));
+                  }
+
+                  if (byBlockFrame) {
+                    satisfiesFilter.push(satisfiesRangeFilter(blockRange, onBlock, DEF_BLOCK_MIN_VAL, DEF_BLOCK_MAX_VAL));
+                  }
+
+                  if (byNormalProps) {
+                    satisfiesFilter.push(satisfiesHitPropertyFilter(normalProps, move.hit.onHit));
+                  }
+
+                  if (byCounterProps) {
+                    satisfiesFilter.push(satisfiesHitPropertyFilter(counterProps, move.hit.onCounterHit));
+                  }
+
+                  // move must satisfy all active filters
+                  return satisfiesFilter.length > 0 ? satisfiesFilter.every(sf => sf) : true;
                 });
-                console.table({
-                  propsNormal: normalProps,
-                  propsCounter: counterProps
-                });*/
-
-                // init active filters
-                let activeFilters = 0;
-
-                // fixme for now readability > time complexity
-                //  deal with optimization later if it turns out to be an issue - merge the filters and just filter it once
-                if (shouldFilterStartupFrame(startUpRange)) {
-                  moves = filterByRange<Move>(moves, 'frames.startUp', startUpRange, DEF_STARTUP_MIN_VAL, DEF_STARTUP_MAX_VAL);
-                  activeFilters++;
-                }
-
-                if (shouldFilterBlockFrame(blockRange)) {
-                  moves = filterByRange<Move>(moves, 'frames.onBlock', blockRange, DEF_BLOCK_MIN_VAL, DEF_BLOCK_MAX_VAL);
-                  activeFilters++;
-                }
-
-                if (shouldFilterNormalFrame(normalRange)) {
-                  moves = filterByRange<Move>(moves, 'frames.onHit', normalRange, DEF_NORMAL_MIN_VAL, DEF_NORMAL_MAX_VAL);
-                  activeFilters++;
-                }
-
-                if (shouldFilterCounterFrame(counterRange)) {
-                  moves = filterByRange<Move>(moves, 'frames.onCounterHit', counterRange, DEF_COUNTER_MIN_VAL, DEF_COUNTER_MAX_VAL);
-                  activeFilters++;
-                }
-
-                if (shouldFilterByHitProperties(normalProps)) {
-                  moves = filterByHitProperty(moves, 'hit.onHit', normalProps);
-                  activeFilters++;
-                }
-
-                if (shouldFilterByHitProperties(counterProps)) {
-                  moves = filterByHitProperty(moves, 'hit.onCounterHit', counterProps);
-                  activeFilters++;
-                }
-
-                // set number of active filters
-                this.activeFiltersCount = activeFilters;
-                return moves;
               })
             )
         )
