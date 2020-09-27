@@ -17,6 +17,20 @@
       font-family: 'Roboto Condensed', sans-serif;
       font-size: 1rem;
     }
+
+    .properties {
+      $height: 20px;
+      max-height: $height;
+      >.property {
+        height: $height;
+        width: $height;
+
+        &:not(:last-child) {
+          margin-right: $xs-margin;
+        }
+      }
+
+    }
   }
 
   .content {

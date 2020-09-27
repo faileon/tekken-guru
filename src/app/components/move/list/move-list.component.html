@@ -7,7 +7,9 @@
   <!-- move name -->
   <div class="header" header>
     <div class="title">{{move.name}}</div>
-    <div class="properties">{{move.properties}}</div>
+    <div class="properties">
+      <img *ngFor="let property of move.properties" [src]="property | movePropertyImg" alt="" class="property">
+    </div>
   </div>
 
   <div class="content" content>

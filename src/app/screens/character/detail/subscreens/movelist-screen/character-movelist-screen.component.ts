@@ -74,6 +74,7 @@ export class CharacterMovelistScreenComponent implements OnInit, OnDestroy {
     this.moveService.counterFilter = {from: DEF_COUNTER_MIN_VAL, to: DEF_COUNTER_MAX_VAL};
     this.moveService.normalProps = [];
     this.moveService.counterProps = [];
+    this.moveService.moveProps = [];
   }
 
   public onTextSearch(text: string): void {
