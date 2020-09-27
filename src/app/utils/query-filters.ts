@@ -1,4 +1,4 @@
-import {HitProperty, NumberRange} from '../types';
+import {HitProperty, MoveProperty, NumberRange} from '../types';
 import {
   DEF_BLOCK_MAX_VAL,
   DEF_BLOCK_MIN_VAL, DEF_COUNTER_MAX_VAL, DEF_COUNTER_MIN_VAL,
@@ -26,10 +26,21 @@ export const satisfiesRangeFilter = (range: NumberRange, property: number, lower
   }
 };
 
+export const satisfiesPropertyFilter = <T>(selectedProperties: T[], properties?: T | T[]): boolean => {
+  if (Array.isArray(properties)) {
+    return selectedProperties.every(property => properties?.includes(property) ?? false);
+  } else {
+    return selectedProperties.includes(properties);
+  }
+};
 
-export const satisfiesHitPropertyFilter = (hitProperties: HitProperty[], moveHitProperty: HitProperty): boolean => {
+/*export const satisfiesHitPropertyFilter = (hitProperties: HitProperty[], moveHitProperty: HitProperty): boolean => {
   return hitProperties.includes(moveHitProperty);
 };
+
+export const satisfiesMovePropertyFilter = (selectedProperties: MoveProperty[], moveProperties?: MoveProperty[]): boolean => {
+  return selectedProperties.every(property => moveProperties?.includes(property) ?? false);
+};*/
 
 // tslint:disable-next-line:no-any
 const getPropertyByPath = (element: any, parts: string[]): number | string | null => {
@@ -58,4 +69,4 @@ export const shouldFilterCounterFrame = (range: NumberRange): boolean => {
   return shouldFilter(range, DEF_COUNTER_MIN_VAL, DEF_COUNTER_MAX_VAL);
 };
 
-export const shouldFilterByHitProperties = (hitProperties: HitProperty[]): boolean => hitProperties.length > 0;
+export const shouldFilterByProperties = <T>(properties: T[]): boolean => properties.length > 0;

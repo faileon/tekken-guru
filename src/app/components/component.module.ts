@@ -23,6 +23,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ReactiveFormsModule} from '@angular/forms';
 import {RoutingModule} from '../modules/routing/routing.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {MovePropertiesFilterComponent} from './ui/filters/move-properties-filter/move-properties-filter.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     NormalFrameFilterComponent,
     BlockFrameFilterComponent,
     CounterFrameFilterComponent,
+    MovePropertiesFilterComponent,
   ],
   imports: [
     CommonModule,
@@ -71,6 +73,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     NormalFrameFilterComponent,
     BlockFrameFilterComponent,
     CounterFrameFilterComponent,
+    MovePropertiesFilterComponent,
   ]
 })
 export class ComponentModule {

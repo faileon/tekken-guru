@@ -13,10 +13,10 @@ export class FilterTemplateComponent implements OnInit {
   public title!: string;
 
   @Input()
-  public sliderOptions!: Options;
+  public sliderOptions?: Options;
 
   @Input()
-  public range!: NumberRange;
+  public range?: NumberRange;
 
   @Output()
   public rangeChange = new EventEmitter<NumberRange>();

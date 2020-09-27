@@ -1,13 +1,13 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {HitProperty, Move, NumberRange} from '../types';
+import {HitProperty, Move, MoveProperty, NumberRange} from '../types';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {
-  satisfiesHitPropertyFilter,
+  satisfiesPropertyFilter,
   satisfiesRangeFilter,
   shouldFilterBlockFrame,
-  shouldFilterByHitProperties, shouldFilterCounterFrame,
+  shouldFilterByProperties, shouldFilterCounterFrame,
   shouldFilterNormalFrame,
   shouldFilterStartupFrame
 } from '../utils/query-filters';
@@ -50,7 +50,8 @@ export class MoveService implements OnDestroy {
   /********************
    * MOVE HIT PROPERTIES:
    *********************/
-  // todo
+  private _moveProps: BehaviorSubject<MoveProperty[]>;
+  public moveProps$: Observable<MoveProperty[]>;
 
   /********************
    * ACTIVE FILTERS COUNT:
@@ -85,8 +86,16 @@ export class MoveService implements OnDestroy {
     this._counterProps.next(properties);
   }
 
+  set moveProps(properties: MoveProperty[]) {
+    this._moveProps.next(properties);
+  }
+
   set activeFiltersCount(count: number) {
     this._activeFiltersCount.next(count);
+  }
+
+  get activeFiltersCount(): number {
+    return this._activeFiltersCount.getValue();
   }
 
   constructor(private firestore: AngularFirestore) {
@@ -108,27 +117,40 @@ export class MoveService implements OnDestroy {
     this._counterProps = new BehaviorSubject<HitProperty[]>([]);
     this.counterProps$ = this._counterProps.asObservable();
 
+    this._moveProps = new BehaviorSubject<MoveProperty[]>([]);
+    this.moveProps$ = this._moveProps.asObservable();
+
     this._activeFiltersCount = new BehaviorSubject(0);
     this.activeFiltersCount$ = this._activeFiltersCount.asObservable();
   }
 
   public getMovelist$(characterId: string): Observable<Move[]> {
     return combineLatest([
-      this.startupFilter$,
-      this.blockFilter$,
-      this.normalFilter$,
-      this.counterFilter$,
-      this.normalProps$,
-      this.counterProps$
+      combineLatest([
+        this.startupFilter$,
+        this.blockFilter$,
+        this.normalFilter$,
+        this.counterFilter$,
+      ]),
+      combineLatest([
+        this.normalProps$,
+        this.counterProps$,
+        this.moveProps$
+      ])
     ])
       .pipe(
         switchMap(([
-                     startUpRange,
-                     blockRange,
-                     normalRange,
-                     counterRange,
-                     normalProps,
-                     counterProps,
+                     [
+                       startUpRange,
+                       blockRange,
+                       normalRange,
+                       counterRange
+                     ],
+                     [
+                       normalProps,
+                       counterProps,
+                       moveProps
+                     ]
                    ]) =>
           this.firestore.collection<Move>(`characters/${characterId}/movelist`)
             .valueChanges({idField: '_id'})
@@ -139,8 +161,9 @@ export class MoveService implements OnDestroy {
                 const byNormalFrame = shouldFilterNormalFrame(normalRange);
                 const byCounterFrame = shouldFilterCounterFrame(counterRange);
                 const byBlockFrame = shouldFilterBlockFrame(blockRange);
-                const byNormalProps = shouldFilterByHitProperties(normalProps);
-                const byCounterProps = shouldFilterByHitProperties(counterProps);
+                const byNormalProps = shouldFilterByProperties<HitProperty>(normalProps);
+                const byCounterProps = shouldFilterByProperties<HitProperty>(counterProps);
+                const byMoveProps = shouldFilterByProperties<MoveProperty>(moveProps);
 
                 // calculate the number of active filters
                 this.activeFiltersCount = [
@@ -149,9 +172,16 @@ export class MoveService implements OnDestroy {
                   byCounterFrame,
                   byBlockFrame,
                   byNormalProps,
-                  byCounterProps
+                  byCounterProps,
+                  byMoveProps
                 ].filter(f => f).length;
 
+                // no filter, just return everything
+                if (this.activeFiltersCount === 0) {
+                  return moves;
+                }
+
+                // filter moves
                 return moves.filter(move => {
                   const satisfiesFilter: boolean[] = [];
                   const {startUp, onHit, onCounterHit, onBlock} = move.frames;
@@ -173,16 +203,21 @@ export class MoveService implements OnDestroy {
                   }
 
                   if (byNormalProps) {
-                    satisfiesFilter.push(satisfiesHitPropertyFilter(normalProps, move.hit.onHit));
+                    satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(normalProps, move.hit.onHit));
                   }
 
                   if (byCounterProps) {
-                    satisfiesFilter.push(satisfiesHitPropertyFilter(counterProps, move.hit.onCounterHit));
+                    satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(counterProps, move.hit.onCounterHit));
+                  }
+
+                  if (byMoveProps) {
+                    satisfiesFilter.push(satisfiesPropertyFilter<MoveProperty>(moveProps, move.properties));
                   }
 
                   // move must satisfy all active filters
                   return satisfiesFilter.length > 0 ? satisfiesFilter.every(sf => sf) : true;
                 });
+
               })
             )
         )

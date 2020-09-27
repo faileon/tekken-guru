@@ -17,21 +17,23 @@ export const debounce = <F extends (...args: any[]) => any>(func: F, waitFor: nu
 export const getDebouncedFilterRange = debounce(() => {
 }, 500);
 
-export const getToggleProperties = <T>(properties: T[], property: T): T[] => {
+export const getToggledProperties = <T>(properties: T[], property: T, multiple = false): T[] => {
   const hasProperty = properties.includes(property);
   let res: T[];
   if (hasProperty) {
     // checkbox-like
-    // res = this.hitProperties.filter(p => p !== property);
-
-    // radio-like
-    res = [];
+    if (multiple) {
+      res = properties.filter(p => p !== property);
+    } else {
+      res = [];
+    }
   } else {
     // checkbox-like
-    // res = [...this.hitProperties, property];
-
-    // radio-like
-    res = [property];
+    if (multiple) {
+      res = [...properties, property];
+    } else {
+      res = [property];
+    }
   }
   return res;
 };

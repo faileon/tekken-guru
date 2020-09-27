@@ -16,9 +16,15 @@
 
     .buttons {
       display: flex;
+      // justify-content: space-between;
+      flex-wrap: wrap;
 
-      >*:not(:last-child) {
-        margin-right: $sm-margin;
+      ::ng-deep > * {
+        &:not(:last-child) {
+          margin-right: $sm-margin;
+        }
+
+        margin-bottom: $sm-margin;
       }
     }
   }

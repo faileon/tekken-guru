@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {LabelType, Options} from 'ng5-slider';
 import {DEF_COUNTER_MAX_VAL, DEF_COUNTER_MIN_VAL} from '../../../../config/default-frames.config';
 import {HitProperty, NumberRange} from '../../../../types';
-import {getDebouncedFilterRange, getToggleProperties} from '../../../../utils/common';
+import {getDebouncedFilterRange, getToggledProperties} from '../../../../utils/common';
 
 
 @Component({
@@ -71,7 +71,7 @@ export class CounterFrameFilterComponent {
   }
 
   private toggleProperty(property: HitProperty): void {
-    const toggleProperties = getToggleProperties(this.hitProperties, property);
+    const toggleProperties = getToggledProperties(this.hitProperties, property);
     this.hitPropertiesChange.emit(toggleProperties);
   }
 

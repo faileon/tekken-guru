@@ -1,0 +1,12 @@
+<tg-filter-template
+  title="Move proprties:"
+>
+  <ng-container properties-presets>
+    <tg-button (click)="toggleProperty('HIGH CRUSH')" [active]="moveProperties | includes:'HIGH CRUSH'">HIGH CRUSH</tg-button>
+    <tg-button (click)="toggleProperty('LOW CRUSH')" [active]="moveProperties | includes:'LOW CRUSH'">LOW CRUSH</tg-button>
+    <tg-button (click)="toggleProperty('HOMING')" [active]="moveProperties | includes:'HOMING'">HOMING</tg-button>
+    <tg-button (click)="toggleProperty('POWER CRUSH')" [active]="moveProperties | includes:'POWER CRUSH'">POWER CRUSH</tg-button>
+    <tg-button (click)="toggleProperty('SCREW')" [active]="moveProperties | includes:'SCREW'">SCREW</tg-button>
+    <tg-button (click)="toggleProperty('WALL BOUNCE')" [active]="moveProperties | includes:'WALL BOUNCE'">WALL BOUNCE</tg-button>
+  </ng-container>
+</tg-filter-template>

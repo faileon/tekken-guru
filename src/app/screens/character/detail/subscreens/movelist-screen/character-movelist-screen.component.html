@@ -37,7 +37,7 @@
         ></tg-normal-frame-filter>
       </div>
 
-      <!-- normal hit frame filter -->
+      <!-- counter frame filter -->
       <div class="section">
         <tg-counter-frame-filter
           [range]="moveService.counterFilter$ | async"
@@ -45,6 +45,14 @@
           [hitProperties]="moveService.counterProps$ | async"
           (hitPropertiesChange)="setCounterHitProperties($event)"
         ></tg-counter-frame-filter>
+      </div>
+
+      <!-- move property filter -->
+      <div class="section">
+        <tg-move-properties-filter
+          [moveProperties]="moveService.moveProps$ | async"
+          (movePropertiesChange)="setMoveProperties($event)"
+        ></tg-move-properties-filter>
       </div>
 
       <div class="section" style="display: flex; justify-content: flex-end">

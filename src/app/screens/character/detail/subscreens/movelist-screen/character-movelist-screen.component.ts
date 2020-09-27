@@ -3,7 +3,7 @@ import {CharacterService} from '../../../../../services/character.service';
 import {takeUntil} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
 import {MoveService} from '../../../../../services/move.service';
-import {HitProperty, Move, NumberRange} from '../../../../../types';
+import {HitProperty, Move, MoveProperty, NumberRange} from '../../../../../types';
 import {
   DEF_BLOCK_MAX_VAL,
   DEF_BLOCK_MIN_VAL, DEF_COUNTER_MAX_VAL, DEF_COUNTER_MIN_VAL, DEF_NORMAL_MAX_VAL,
@@ -61,6 +61,10 @@ export class CharacterMovelistScreenComponent implements OnInit, OnDestroy {
 
   public setCounterHitProperties(properties: HitProperty[]): void {
     this.moveService.counterProps = properties;
+  }
+
+  public setMoveProperties(properties: MoveProperty[]): void {
+    this.moveService.moveProps = properties;
   }
 
   public resetFilters(): void {

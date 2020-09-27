@@ -6,6 +6,7 @@
   </div>
 </div>
 <tg-slider
+  *ngIf="sliderOptions"
   [range]="range"
   (rangeChange)="rangeChange.emit($event)"
   [options]="sliderOptions">

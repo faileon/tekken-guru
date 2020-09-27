@@ -2,7 +2,7 @@
   title="Block hit frame:"
   [sliderOptions]="options"
   [range]="range"
-  (rangeChange)="onRangeChange(range)"
+  (rangeChange)="onRangeChange($event)"
 >
   <ng-container frame-presets>
     <tg-button (click)="setUnsafeFrames()">UNSAFE</tg-button>
