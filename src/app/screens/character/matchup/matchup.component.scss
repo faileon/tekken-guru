@@ -1,0 +1,29 @@
+@import "src/scss/variables";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: $sm-padding;
+  height: calc(100% - 50px);
+
+  .content {
+    display: flex;
+    flex: 1;
+    height: 100%;
+
+    .col {
+      padding-top: $xs-padding;
+      flex: 1 1 0;
+
+      &:first-child {
+        margin-left: 0;
+        margin-right: $xs-margin;
+      }
+
+      overflow-y: auto;
+      margin-left: $xs-margin;
+
+    }
+  }
+}

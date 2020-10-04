@@ -24,10 +24,12 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {RoutingModule} from '../modules/routing/routing.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MovePropertiesFilterComponent} from './ui/filters/move-properties-filter/move-properties-filter.component';
+import {DirectiveModule} from '../directives/directive.module';
 
 
 @NgModule({
-  declarations: [InputNotationComponent,
+  declarations: [
+    InputNotationComponent,
     CharacterGridComponent,
     ButtonComponent,
     CharacterHeaderComponent,
@@ -54,13 +56,13 @@ import {MovePropertiesFilterComponent} from './ui/filters/move-properties-filter
     ReactiveFormsModule,
     RoutingModule,
     FlexLayoutModule,
+    DirectiveModule,
   ],
   exports: [
     InputNotationComponent,
     CharacterGridComponent,
     ButtonComponent,
     CharacterHeaderComponent,
-    MoveListComponent,
     MoveGridComponent,
     TabsComponent,
     CardComponent,
@@ -74,6 +76,7 @@ import {MovePropertiesFilterComponent} from './ui/filters/move-properties-filter
     BlockFrameFilterComponent,
     CounterFrameFilterComponent,
     MovePropertiesFilterComponent,
+    MoveListComponent,
   ]
 })
 export class ComponentModule {

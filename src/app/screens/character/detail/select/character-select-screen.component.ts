@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Character} from '../../../types';
-import {CharacterService} from '../../../services/character.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
+import {CharacterService} from '../../../../services/character.service';
+import {Character} from '../../../../types';
 
 @Component({
   selector: 'tg-character-select',

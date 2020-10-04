@@ -1,30 +1,33 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {CharacterSelectScreenComponent} from './character/select/character-select-screen.component';
+import {NgModule} from '@angular/core';
+import {AsyncPipe, CommonModule} from '@angular/common';
+import {CharacterSelectScreenComponent} from './character/detail/select/character-select-screen.component';
 import {DashboardScreenComponent} from './dashboard/dashboard-screen.component';
-import {CharacterDetailScreenComponentComponent} from './character/detail/character-detail-screen-component.component';
-import {CharacterMovelistScreenComponent} from './character/detail/subscreens/movelist-screen/character-movelist-screen.component';
+import {CharacterDetailScreenComponent} from './character/detail/character-detail-screen.component';
 import {CharacterCombosScreenComponent} from './character/detail/subscreens/character-combos-screen/character-combos-screen.component';
 import {CharacterKeyMovesScreenComponent} from './character/detail/subscreens/key-moves-screen/character-key-moves-screen.component';
 import {CharacterPunishesScreenComponent} from './character/detail/subscreens/punishes-screen/character-punishes-screen.component';
 import {CharacterOverviewScreenComponent} from './character/detail/subscreens/overview-screen/character-overview-screen.component';
 import {ComponentModule} from '../components/component.module';
-import {PipeModule} from '../pipes/pipe.module';
 import {DirectiveModule} from '../directives/directive.module';
 import {RoutingModule} from '../modules/routing/routing.module';
-
+import {MatchupComponent} from './character/matchup/matchup.component';
+import { MatchupSelectComponent } from './character/matchup/select/matchup-select.component';
+import {MovelistScreenComponent} from './character/movelist-screen/movelist-screen.component';
+import {PipeModule} from '../pipes/pipe.module';
 
 
 @NgModule({
   declarations: [
     CharacterSelectScreenComponent,
     DashboardScreenComponent,
-    CharacterDetailScreenComponentComponent,
-    CharacterMovelistScreenComponent,
+    CharacterDetailScreenComponent,
     CharacterCombosScreenComponent,
     CharacterKeyMovesScreenComponent,
     CharacterPunishesScreenComponent,
     CharacterOverviewScreenComponent,
+    MatchupComponent,
+    MovelistScreenComponent,
+    MatchupSelectComponent
   ],
   imports: [
     CommonModule,
@@ -35,12 +38,13 @@ import {RoutingModule} from '../modules/routing/routing.module';
   exports: [
     CharacterSelectScreenComponent,
     DashboardScreenComponent,
-    CharacterDetailScreenComponentComponent,
-    CharacterMovelistScreenComponent,
+    CharacterDetailScreenComponent,
     CharacterCombosScreenComponent,
     CharacterKeyMovesScreenComponent,
     CharacterPunishesScreenComponent,
     CharacterOverviewScreenComponent,
+    MovelistScreenComponent,
   ]
 })
-export class ScreenModule { }
+export class ScreenModule {
+}

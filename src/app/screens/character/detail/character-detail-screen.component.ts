@@ -1,33 +1,30 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {take} from 'rxjs/operators';
-import {CharacterParams} from '../../../types';
+import {Character, CharacterParams} from '../../../types';
 import {CharacterService} from '../../../services/character.service';
-
 import {DEFAULT_CHARACTER_TABS} from '../../../utils/menu-constants';
 import {TGMenuItem} from '../../../types/ui.types';
 import {MoveService} from '../../../services/move.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'tg-character-detail-screen-component',
-  templateUrl: './character-detail-screen-component.component.html',
-  styleUrls: ['./character-detail-screen-component.component.scss'],
+  templateUrl: './character-detail-screen.component.html',
+  styleUrls: ['./character-detail-screen.component.scss'],
   providers: [MoveService]
 })
-export class CharacterDetailScreenComponentComponent implements OnInit, OnDestroy {
+export class CharacterDetailScreenComponent implements OnInit, OnDestroy {
   // private isDestroyed$: Subject<boolean> = new Subject<boolean>();
   public tabs: TGMenuItem[] = DEFAULT_CHARACTER_TABS;
+  public selectedCharacter$!: Observable<Character>;
 
   constructor(
     private route: ActivatedRoute,
-    public characterService: CharacterService) {
+    private characterService: CharacterService) {
+
     // subscribe to route params
-    this.route.params.pipe(
-      take(1),
-    ).subscribe(params => {
-      const {_id} = (params as CharacterParams);
-      this.characterService.setSelectedCharacterById(_id);
-    });
+    const {_id} = this.route.snapshot.params as CharacterParams;
+    this.selectedCharacter$ = this.characterService.getCharacter(_id);
   }
 
   ngOnInit(): void {

@@ -5,24 +5,26 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class CharacterService {
 
-    public readonly characters$: Observable<Character[]>;
-    public selectedCharacter$?: Observable<Character | undefined>;
+  public readonly characters$: Observable<Character[]>;
 
-    constructor(private firestore: AngularFirestore) {
-        this.characters$ = this.firestore
-            .collection<Character>('characters', ref =>
-                ref.orderBy('position')
-            )
-            .valueChanges({idField: '_id'});
-    }
+  // public selectedCharacter$?: Observable<Character | undefined>;
 
-    public setSelectedCharacterById(_id: string): void {
-        this.selectedCharacter$ = this.characters$.pipe(
-            map(characters => characters.find(char => char._id === _id))
-        );
-    }
+  constructor(private firestore: AngularFirestore) {
+    this.characters$ = this.firestore
+      .collection<Character>('characters', ref =>
+        ref.orderBy('position')
+      )
+      .valueChanges({idField: '_id'});
+  }
+
+  public getCharacter(_id: string): Observable<Character> {
+    return this.characters$.pipe(
+      map(characters => characters.find(char => char._id === _id))
+    );
+  }
+
 }

@@ -1,5 +1,73 @@
+<div class="option-bar">
+  <!-- search bar -->
+  <tg-search-bar (searched)="onTextSearch($event)"></tg-search-bar>
+
+  <!-- filters -->
+  <tg-pop-over-button
+    [tgBadge]="(moveService.activeFiltersCount$ | async)"
+    [tgBadgeHidden]="(moveService.activeFiltersCount$ | async) === 0"
+    icon="filter"
+  >
+
+    <div class="filters">
+      <!-- startup frame filter -->
+      <div class="section">
+        <tg-start-up-frame-filter
+          [range]="moveService.startupFilter$ | async"
+          (rangeChange)="filterByStartUpFrame($event)"
+        ></tg-start-up-frame-filter>
+      </div>
+
+
+      <!-- block hit frame filter -->
+      <div class="section">
+        <tg-block-frame-filter
+          [range]="moveService.blockFilter$ | async"
+          (rangeChange)="filterByBlockFrame($event)"
+        ></tg-block-frame-filter>
+      </div>
+
+      <!-- normal hit frame filter -->
+      <div class="section">
+        <tg-normal-frame-filter
+          [range]="moveService.normalFilter$ | async"
+          (rangeChange)="filterByNormalFrame($event)"
+          [hitProperties]="moveService.normalProps$ | async"
+          (hitPropertiesChange)="setNormalHitProperties($event)"
+        ></tg-normal-frame-filter>
+      </div>
+
+      <!-- counter frame filter -->
+      <div class="section">
+        <tg-counter-frame-filter
+          [range]="moveService.counterFilter$ | async"
+          (rangeChange)="filterByCounterFrame($event)"
+          [hitProperties]="moveService.counterProps$ | async"
+          (hitPropertiesChange)="setCounterHitProperties($event)"
+        ></tg-counter-frame-filter>
+      </div>
+
+      <!-- move property filter -->
+      <div class="section">
+        <tg-move-properties-filter
+          [moveProperties]="moveService.moveProps$ | async"
+          (movePropertiesChange)="setMoveProperties($event)"
+        ></tg-move-properties-filter>
+      </div>
+
+      <div class="section" style="display: flex; justify-content: flex-end">
+        <tg-button (click)="resetFilters()">RESET FILTERS</tg-button>
+      </div>
+    </div>
+
+
+
+  </tg-pop-over-button>
+</div>
+
+<!-- movelist -->
 <tg-card
-  *ngFor="let move of moves"
+  *ngFor="let move of movelist"
   [isFixedHeight]="false"
   [title]="move._id"
 >
@@ -35,49 +103,51 @@
 
     <!--frame data -->
     <div class="frame-data">
-        <table>
-          <tr>
-            <td>Start frame:</td>
-            <td>{{move.frames.startUp}}
-            </td>
-          </tr>
+      <table>
+        <tr>
+          <td>Start frame:</td>
+          <td>{{move.frames.startUp}}
+          </td>
+        </tr>
 
-          <tr>
-            <td>On block:</td>
-            <td
-              [class.positive]="move.frames.onBlock > 0"
-              [class.negative]="move.frames.onBlock < 0">
-              {{move.frames.onBlock}}
-            </td>
-            <td *ngIf="move.hit.onBlock">
-              ({{move.hit.onBlock}})
-            </td>
-          </tr>
+        <tr>
+          <td>On block:</td>
+          <td
+            [class.positive]="move.frames.onBlock > 0"
+            [class.negative]="move.frames.onBlock < 0">
+            {{move.frames.onBlock}}
+          </td>
+          <td *ngIf="move.hit.onBlock">
+            ({{move.hit.onBlock}})
+          </td>
+        </tr>
 
-          <tr>
-            <td>On hit:</td>
-            <td
-              [class.positive]="move.frames.onHit > 0"
-              [class.negative]="move.frames.onHit < 0">
-              {{move.frames.onHit}}
-            </td>
-            <td *ngIf="move.hit.onHit">
-              ({{move.hit.onHit}})
-            </td>
-          </tr>
+        <tr>
+          <td>On hit:</td>
+          <td
+            [class.positive]="move.frames.onHit > 0"
+            [class.negative]="move.frames.onHit < 0">
+            {{move.frames.onHit}}
+          </td>
+          <td *ngIf="move.hit.onHit">
+            ({{move.hit.onHit}})
+          </td>
+        </tr>
 
-          <tr>
-            <td>On counter hit:</td>
-            <td [class.positive]="move.frames.onCounterHit > 0"
-                [class.negative]="move.frames.onCounterHit < 0">
-              {{move.frames.onCounterHit}}
-            </td>
-            <td *ngIf="move.hit.onCounterHit">
-              ({{move.hit.onCounterHit}})
-            </td>
-          </tr>
-        </table>
-      </div>
+        <tr>
+          <td>On counter hit:</td>
+          <td [class.positive]="move.frames.onCounterHit > 0"
+              [class.negative]="move.frames.onCounterHit < 0">
+            {{move.frames.onCounterHit}}
+          </td>
+          <td *ngIf="move.hit.onCounterHit">
+            ({{move.hit.onCounterHit}})
+          </td>
+        </tr>
+      </table>
+    </div>
 
   </div>
 </tg-card>
+
+

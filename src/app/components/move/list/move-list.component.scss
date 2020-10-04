@@ -1,8 +1,19 @@
 @import "src/scss/variables";
 
+
 :host {
-  display: flex;
-  flex-direction: column;
+  > *:not(:last-child) {
+    margin-bottom: $md-margin;
+  }
+
+  .option-bar {
+    display: flex;
+    align-items: center;
+
+    > *:not(:last-child) {
+      margin-right: $sm-margin;
+    }
+  }
 
   > tg-card:not(:last-child) {
     margin-bottom: $md-margin;
@@ -98,5 +109,4 @@
       }
     }
   }
-
 }

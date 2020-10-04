@@ -1,5 +1,5 @@
 <div class="tg-container">
-  <ng-container *ngIf="characterService.selectedCharacter$ | async as selectedCharacter">
+  <ng-container *ngIf="selectedCharacter$ | async as selectedCharacter">
     <tg-character-header [character]="selectedCharacter"></tg-character-header>
   </ng-container>
 

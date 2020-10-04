@@ -1,21 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {MoveListComponent} from './move-list.component';
 
+import { MatchupComponent } from './matchup.component';
 
-
-describe('MovelistComponent', () => {
-  let component: MoveListComponent;
-  let fixture: ComponentFixture<MoveListComponent>;
+describe('MatchupComponent', () => {
+  let component: MatchupComponent;
+  let fixture: ComponentFixture<MatchupComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MoveListComponent ]
+      declarations: [ MatchupComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MoveListComponent);
+    fixture = TestBed.createComponent(MatchupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
