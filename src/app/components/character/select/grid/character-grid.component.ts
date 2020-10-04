@@ -7,6 +7,11 @@ import {Character} from '../../../../types';
   styleUrls: ['./character-grid.component.scss']
 })
 export class CharacterGridComponent {
+  public _selectedCharacters: Character[] = [];
+
+  @Input()
+  public withRouting = true;
+
   @Input()
   public characters?: Character[] | null;
 
@@ -15,5 +20,6 @@ export class CharacterGridComponent {
 
   public onCharacterClick(character: Character): void {
     this.characterSelected.emit(character);
+    this._selectedCharacters.push(character);
   }
 }

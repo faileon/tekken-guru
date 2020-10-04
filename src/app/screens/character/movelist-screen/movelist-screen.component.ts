@@ -22,8 +22,6 @@ export class MovelistScreenComponent implements OnInit {
     const params = this.route.parent.snapshot.params;
     const characterId = Object.values(params)[index];
 
-    console.log(`Movelist at ${index} will load ${characterId}`);
-
     this.movelist$ = this.moveService.getMovelist$(characterId);
 
   }

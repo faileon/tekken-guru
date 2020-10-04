@@ -1,1 +1,8 @@
-<p>matchup-select works!</p>
+<div class="tg-container">
+  <div class="title">Select Player {{currentSelectionIdx}}</div>
+  <tg-character-grid
+    [withRouting]="false"
+    [characters]="characterService.characters$ | async"
+    (characterSelected)="onCharacterSelected($event)"
+  ></tg-character-grid>
+</div>

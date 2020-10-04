@@ -10,7 +10,7 @@ import {CharacterOverviewScreenComponent} from './character/detail/subscreens/ov
 import {ComponentModule} from '../components/component.module';
 import {DirectiveModule} from '../directives/directive.module';
 import {RoutingModule} from '../modules/routing/routing.module';
-import {MatchupComponent} from './character/matchup/matchup.component';
+import {MatchupScreenComponent} from './character/matchup/matchup-screen.component';
 import { MatchupSelectComponent } from './character/matchup/select/matchup-select.component';
 import {MovelistScreenComponent} from './character/movelist-screen/movelist-screen.component';
 import {PipeModule} from '../pipes/pipe.module';
@@ -25,7 +25,7 @@ import {PipeModule} from '../pipes/pipe.module';
     CharacterKeyMovesScreenComponent,
     CharacterPunishesScreenComponent,
     CharacterOverviewScreenComponent,
-    MatchupComponent,
+    MatchupScreenComponent,
     MovelistScreenComponent,
     MatchupSelectComponent
   ],

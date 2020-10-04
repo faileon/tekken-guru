@@ -2,20 +2,26 @@
 
 
 :host {
-  display: flex;
-  flex-wrap: wrap-reverse;
-  justify-content: center;
+  .items {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
 
 
-  .character-card {
-    width: $character-avatar-width;
-    background-color: darkred;
-    height: $character-avatar-height;
-    margin: $xs-margin;
-    cursor: pointer;
+    .character-card {
+      width: $character-avatar-width;
+      background-color: darkred;
+      height: $character-avatar-height;
+      margin: $xs-margin;
+      cursor: pointer;
 
-    &:hover {
-      background-color: green;
+      &:hover {
+        background-color: green;
+      }
+
+      &.selected {
+        background-color: green;
+      }
     }
   }
 }

@@ -8,7 +8,7 @@ import {CharacterCombosScreenComponent} from '../../screens/character/detail/sub
 import {CharacterKeyMovesScreenComponent} from '../../screens/character/detail/subscreens/key-moves-screen/character-key-moves-screen.component';
 import {CharacterPunishesScreenComponent} from '../../screens/character/detail/subscreens/punishes-screen/character-punishes-screen.component';
 import {CharacterOverviewScreenComponent} from '../../screens/character/detail/subscreens/overview-screen/character-overview-screen.component';
-import {MatchupComponent} from '../../screens/character/matchup/matchup.component';
+import {MatchupScreenComponent} from '../../screens/character/matchup/matchup-screen.component';
 import {MatchupSelectComponent} from '../../screens/character/matchup/select/matchup-select.component';
 import {MatchupMovelistSettings, MovelistScreenComponent} from '../../screens/character/movelist-screen/movelist-screen.component';
 
@@ -61,12 +61,17 @@ const routes: Routes = [
   },
   {
     path: 'matchup/:firstId/:secondId',
-    component: MatchupComponent,
+    pathMatch: 'full',
+    redirectTo: '/matchup/:firstId/:secondId/(tab1:movelist//tab2:movelist)'
+  },
+  {
+    path: 'matchup/:firstId/:secondId',
+    component: MatchupScreenComponent,
     children: [
       {
         path: 'movelist',
         component: MovelistScreenComponent,
-        outlet: 'firstCharacter',
+        outlet: 'tab1',
         data: {
           index: 0,
         } as MatchupMovelistSettings
@@ -74,11 +79,11 @@ const routes: Routes = [
       {
         path: 'movelist',
         component: MovelistScreenComponent,
-        outlet: 'secondCharacter',
+        outlet: 'tab2',
         data: {
           index: 1,
         } as MatchupMovelistSettings
-      }
+      },
     ]
   },
   {

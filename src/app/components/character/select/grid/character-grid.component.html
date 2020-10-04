@@ -1,5 +1,30 @@
-<a *ngFor="let character of characters" [routerLink]="character._id + '/movelist'">
-  <div class="character-card" (click)="onCharacterClick(character)">
-    {{character.fullName}}
-  </div>
-</a>
+<div class="items">
+  <ng-container *ngIf="withRouting; else noRouting">
+    <ng-container *ngFor="let character of characters">
+      <a [routerLink]="character._id + '/movelist'">
+        <ng-container [ngTemplateOutlet]="char"
+                      [ngTemplateOutletContext]="{character: character}"
+        ></ng-container>
+      </a>
+    </ng-container>
+  </ng-container>
+
+
+  <ng-template #noRouting>
+    <ng-container *ngFor="let character of characters">
+      <ng-container [ngTemplateOutlet]="char"
+                    [ngTemplateOutletContext]="{character: character}"
+      ></ng-container>
+
+    </ng-container>
+  </ng-template>
+
+  <ng-template #char let-character="character">
+    <div class="character-card"
+         [class.selected]="_selectedCharacters.includes(character)"
+         (click)="onCharacterClick(character)"
+    >
+      {{character.fullName}}
+    </div>
+  </ng-template>
+</div>

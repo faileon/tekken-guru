@@ -2,7 +2,7 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {HitProperty, Move, MoveProperty, NumberRange} from '../types';
 import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
-import {map, switchMap} from 'rxjs/operators';
+import {map, startWith, switchMap} from 'rxjs/operators';
 import {
   satisfiesPropertyFilter,
   satisfiesRangeFilter,
@@ -100,6 +100,7 @@ export class MoveService implements OnDestroy {
 
   constructor(private firestore: AngularFirestore) {
     console.log('moveservice created');
+
     this._startUpFilter = new BehaviorSubject({from: DEF_STARTUP_MIN_VAL, to: DEF_STARTUP_MAX_VAL} as NumberRange);
     this.startupFilter$ = this._startUpFilter.asObservable();
 

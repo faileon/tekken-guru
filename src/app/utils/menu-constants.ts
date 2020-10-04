@@ -38,13 +38,18 @@ export const APP_MENU: TGMenuItem[] = [
   {
     title: 'Matchup',
     icon: faInfinity,
+    routeTo: '/matchup'
+  }
+/*  {
+    title: 'Matchup Detail',
+    icon: faInfinity,
     routeTo: ['/matchup/leroy/king', {
       outlets: {
-        firstCharacter: ['movelist'],
-        secondCharacter: ['movelist']
+        tab1: ['movelist'],
+        tab2: ['movelist']
       }
     }]
-  }
+  }*/
 ];
 
 // matchup routes idea:
