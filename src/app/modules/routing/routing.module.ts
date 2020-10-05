@@ -10,7 +10,7 @@ import {CharacterPunishesScreenComponent} from '../../screens/character/detail/s
 import {CharacterOverviewScreenComponent} from '../../screens/character/detail/subscreens/overview-screen/character-overview-screen.component';
 import {MatchupScreenComponent} from '../../screens/character/matchup/matchup-screen.component';
 import {MatchupSelectComponent} from '../../screens/character/matchup/select/matchup-select.component';
-import {MatchupMovelistSettings, MovelistScreenComponent} from '../../screens/character/movelist-screen/movelist-screen.component';
+import {MovelistScreenSettings, MovelistScreenComponent} from '../../screens/character/movelist-screen/movelist-screen.component';
 
 const routes: Routes = [
   {
@@ -31,7 +31,7 @@ const routes: Routes = [
         component: MovelistScreenComponent,
         data: {
           index: 0,
-        } as MatchupMovelistSettings
+        } as MovelistScreenSettings
       },
       {
         path: 'keymoves',
@@ -74,7 +74,7 @@ const routes: Routes = [
         outlet: 'tab1',
         data: {
           index: 0,
-        } as MatchupMovelistSettings
+        } as MovelistScreenSettings
       },
       {
         path: 'movelist',
@@ -82,7 +82,7 @@ const routes: Routes = [
         outlet: 'tab2',
         data: {
           index: 1,
-        } as MatchupMovelistSettings
+        } as MovelistScreenSettings
       },
     ]
   },

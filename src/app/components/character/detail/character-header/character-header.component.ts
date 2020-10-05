@@ -2,19 +2,22 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Character} from '../../../../types';
 
 @Component({
-  selector: 'tg-character-header',
-  templateUrl: './character-header.component.html',
-  styleUrls: ['./character-header.component.scss']
+    selector: 'tg-character-header',
+    templateUrl: './character-header.component.html',
+    styleUrls: ['./character-header.component.scss']
 })
 export class CharacterHeaderComponent implements OnInit {
 
-  @Input()
-  public character!: Character;
+    @Input()
+    public character!: Character;
 
-  constructor() {
-  }
+    @Input()
+    public reverse = false;
 
-  ngOnInit(): void {
-  }
+    constructor() {
+    }
+
+    ngOnInit(): void {
+    }
 
 }

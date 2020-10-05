@@ -1,4 +1,9 @@
-<div>header with versus</div>
+<div class="header">
+  <tg-character-header *ngIf="firstCharacter$ | async as character" [character]="character"></tg-character-header>
+  <div class="timer">420</div>
+  <tg-character-header *ngIf="secondCharacter$ | async as character" [character]="character" [reverse]="true"></tg-character-header>
+</div>
+
 <div class="content">
   <div class="col">
     <router-outlet name="tab1"></router-outlet>

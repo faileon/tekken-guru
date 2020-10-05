@@ -18,7 +18,7 @@ export class MovelistScreenComponent implements OnInit {
    * This is a smart wrapper to provide moveservice to the child component, so we can have multiple of them on the same screen in the matchup view
    */
   constructor(private route: ActivatedRoute, private moveService: MoveService) {
-    const {index} = route.snapshot.data as MatchupMovelistSettings;
+    const {index} = route.snapshot.data as MovelistScreenSettings;
     const params = this.route.parent.snapshot.params;
     const characterId = Object.values(params)[index];
 
@@ -31,6 +31,6 @@ export class MovelistScreenComponent implements OnInit {
 
 }
 
-export interface MatchupMovelistSettings {
-  index: number;
+export interface MovelistScreenSettings {
+  index: number; // which character from route params to fetch
 }

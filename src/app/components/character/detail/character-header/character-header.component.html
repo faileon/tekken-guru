@@ -1,15 +1,16 @@
-<div class="avatar">
-  <img [src]="character.avatar | mediaPath"/>
-</div>
-
-<div class="info">
-  <!-- FULLNAME -->
-  <div class="title">
-    {{character.fullName}}
+<div class="wrapper" [class.reverse]="reverse">
+  <div class="avatar">
+    <img [src]="character.avatar | mediaPath"/>
   </div>
 
-  <!-- DIFFICULTY -->
-  <div class="difficulty">
+  <div class="info">
+    <!-- FULLNAME -->
+    <div class="title">
+      {{character.fullName}}
+    </div>
+
+    <!-- DIFFICULTY -->
+    <div class="difficulty">
     <span
       class="dot"
       [class.easy]="character.difficulty === 1"
@@ -17,7 +18,9 @@
       [class.hard]="character.difficulty === 3"
     >
   </span>
-    <div class="text">{{character.difficulty | characterDifficulty}}</div>
+      <div class="text">{{character.difficulty | characterDifficulty}}</div>
+    </div>
+
   </div>
 
 </div>

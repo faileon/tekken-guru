@@ -2,49 +2,52 @@
 
 
 :host {
-  display: flex;
-
-  > *:not(:last-child) {
-    margin-right: $lg-margin;
-  }
-
-  .avatar {
-    max-width: $character-avatar-width;
-    max-height: $character-avatar-height;
-  }
-
-  .info {
+  .wrapper {
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
 
-    .difficulty {
+    &.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .avatar {
+      max-width: $character-avatar-width;
+      max-height: $character-avatar-height;
+    }
+
+    .info {
       display: flex;
-      align-items: center;
-      $dot-size: 8px;
-      $dot-border-size: 3px;
+      margin: 0 $lg-margin;
+      flex-direction: column;
+      justify-content: space-evenly;
 
-      .dot {
-        height: $dot-size;
-        width: $dot-size;
-        border-radius: 50%;
-        margin-right: $sm-margin;
+      .difficulty {
+        display: flex;
+        align-items: center;
+        $dot-size: 8px;
+        $dot-border-size: 3px;
 
-        &.easy {
-          border: $dot-border-size solid #3DD618;
+        .dot {
+          height: $dot-size;
+          width: $dot-size;
+          border-radius: 50%;
+          margin-right: $sm-margin;
+
+          &.easy {
+            border: $dot-border-size solid #3DD618;
+          }
+
+          &.medium {
+            border: $dot-border-size solid yellow;
+          }
+
+          &.hard {
+            border: $dot-border-size solid red;
+          }
         }
 
-        &.medium {
-          border: $dot-border-size solid yellow;
+        .text {
+          text-transform: uppercase;
         }
-
-        &.hard {
-          border: $dot-border-size solid red;
-        }
-      }
-
-      .text {
-        text-transform: uppercase;
       }
     }
   }
