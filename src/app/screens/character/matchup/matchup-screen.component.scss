@@ -5,12 +5,32 @@
   flex-direction: column;
   flex: 1;
   padding: $md-padding;
-  height: calc(100% - 114px);
+  height: calc(100% - 125px); //114 is precise, but lets have some padding
 
   .header {
     display: flex;
     justify-content: space-between;
     margin-bottom: $sm-margin;
+
+    .timer {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+
+      &.small {
+        min-width: 45px;
+      }
+
+      &.medium {
+        min-width: 95px;
+      }
+
+      &.large {
+        min-width: 145px;
+      }
+    }
   }
 
   .content {
