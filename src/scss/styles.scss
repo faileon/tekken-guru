@@ -34,7 +34,9 @@ body {
   padding: $md-padding;
 
   > *:not(router-outlet) {
-    margin-bottom: $md-margin;
+    &:not(:last-child){
+      margin-bottom: $md-margin;
+    }
   }
 }
 

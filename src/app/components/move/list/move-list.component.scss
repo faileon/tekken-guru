@@ -5,6 +5,8 @@
   > *:not(:last-child) {
     margin-bottom: $md-margin;
   }
+  flex: 1 1 0;
+  height: 100%;
 
   .option-bar {
     display: flex;
@@ -15,98 +17,108 @@
     }
   }
 
-  > tg-card:not(:last-child) {
-    margin-bottom: $md-margin;
-  }
+  .list {
+    height: 100%;
+    overflow-y: auto;
+    padding-right: $xs-padding;
 
-  .header {
-    display: flex;
-    flex: 1;
-    padding: $xs-padding;
-    .title {
-      flex: 1;
-      font-family: 'Roboto Condensed', sans-serif;
-      font-size: 1rem;
+    > tg-card:not(:last-child) {
+      margin-bottom: $md-margin;
     }
 
-    .properties {
-      $height: 20px;
-      max-height: $height;
-      >.property {
-        height: $height;
-        width: $height;
-
-        &:not(:last-child) {
-          margin-right: $xs-margin;
-        }
-      }
-
-    }
-  }
-
-  .content {
-    display: flex;
-    flex: 1;
-    padding: 0 $xs-padding $xs-padding $xs-padding;
-
-    .actions {
+    .header {
       display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      min-width: 52.5px;
-    }
-
-    .main {
-      display: flex;
-      flex-direction: column;
       flex: 1;
+      padding: $xs-padding;
 
-      .notation {
-        margin: auto 0;
-      }
-
-      .hits {
+      .title {
+        flex: 1;
         font-family: 'Roboto Condensed', sans-serif;
-
-        .move {
-          color: yellow;
-        }
-
-        .damage {
-          color: red;
-        }
+        font-size: 1rem;
       }
-    }
 
-    tg-video {
-      margin-top: -$lg-margin;
-    }
+      .properties {
+        $height: 20px;
+        max-height: $height;
 
-    .frame-data {
-      min-width: 170px;
-      margin-top: auto;
-      padding-left: $xs-padding;
-      // padding: 0 $xs-padding;
+        > .property {
+          height: $height;
+          width: $height;
 
-      font-family: Roboto Condensed, "Helvetica Neue", sans-serif;
-      font-weight: 300;
-
-      > table {
-
-        > tr {
-          > td:nth-child(2) {
-            text-align: right;
+          &:not(:last-child) {
+            margin-right: $xs-margin;
           }
         }
 
-        .positive {
-          color: deepskyblue;
+      }
+    }
+
+    .content {
+      display: flex;
+      flex: 1;
+      padding: 0 $xs-padding $xs-padding $xs-padding;
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-width: 52.5px;
+      }
+
+      .main {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        .notation {
+          margin: auto 0;
         }
 
-        .negative {
-          color: red;
+        .hits {
+          font-family: 'Roboto Condensed', sans-serif;
+
+          .move {
+            color: yellow;
+          }
+
+          .damage {
+            color: red;
+          }
+        }
+      }
+
+      tg-video {
+        margin-top: -$lg-margin;
+      }
+
+      .frame-data {
+        min-width: 170px;
+        margin-top: auto;
+        padding-left: $xs-padding;
+        // padding: 0 $xs-padding;
+
+        font-family: Roboto Condensed, "Helvetica Neue", sans-serif;
+        font-weight: 300;
+
+        > table {
+
+          > tr {
+            > td:nth-child(2) {
+              text-align: right;
+            }
+          }
+
+          .positive {
+            color: deepskyblue;
+          }
+
+          .negative {
+            color: red;
+          }
         }
       }
     }
   }
+
+
 }
