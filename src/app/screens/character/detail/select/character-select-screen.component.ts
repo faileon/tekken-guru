@@ -19,4 +19,5 @@ export class CharacterSelectScreenComponent implements OnInit {
   public onCharacterSelected(character: Character): void {
     // console.log('selected', character);
   }
+
 }

@@ -2,15 +2,15 @@
 
 :host {
   display: flex;
-  flex-direction: column;
   flex: 1;
-  padding: $md-padding;
-  height: calc(100% - 125px); //114 is precise, but lets have some padding
+  justify-content: center;
+
+  height: 100%;
+  overflow: hidden;
 
   .header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: $sm-margin;
 
     .timer {
       font-family: 'Oswald', sans-serif;
@@ -37,9 +37,9 @@
     display: flex;
     flex: 1;
     height: 100%;
+    overflow: hidden;
 
     .col {
-      padding-top: $xs-padding;
       flex: 1 1 0;
 
       &:first-child {

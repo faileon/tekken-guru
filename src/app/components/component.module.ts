@@ -25,6 +25,7 @@ import {RoutingModule} from '../modules/routing/routing.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MovePropertiesFilterComponent} from './ui/filters/move-properties-filter/move-properties-filter.component';
 import {DirectiveModule} from '../directives/directive.module';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import {DirectiveModule} from '../directives/directive.module';
     RoutingModule,
     FlexLayoutModule,
     DirectiveModule,
+    ScrollingModule
   ],
   exports: [
     InputNotationComponent,

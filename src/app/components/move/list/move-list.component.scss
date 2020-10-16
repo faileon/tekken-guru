@@ -5,12 +5,11 @@
   > *:not(:last-child) {
     margin-bottom: $md-margin;
   }
-  flex: 1 1 0;
-  height: 100%;
 
   .option-bar {
     display: flex;
     align-items: center;
+    padding-top: $xs-padding;
 
     > *:not(:last-child) {
       margin-right: $sm-margin;
@@ -18,11 +17,9 @@
   }
 
   .list {
-    height: 100%;
-    overflow-y: auto;
-    padding-right: $xs-padding;
+    height: calc(100% - 25px - #{$sm-margin} - #{$xs-padding});
 
-    > tg-card:not(:last-child) {
+    tg-card {
       margin-bottom: $md-margin;
     }
 

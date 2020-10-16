@@ -1,4 +1,5 @@
 <div class="tg-container">
+
   <tg-character-grid
     [characters]="characterService.characters$ | async"
     (characterSelected)="onCharacterSelected($event)">

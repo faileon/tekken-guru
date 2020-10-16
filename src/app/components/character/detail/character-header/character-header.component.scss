@@ -2,6 +2,8 @@
 
 
 :host {
+  margin-bottom: $sm-margin !important;
+
   .wrapper {
     display: flex;
 
@@ -12,6 +14,10 @@
     .avatar {
       max-width: $character-avatar-width;
       max-height: $character-avatar-height;
+
+      >img{
+        height: 100%;
+      }
     }
 
     .info {

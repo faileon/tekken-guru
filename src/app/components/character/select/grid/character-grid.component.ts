@@ -22,4 +22,8 @@ export class CharacterGridComponent {
     this.characterSelected.emit(character);
     this._selectedCharacters.push(character);
   }
+
+  public onTextSearch(text: string): void {
+    console.log('searching for', text);
+  }
 }

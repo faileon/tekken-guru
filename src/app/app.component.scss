@@ -83,8 +83,8 @@
     }
 
     .content {
-      height: calc(100% - #{$tool-bar-height});
-      overflow: auto;
+      height: calc(100vh - #{$tool-bar-height});
+      // overflow: auto;
       background-color: $primary-color-dark;
     }
   }

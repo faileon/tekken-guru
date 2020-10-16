@@ -65,10 +65,9 @@
   </tg-pop-over-button>
 </div>
 
-<div class="list">
-  <!-- movelist -->
+<cdk-virtual-scroll-viewport class="list" itemSize="8">
   <tg-card
-    *ngFor="let move of movelist"
+    *cdkVirtualFor="let move of movelist"
     [isFixedHeight]="false"
     [title]="move._id"
   >
@@ -100,10 +99,8 @@
 
 
       <!-- video with the move -->
-      <!-- todo rework:
-          <tg-video [src]="move.video | mediaPath"></tg-video>
-      -->
-      <div>video here {{move.video}}</div>
+      <tg-video [src]="move.video | mediaPath"></tg-video>
+      <!--<div>video here {{move.video}}</div>-->
 
       <!--frame data -->
       <div class="frame-data">
@@ -153,6 +150,97 @@
 
     </div>
   </tg-card>
-</div>
+</cdk-virtual-scroll-viewport>
+
+
+<!--<div class="list">
+  &lt;!&ndash; movelist &ndash;&gt;
+  <tg-card
+    *ngFor="let move of movelist"
+    [isFixedHeight]="false"
+    [title]="move._id"
+  >
+
+    &lt;!&ndash; move name &ndash;&gt;
+    <div class="header" header>
+      <div class="title">{{move.name}}</div>
+      <div class="properties">
+        <img *ngFor="let property of move.properties" [src]="property | movePropertyImg" alt="" class="property">
+      </div>
+    </div>
+
+    <div class="content" content>
+      &lt;!&ndash; actions for auth user - favorite &ndash;&gt;
+      <div class="actions">
+        <tg-button [outlined]="false" [icon]="['far','star']" iconSize="2x"></tg-button>
+      </div>
+
+      &lt;!&ndash; main content with name, notation and hits &ndash;&gt;
+      <div class="main">
+        &lt;!&ndash; move notation &ndash;&gt;
+        <div class="notation">{{move.notation}}</div>
+        &lt;!&ndash; move hits &ndash;&gt;
+        <div class="hits">
+          <div class="move">{{move.hit.move | hitMove}}</div>
+          <div class="damage">{{move.hit.damage | hitDamage}}</div>
+        </div>
+      </div>
+
+
+      &lt;!&ndash; video with the move &ndash;&gt;
+      &lt;!&ndash; todo rework:
+          <tg-video [src]="move.video | mediaPath"></tg-video>
+      &ndash;&gt;
+      <div>video here {{move.video}}</div>
+
+      &lt;!&ndash;frame data &ndash;&gt;
+      <div class="frame-data">
+        <table>
+          <tr>
+            <td>Start frame:</td>
+            <td>{{move.frames.startUp}}
+            </td>
+          </tr>
+
+          <tr>
+            <td>On block:</td>
+            <td
+              [class.positive]="move.frames.onBlock > 0"
+              [class.negative]="move.frames.onBlock < 0">
+              {{move.frames.onBlock}}
+            </td>
+            <td *ngIf="move.hit.onBlock">
+              ({{move.hit.onBlock}})
+            </td>
+          </tr>
+
+          <tr>
+            <td>On hit:</td>
+            <td
+              [class.positive]="move.frames.onHit > 0"
+              [class.negative]="move.frames.onHit < 0">
+              {{move.frames.onHit}}
+            </td>
+            <td *ngIf="move.hit.onHit">
+              ({{move.hit.onHit}})
+            </td>
+          </tr>
+
+          <tr>
+            <td>On counter hit:</td>
+            <td [class.positive]="move.frames.onCounterHit > 0"
+                [class.negative]="move.frames.onCounterHit < 0">
+              {{move.frames.onCounterHit}}
+            </td>
+            <td *ngIf="move.hit.onCounterHit">
+              ({{move.hit.onCounterHit}})
+            </td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+  </tg-card>
+</div>-->
 
 

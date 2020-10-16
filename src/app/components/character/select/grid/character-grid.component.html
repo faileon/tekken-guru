@@ -1,3 +1,5 @@
+<tg-search-bar (searched)="onTextSearch($event)"></tg-search-bar>
+
 <div class="items">
   <ng-container *ngIf="withRouting; else noRouting">
     <ng-container *ngFor="let character of characters">
@@ -24,7 +26,7 @@
          [class.selected]="_selectedCharacters.includes(character)"
          (click)="onCharacterClick(character)"
     >
-      {{character.fullName}}
+      <img [src]="character.avatar | mediaPath"/>
     </div>
   </ng-template>
 </div>
