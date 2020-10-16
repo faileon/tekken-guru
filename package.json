@@ -30,6 +30,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "firebase": "^7.19.1",
     "ng5-slider": "^1.2.4",
+    "ngx-virtual-scroller": "^4.0.3",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

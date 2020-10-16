@@ -33,6 +33,10 @@ export class MoveListComponent implements OnInit, OnDestroy {
     this.isDestroyed$.unsubscribe();
   }
 
+  public trackByMoveId(index: number, move: Move): string {
+    return move._id;
+  }
+
 
   public filterByStartUpFrame(range: NumberRange): void {
     this.moveService.startUpFilter = range;
