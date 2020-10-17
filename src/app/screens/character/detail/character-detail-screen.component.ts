@@ -2,10 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Character, CharacterParams} from '../../../types';
 import {CharacterService} from '../../../services/character.service';
-import {DEFAULT_CHARACTER_TABS} from '../../../utils/menu-constants';
 import {TGMenuItem} from '../../../types/ui.types';
 import {MoveService} from '../../../services/move.service';
 import {Observable} from 'rxjs';
+import {DEFAULT_CHARACTER_TABS} from '../../../config/navigation.config';
 
 @Component({
   selector: 'tg-character-detail-screen-component',

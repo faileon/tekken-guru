@@ -10,7 +10,8 @@ import {CharacterPunishesScreenComponent} from '../../screens/character/detail/s
 import {CharacterOverviewScreenComponent} from '../../screens/character/detail/subscreens/overview-screen/character-overview-screen.component';
 import {MatchupScreenComponent} from '../../screens/character/matchup/matchup-screen.component';
 import {MatchupSelectComponent} from '../../screens/character/matchup/select/matchup-select.component';
-import {MovelistScreenSettings, MovelistScreenComponent} from '../../screens/character/movelist-screen/movelist-screen.component';
+import {MovelistScreenComponent} from '../../screens/character/movelist-screen/movelist-screen.component';
+import {MovelistScreenSettings} from '../../types';
 
 const routes: Routes = [
   {
@@ -77,8 +78,72 @@ const routes: Routes = [
         } as MovelistScreenSettings
       },
       {
+        path: 'keymoves',
+        component: CharacterKeyMovesScreenComponent,
+        outlet: 'tab1',
+        data: {
+          index: 0,
+        } as MovelistScreenSettings
+      },
+      {
+        path: 'combos',
+        component: CharacterCombosScreenComponent,
+        outlet: 'tab1',
+        data: {
+          index: 0,
+        } as MovelistScreenSettings
+      },
+      {
+        path: 'punishes',
+        component: CharacterPunishesScreenComponent,
+        outlet: 'tab1',
+        data: {
+          index: 0,
+        } as MovelistScreenSettings
+      },
+      {
+        path: 'overview',
+        component: CharacterOverviewScreenComponent,
+        outlet: 'tab1',
+        data: {
+          index: 0,
+        } as MovelistScreenSettings
+      },
+      {
         path: 'movelist',
         component: MovelistScreenComponent,
+        outlet: 'tab2',
+        data: {
+          index: 1,
+        } as MovelistScreenSettings
+      },
+      {
+        path: 'keymoves',
+        component: CharacterKeyMovesScreenComponent,
+        outlet: 'tab2',
+        data: {
+          index: 1,
+        } as MovelistScreenSettings
+      },
+      {
+        path: 'combos',
+        component: CharacterCombosScreenComponent,
+        outlet: 'tab2',
+        data: {
+          index: 1,
+        } as MovelistScreenSettings
+      },
+      {
+        path: 'punishes',
+        component: CharacterPunishesScreenComponent,
+        outlet: 'tab2',
+        data: {
+          index: 1,
+        } as MovelistScreenSettings
+      },
+      {
+        path: 'overview',
+        component: CharacterOverviewScreenComponent,
         outlet: 'tab2',
         data: {
           index: 1,

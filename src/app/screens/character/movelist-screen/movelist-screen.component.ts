@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MoveService} from '../../../services/move.service';
-import {Move} from '../../../types';
+import {Move, MovelistScreenSettings} from '../../../types';
 import {Observable} from 'rxjs';
 
 
@@ -31,6 +31,4 @@ export class MovelistScreenComponent implements OnInit {
 
 }
 
-export interface MovelistScreenSettings {
-  index: number; // which character from route params to fetch
-}
+

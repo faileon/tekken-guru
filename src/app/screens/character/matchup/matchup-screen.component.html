@@ -1,6 +1,10 @@
 <div class="tg-container">
   <div class="header">
-    <tg-character-header *ngIf="firstCharacter$ | async as character" [character]="character"></tg-character-header>
+    <div class="character">
+      <tg-character-header *ngIf="firstCharacter$ | async as character" [character]="character"></tg-character-header>
+      <tg-tabs [tabs]="firstCharacterTabs"></tg-tabs>
+    </div>
+
     <div *ngIf="timeElapsed$ | async as time"
          class="timer"
          [class.small]="time.length < 3"
@@ -8,7 +12,12 @@
          [class.large]="time.length >= 6">
       {{time}}
     </div>
-    <tg-character-header *ngIf="secondCharacter$ | async as character" [character]="character" [reverse]="true"></tg-character-header>
+
+    <div class="character">
+      <tg-character-header *ngIf="secondCharacter$ | async as character" [character]="character" [reverse]="true"></tg-character-header>
+      <tg-tabs [tabs]="secondCharacterTabs"></tg-tabs>
+    </div>
+
   </div>
 
   <div class="content">

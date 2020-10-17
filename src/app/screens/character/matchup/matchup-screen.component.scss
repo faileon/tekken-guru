@@ -12,6 +12,17 @@
     display: flex;
     justify-content: space-between;
 
+    .character {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+
+      > *:not(:last-child) {
+        margin-bottom: $sm-margin;
+      }
+
+    }
+
     .timer {
       font-family: 'Oswald', sans-serif;
       font-size: 2.5rem;

@@ -1,7 +1,8 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {APP_MENU} from './utils/menu-constants';
+
 import {TGMenuItem} from './types/ui.types';
+import {APP_MENU} from './config/navigation.config';
 
 @Component({
   selector: 'tg-root',

@@ -2,8 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Character, MatchupParams} from '../../../types';
 import {CharacterService} from '../../../services/character.service';
-import {fromEvent, interval, Observable} from 'rxjs';
-import {map, skip, startWith, takeUntil, timeInterval} from 'rxjs/operators';
+import {interval, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {TGMenuItem} from '../../../types/ui.types';
+import {MATCHUP_CHARACTER_1_TABS, MATCHUP_CHARACTER_2_TABS} from '../../../config/navigation.config';
+
 
 @Component({
   selector: 'tg-matchup-screen',
@@ -11,8 +14,11 @@ import {map, skip, startWith, takeUntil, timeInterval} from 'rxjs/operators';
   styleUrls: ['./matchup-screen.component.scss'],
 })
 export class MatchupScreenComponent implements OnInit {
+  public firstCharacterTabs: TGMenuItem[] = MATCHUP_CHARACTER_1_TABS;
   public firstCharacter$: Observable<Character>;
+
   public secondCharacter$: Observable<Character>;
+  public secondCharacterTabs: TGMenuItem[] = MATCHUP_CHARACTER_2_TABS;
 
   public timeElapsed$!: Observable<string>;
 
