@@ -17,8 +17,12 @@ export class MovePropertyImgPipe implements PipeTransform {
         return `${prefix}/wall-bounce.png`;
       case 'SCREW':
         return `${prefix}/screw.png`;
+      case 'LOW CRUSH':
+        return `${prefix}/low-crush.png`;
+      case 'HIGH CRUSH':
+        return `${prefix}/high-crush.png`;
       default:
-        return `${prefix}/low_crush.png`;
+        return `${prefix}/low-crush.png`;
     }
   }
 

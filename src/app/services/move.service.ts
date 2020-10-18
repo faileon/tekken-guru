@@ -19,6 +19,7 @@ import {
   DEF_STARTUP_MAX_VAL,
   DEF_STARTUP_MIN_VAL
 } from '../config/default-frames.config';
+import {CharacterService} from './character.service';
 
 @Injectable()
 export class MoveService implements OnDestroy {
@@ -98,7 +99,7 @@ export class MoveService implements OnDestroy {
     return this._activeFiltersCount.getValue();
   }
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(private characterService: CharacterService) {
     console.log('moveservice created');
 
     this._startUpFilter = new BehaviorSubject({from: DEF_STARTUP_MIN_VAL, to: DEF_STARTUP_MAX_VAL} as NumberRange);
@@ -154,8 +155,7 @@ export class MoveService implements OnDestroy {
                        moveProps
                      ]
                    ]) =>
-          this.firestore.collection<Move>(`characters/${characterId}/movelist`)
-            .valueChanges({idField: '_id'})
+          this.characterService.getMoves(characterId)
             .pipe(
               map(moves => {
                 // determine what will be filtered

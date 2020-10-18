@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {CharacterService} from '../../../../services/character.service';
 import {Character} from '../../../../types';
 
@@ -10,7 +9,7 @@ import {Character} from '../../../../types';
 })
 export class CharacterSelectScreenComponent implements OnInit {
 
-  constructor(public characterService: CharacterService, private router: Router) {
+  constructor(public characterService: CharacterService) {
   }
 
   ngOnInit(): void {

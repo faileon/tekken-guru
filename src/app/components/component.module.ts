@@ -26,6 +26,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {MovePropertiesFilterComponent} from './ui/filters/move-properties-filter/move-properties-filter.component';
 import {DirectiveModule} from '../directives/directive.module';
 import {VirtualScrollerModule} from 'ngx-virtual-scroller';
+import { TooltipComponent } from './ui/tooltip/tooltip.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import {VirtualScrollerModule} from 'ngx-virtual-scroller';
     BlockFrameFilterComponent,
     CounterFrameFilterComponent,
     MovePropertiesFilterComponent,
+    TooltipComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,29 @@
+@import "src/scss/variables";
+
+:host {
+
+  > *:not(:last-child) {
+    margin-bottom: $md-margin;
+  }
+
+  .content {
+    padding: $sm-padding;
+  }
+
+  ul {
+    margin: 0;
+    list-style-position: inside;
+  }
+
+  .pros-cons {
+    display: flex;
+
+    > * {
+      flex: 1;
+    }
+
+    > *:not(:last-child) {
+      margin-right: $md-margin;
+    }
+  }
+}

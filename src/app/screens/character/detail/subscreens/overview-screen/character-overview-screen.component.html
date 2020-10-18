@@ -1,1 +1,21 @@
-<p>character-overview-screen works!</p>
+<ng-container *ngIf="character$ | async as character">
+  <tg-card title="Overview">
+    <div class="content" content>
+      {{character?.overview}}
+    </div>
+  </tg-card>
+
+  <div class="pros-cons">
+    <tg-card title="Strengths">
+      <ul class="content" content>
+        <li *ngFor="let strength of character.strengths">{{strength}}</li>
+      </ul>
+    </tg-card>
+
+    <tg-card title="Weaknesses">
+      <ul class="content" content>
+        <li *ngFor="let weakness of character.weaknesses">{{weakness}}</li>
+      </ul>
+    </tg-card>
+  </div>
+</ng-container>

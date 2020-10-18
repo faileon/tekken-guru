@@ -1,0 +1,15 @@
+@import "src/scss/variables";
+
+:host {
+
+
+  div {
+    background-color: $primary-color;
+    max-width: 300px;
+    border: 1px solid $secondary-color;
+    color: white;
+    padding: $sm-padding $md-padding;
+    border-radius: 4px;
+  }
+}
+

@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
   selector: 'tg-movelist-screen',
   templateUrl: './movelist-screen.component.html',
   styleUrls: ['./movelist-screen.component.scss'],
-  providers: [MoveService]
+  providers: [MoveService] // todo this makes the service reset with each tab, consider bubbling it up to parent
 })
 export class MovelistScreenComponent implements OnInit {
   public movelist$!: Observable<Move[]>;

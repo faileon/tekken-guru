@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CharacterService} from '../../../../../services/character.service';
+import {ActivatedRoute} from '@angular/router';
+import {MoveService} from '../../../../../services/move.service';
+import {Character, CharacterParams, MovelistScreenSettings} from '../../../../../types';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'tg-character-overview-screen',
@@ -8,7 +12,14 @@ import {CharacterService} from '../../../../../services/character.service';
 })
 export class CharacterOverviewScreenComponent implements OnInit {
 
-  constructor(private characterService: CharacterService) {
+  public character$!: Observable<Character>;
+
+  constructor(private route: ActivatedRoute, private characterService: CharacterService) {
+    const params = this.route.parent.snapshot.params as CharacterParams;
+    const {_id} = params;
+
+    this.character$ = this.characterService.getCharacter(_id);
+    this.character$.subscribe(char => console.log('char', char));
   }
 
   ngOnInit(): void {
