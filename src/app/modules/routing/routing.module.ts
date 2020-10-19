@@ -11,7 +11,7 @@ import {CharacterOverviewScreenComponent} from '../../screens/character/detail/s
 import {MatchupScreenComponent} from '../../screens/character/matchup/matchup-screen.component';
 import {MatchupSelectComponent} from '../../screens/character/matchup/select/matchup-select.component';
 import {MovelistScreenComponent} from '../../screens/character/movelist-screen/movelist-screen.component';
-import {MovelistScreenSettings} from '../../types';
+import {CharacterSubscreenSettings} from '../../types';
 
 const routes: Routes = [
   {
@@ -32,23 +32,35 @@ const routes: Routes = [
         component: MovelistScreenComponent,
         data: {
           index: 0,
-        } as MovelistScreenSettings
+        } as CharacterSubscreenSettings
       },
       {
         path: 'keymoves',
         component: CharacterKeyMovesScreenComponent,
+        data: {
+          index: 0,
+        } as CharacterSubscreenSettings
       },
       {
         path: 'combos',
         component: CharacterCombosScreenComponent,
+        data: {
+          index: 0,
+        } as CharacterSubscreenSettings
       },
       {
         path: 'punishes',
         component: CharacterPunishesScreenComponent,
+        data: {
+          index: 0,
+        } as CharacterSubscreenSettings
       },
       {
         path: 'overview',
         component: CharacterOverviewScreenComponent,
+        data: {
+          index: 0,
+        } as CharacterSubscreenSettings
       },
       {
         path: '**',
@@ -75,7 +87,7 @@ const routes: Routes = [
         outlet: 'tab1',
         data: {
           index: 0,
-        } as MovelistScreenSettings
+        } as CharacterSubscreenSettings
       },
       {
         path: 'keymoves',
@@ -83,7 +95,7 @@ const routes: Routes = [
         outlet: 'tab1',
         data: {
           index: 0,
-        } as MovelistScreenSettings
+        } as CharacterSubscreenSettings
       },
       {
         path: 'combos',
@@ -91,7 +103,7 @@ const routes: Routes = [
         outlet: 'tab1',
         data: {
           index: 0,
-        } as MovelistScreenSettings
+        } as CharacterSubscreenSettings
       },
       {
         path: 'punishes',
@@ -99,7 +111,7 @@ const routes: Routes = [
         outlet: 'tab1',
         data: {
           index: 0,
-        } as MovelistScreenSettings
+        } as CharacterSubscreenSettings
       },
       {
         path: 'overview',
@@ -107,7 +119,7 @@ const routes: Routes = [
         outlet: 'tab1',
         data: {
           index: 0,
-        } as MovelistScreenSettings
+        } as CharacterSubscreenSettings
       },
       {
         path: 'movelist',
@@ -115,7 +127,7 @@ const routes: Routes = [
         outlet: 'tab2',
         data: {
           index: 1,
-        } as MovelistScreenSettings
+        } as CharacterSubscreenSettings
       },
       {
         path: 'keymoves',
@@ -123,7 +135,7 @@ const routes: Routes = [
         outlet: 'tab2',
         data: {
           index: 1,
-        } as MovelistScreenSettings
+        } as CharacterSubscreenSettings
       },
       {
         path: 'combos',
@@ -131,7 +143,7 @@ const routes: Routes = [
         outlet: 'tab2',
         data: {
           index: 1,
-        } as MovelistScreenSettings
+        } as CharacterSubscreenSettings
       },
       {
         path: 'punishes',
@@ -139,7 +151,7 @@ const routes: Routes = [
         outlet: 'tab2',
         data: {
           index: 1,
-        } as MovelistScreenSettings
+        } as CharacterSubscreenSettings
       },
       {
         path: 'overview',
@@ -147,7 +159,7 @@ const routes: Routes = [
         outlet: 'tab2',
         data: {
           index: 1,
-        } as MovelistScreenSettings
+        } as CharacterSubscreenSettings
       },
     ]
   },

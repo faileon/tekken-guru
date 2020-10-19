@@ -1,4 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
+import {FirestoreBucketPath} from '../config/storage.config';
 
 @Pipe({
   name: 'mediaPath'
@@ -6,7 +7,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class MediaPathPipe implements PipeTransform {
 
   transform(url: string): string {
-    return `https://firebasestorage.googleapis.com/v0/b/tekken-guru.appspot.com/o/${encodeURIComponent(url)}?alt=media`;
+    return `${FirestoreBucketPath}${encodeURIComponent(url)}?alt=media`;
   }
 
 }

@@ -1,9 +1,20 @@
 @import "src/scss/variables";
 
 :host {
+  // todo with responsive probably make small/medium/large and change it based on media query
+  $vid-height: 124px;
+  $vid-width: 214px;
+
   video {
+    object-fit: fill;
     &.fixed-height {
-      max-height: $card-height;
+      height: $vid-height;
+      width: $vid-width;
+
+      &[poster]{
+        height: $vid-height;
+        width: $vid-width;
+      }
     }
   }
 }

@@ -9,6 +9,6 @@ export interface MatchupParams extends Params {
   secondId: string;
 }
 
-export interface MovelistScreenSettings {
-  index: number; // which character from route params to fetch
+export interface CharacterSubscreenSettings {
+  index: number; // which character (object key) from route params to fetch
 }
