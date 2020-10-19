@@ -1,11 +1,11 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'tg-video',
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss']
 })
-export class VideoComponent implements OnInit {
+export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input()
   public src!: string;
@@ -25,6 +25,15 @@ export class VideoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+  }
+
+  ngAfterViewInit(): void {
+
+  }
+
+  ngOnDestroy(): void {
+
   }
 
   public playVideo(): void {

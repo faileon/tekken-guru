@@ -1,29 +1,79 @@
-import {Component, ElementRef, HostListener, Input, OnInit} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EmbeddedViewRef,
+  HostListener,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {ConnectionPositionPair, Overlay, OverlayPositionBuilder, OverlayRef} from '@angular/cdk/overlay';
+import {TemplatePortal} from '@angular/cdk/portal';
 
 @Component({
   selector: 'tg-pop-over-button',
   templateUrl: './pop-over-button.component.html',
   styleUrls: ['./pop-over-button.component.scss']
 })
-export class PopOverButtonComponent implements OnInit {
-
-  public isOpen = false;
+export class PopOverButtonComponent implements OnInit, AfterViewInit {
 
   @Input()
   public icon!: IconProp;
 
+  @Input()
+  public title?: string;
+
+  @ViewChild('content')
+  private content: TemplateRef<unknown>;
+
+  private overlayRef: OverlayRef;
+  private portal: TemplatePortal;
+
   @HostListener('document:mousedown', ['$event'])
-  public outsideClick(event: MouseEvent): void {
-    if (!this.elementRef.nativeElement.contains(event.target)) {
-      this.isOpen = false;
+  private outsideClick(event: MouseEvent): void {
+    // @ts-ignore
+    if (!this.overlayRef.hostElement.contains(event.target)) {
+      this.closeContent();
     }
   }
 
-  constructor(private elementRef: ElementRef) {
+  constructor(
+    private overlay: Overlay,
+    private overlayPositionBuilder: OverlayPositionBuilder,
+    private _viewContainerRef: ViewContainerRef,
+    private elementRef: ElementRef) {
   }
 
   ngOnInit(): void {
+    console.log(this.elementRef);
+    const positions = [
+      new ConnectionPositionPair({originX: 'start', originY: 'bottom'}, {overlayX: 'start', overlayY: 'top'}),
+      new ConnectionPositionPair({originX: 'start', originY: 'top'}, {overlayX: 'start', overlayY: 'bottom'})
+    ];
+
+    const positionStrategy = this.overlayPositionBuilder
+      .flexibleConnectedTo(this.elementRef)
+      .withPositions(positions);
+
+    this.overlayRef = this.overlay.create({positionStrategy});
+  }
+
+  ngAfterViewInit(): void {
+    this.portal = new TemplatePortal(this.content, this._viewContainerRef);
+  }
+
+  public openContent(): void {
+    if (!this.overlayRef?.hasAttached()) {
+      this.overlayRef?.attach(this.portal);
+    }
+  }
+
+  public closeContent(): void {
+    this.overlayRef?.detach();
   }
 
 }

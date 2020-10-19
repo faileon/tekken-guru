@@ -6,10 +6,15 @@
   <tg-pop-over-button
     [tgBadge]="(moveService.activeFiltersCount$ | async)"
     [tgBadgeHidden]="(moveService.activeFiltersCount$ | async) === 0"
+    title="Filters"
     icon="filter"
   >
 
-    <div class="filters">
+    <div buttons>
+      <tg-button tgTooltip="Reset current filters" icon="sync-alt" (click)="resetFilters()" [outlined]="false"></tg-button>
+    </div>
+
+    <div class="filters" style="height: 100%; overflow-y: auto">
       <!-- startup frame filter -->
       <div class="section">
         <tg-start-up-frame-filter
@@ -53,10 +58,6 @@
           [moveProperties]="moveService.moveProps$ | async"
           (movePropertiesChange)="setMoveProperties($event)"
         ></tg-move-properties-filter>
-      </div>
-
-      <div class="section" style="display: flex; justify-content: flex-end">
-        <tg-button (click)="resetFilters()">RESET FILTERS</tg-button>
       </div>
     </div>
 

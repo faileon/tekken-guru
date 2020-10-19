@@ -33,7 +33,7 @@ export class TooltipDirective implements OnInit {
     this.overlayRef = this.overlay.create({positionStrategy});
   }
 
-  @HostListener('mouseenter')
+  @HostListener('mouseover')
   show(): void {
     const injector = this.createInjector(this.text);
     const portal = new ComponentPortal(TooltipComponent, null, injector);
@@ -42,6 +42,7 @@ export class TooltipDirective implements OnInit {
 
   @HostListener('mouseout')
   hide(): void {
+    console.log('mouse out');
     this.overlayRef.detach();
   }
 
