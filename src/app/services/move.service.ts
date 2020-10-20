@@ -2,7 +2,7 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {HitProperty, Move, MoveProperty, NumberRange} from '../types';
 import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
-import {map, startWith, switchMap} from 'rxjs/operators';
+import {debounceTime, map, startWith, switchMap} from 'rxjs/operators';
 import {
   satisfiesPropertyFilter,
   satisfiesRangeFilter,
@@ -143,6 +143,7 @@ export class MoveService implements OnDestroy {
       ])
     ])
       .pipe(
+        debounceTime(0), // when we trigger more than one filter (for example when reseting), the switch-map would not work without this
         switchMap(([
                      [
                        startUpRange,
