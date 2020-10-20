@@ -128,6 +128,7 @@ export class MoveService implements OnDestroy {
   }
 
   public getMovelist$(characterId: string): Observable<Move[]> {
+    // todo this broke switchmap on reest
     return combineLatest([
       combineLatest([
         this.startupFilter$,

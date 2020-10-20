@@ -4,7 +4,7 @@ import {
   ElementRef,
   EmbeddedViewRef,
   HostListener,
-  Input,
+  Input, OnDestroy,
   OnInit,
   TemplateRef,
   ViewChild,
@@ -19,7 +19,7 @@ import {TemplatePortal} from '@angular/cdk/portal';
   templateUrl: './pop-over-button.component.html',
   styleUrls: ['./pop-over-button.component.scss']
 })
-export class PopOverButtonComponent implements OnInit, AfterViewInit {
+export class PopOverButtonComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input()
   public icon!: IconProp;
@@ -49,7 +49,6 @@ export class PopOverButtonComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(this.elementRef);
     const positions = [
       new ConnectionPositionPair({originX: 'start', originY: 'bottom'}, {overlayX: 'start', overlayY: 'top'}),
       new ConnectionPositionPair({originX: 'start', originY: 'top'}, {overlayX: 'start', overlayY: 'bottom'})
@@ -60,6 +59,10 @@ export class PopOverButtonComponent implements OnInit, AfterViewInit {
       .withPositions(positions);
 
     this.overlayRef = this.overlay.create({positionStrategy});
+  }
+
+  ngOnDestroy(): void {
+    this.closeContent();
   }
 
   ngAfterViewInit(): void {

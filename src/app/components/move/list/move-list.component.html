@@ -78,7 +78,7 @@
     <div class="header" header>
       <div class="title">{{move.name}}</div>
       <div class="properties">
-        <img [tgTooltip]="property | movePropertyText" *ngFor="let property of move.properties" [src]="property | movePropertyImg" alt="" class="property">
+        <img [tgTooltip]="property | movePropertyText" *ngFor="let property of move.properties" [src]="property | movePropertyImg" alt="Move property {{property}}" class="property">
       </div>
     </div>
 

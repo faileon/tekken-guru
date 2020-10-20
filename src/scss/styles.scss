@@ -21,11 +21,12 @@ body {
 
 ::-webkit-scrollbar-track {
   background: $primary-color; /* color of the tracking area */
+  border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: $primary-color-light; /* color of the scroll thumb */
-}
+/*::-webkit-scrollbar-thumb {
+  background-color: $primary-color-light; !* color of the scroll thumb *!
+}*/
 
 .tg-container {
   max-width: 1275px;

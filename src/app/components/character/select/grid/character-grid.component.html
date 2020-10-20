@@ -26,7 +26,7 @@
          [class.selected]="_selectedCharacters.includes(character)"
          (click)="onCharacterClick(character)"
     >
-      <img [src]="character.avatar | mediaPath"/>
+      <img alt="Avatar of {{character._id}}" [src]="character.avatar | mediaPath"/>
     </div>
   </ng-template>
 </div>

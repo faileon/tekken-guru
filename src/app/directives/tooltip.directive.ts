@@ -1,4 +1,4 @@
-import {Directive, ElementRef, HostListener, Injector, Input, OnInit} from '@angular/core';
+import {Directive, ElementRef, HostListener, Injector, Input, OnDestroy, OnInit} from '@angular/core';
 import {ComponentPortal, PortalInjector} from '@angular/cdk/portal';
 import {Overlay, OverlayPositionBuilder, OverlayRef} from '@angular/cdk/overlay';
 import {TOOLTIP_INJECTION_TOKEN, TooltipComponent} from '../components/ui/tooltip/tooltip.component';
@@ -6,7 +6,7 @@ import {TOOLTIP_INJECTION_TOKEN, TooltipComponent} from '../components/ui/toolti
 @Directive({
   selector: '[tgTooltip]'
 })
-export class TooltipDirective implements OnInit {
+export class TooltipDirective implements OnDestroy {
 
   @Input('tgTooltip')
   public text!: string;
@@ -19,7 +19,30 @@ export class TooltipDirective implements OnInit {
               private elementRef: ElementRef) {
   }
 
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.overlayRef?.detach();
+  }
+
+  @HostListener('mouseover')
+  show(): void {
+    this.overlayRef = this.createOverlayRef();
+    const injector = this.createInjector(this.text);
+    const portal = new ComponentPortal(TooltipComponent, null, injector);
+    this.overlayRef.attach(portal);
+  }
+
+  @HostListener('mouseout')
+  hide(): void {
+    this.overlayRef?.detach();
+  }
+
+  private createInjector(text: string): PortalInjector {
+    const injectorTokens = new WeakMap();
+    injectorTokens.set(TOOLTIP_INJECTION_TOKEN, text);
+    return new PortalInjector(this.injector, injectorTokens);
+  }
+
+  private createOverlayRef(): OverlayRef {
     const positionStrategy = this.overlayPositionBuilder
       .flexibleConnectedTo(this.elementRef)
       .withPositions([{
@@ -30,26 +53,7 @@ export class TooltipDirective implements OnInit {
         offsetY: -8,
       }]);
 
-    this.overlayRef = this.overlay.create({positionStrategy});
-  }
-
-  @HostListener('mouseover')
-  show(): void {
-    const injector = this.createInjector(this.text);
-    const portal = new ComponentPortal(TooltipComponent, null, injector);
-    this.overlayRef.attach(portal);
-  }
-
-  @HostListener('mouseout')
-  hide(): void {
-    console.log('mouse out');
-    this.overlayRef.detach();
-  }
-
-  private createInjector(text: string): PortalInjector {
-    const injectorTokens = new WeakMap();
-    injectorTokens.set(TOOLTIP_INJECTION_TOKEN, text);
-    return new PortalInjector(this.injector, injectorTokens);
+    return this.overlay.create({positionStrategy});
   }
 
 }
