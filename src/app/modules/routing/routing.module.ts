@@ -20,6 +20,10 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'dashboard',
+    component: DashboardScreenComponent
+  },
+  {
     path: 'characters',
     component: CharacterSelectScreenComponent,
   },
@@ -163,10 +167,6 @@ const routes: Routes = [
       },
     ]
   },
-  {
-    path: 'dashboard',
-    component: DashboardScreenComponent
-  }
 ];
 
 @NgModule({

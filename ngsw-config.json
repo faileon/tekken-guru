@@ -31,11 +31,13 @@
     {
       "name": "firebase-storage",
       "urls": [
-        "https://epx-kiosk.s3.eu-central-1.amazonaws.com/**/*.(mp4|jpg)"
+        "https://firebasestorage.googleapis.com/v0/b/tekken-guru.appspot.com/",
+        "https://fonts.googleapis.com/**",
+        "https://fonts.gstatic.com/**"
       ],
       "cacheConfig": {
-        "maxSize": 10000,
-        "maxAge": "31d",
+        "maxSize": 1000,
+        "maxAge": "15d",
         "strategy": "performance"
       }
     }

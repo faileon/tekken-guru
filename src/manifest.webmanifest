@@ -1,8 +1,10 @@
 {
-  "name": "tekken-guru",
+  "name": "Tekken.guru",
   "short_name": "tekken-guru",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "description": "Tekken notation, frame data, character overview, punishes, moves including videos, recommended combos and more.",
+  "lang": "en",
+  "theme_color": "#582B85",
+  "background_color": "#291043",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

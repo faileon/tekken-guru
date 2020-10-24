@@ -1,6 +1,5 @@
 export const environment = {
   production: false,
-  db_version: 1,
   firebase: {
     apiKey: 'AIzaSyCmxUjA4a50yTbV6ySG2mizu7HYpKH2LH4',
     authDomain: 'tekken-guru.firebaseapp.com',
