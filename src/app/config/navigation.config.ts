@@ -7,17 +7,20 @@ export const APP_MENU: TGMenuItem[] = [
   {
     title: 'Dashboard',
     icon: faTh,
-    routeTo: '/dashboard'
+    routeTo: '/dashboard',
+    ariaLabel: 'Dashboard'
   },
   {
     title: 'Characters',
     icon: faUsers,
-    routeTo: '/characters'
+    routeTo: '/characters',
+    ariaLabel: 'List of characters'
   },
   {
     title: 'Matchup',
     icon: faInfinity,
-    routeTo: '/matchup'
+    routeTo: '/matchup',
+    ariaLabel: 'Matchup select'
   }
 ];
 // CHARACTER DETAIL TABS
@@ -25,21 +28,27 @@ export const DEFAULT_CHARACTER_TABS: TGMenuItem[] = [
   {
     title: 'Moves',
     routeTo: 'movelist',
+    ariaLabel: 'Character movelist'
   },
   {
     title: 'Key moves',
     routeTo: 'keymoves',
+    ariaLabel: 'Character keymoves'
   },
   {
     title: 'Combos',
     routeTo: 'combos',
+    ariaLabel: 'Character keymoves'
   },
   {
     title: 'Punishes',
     routeTo: 'punishes',
-  }, {
+    ariaLabel: 'Character keymoves',
+  },
+  {
     title: 'Overview',
     routeTo: 'overview',
+    ariaLabel: 'Character keymoves'
   }
 ];
 

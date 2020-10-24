@@ -8,6 +8,7 @@ export interface TGMenuItem {
   routeTo?: string | any[];
   title: string;
   icon?: IconDefinition;
+  ariaLabel?: string;
 }
 
 
