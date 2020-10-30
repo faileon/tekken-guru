@@ -10,3 +10,4 @@ export type MoveProperty =
   'HIGH CRUSH';
 
 export type HitProperty = 'KND' | 'LAUNCH' | 'CROUCH';
+export type HitLevel = 'L' | 'M' | 'H';

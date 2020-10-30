@@ -8,7 +8,7 @@ import {
 import {MoveService} from '../../../services/move.service';
 import {Subject} from 'rxjs';
 import {Component, Input, OnDestroy, OnInit, SkipSelf} from '@angular/core';
-import {HitProperty, Move, MoveProperty, NumberRange} from '../../../types';
+import {HitLevel, HitProperty, Move, MoveProperty, NumberRange} from '../../../types';
 
 @Component({
   selector: 'tg-move-list',
@@ -66,6 +66,10 @@ export class MoveListComponent implements OnInit, OnDestroy {
     this.moveService.moveProps = properties;
   }
 
+  public setHitLevels(hitLevels: HitLevel[]): void {
+    this.moveService.hitLevels = hitLevels;
+  }
+
   public resetFilters(): void {
     this.moveService.startUpFilter = {from: DEF_STARTUP_MIN_VAL, to: DEF_STARTUP_MAX_VAL};
     this.moveService.blockFilter = {from: DEF_BLOCK_MIN_VAL, to: DEF_BLOCK_MAX_VAL};
@@ -74,6 +78,7 @@ export class MoveListComponent implements OnInit, OnDestroy {
     this.moveService.normalProps = [];
     this.moveService.counterProps = [];
     this.moveService.moveProps = [];
+    this.moveService.hitLevels = [];
   }
 
   public onTextSearch(text: string): void {

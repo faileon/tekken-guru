@@ -1,0 +1,9 @@
+<tg-filter-template
+  title="Hit levels:"
+>
+  <ng-container properties-presets>
+    <tg-button (click)="toggleProperty('L')" [active]="hitLevels | includes:'L'">LOW</tg-button>
+    <tg-button (click)="toggleProperty('M')" [active]="hitLevels | includes:'M'">MID</tg-button>
+    <tg-button (click)="toggleProperty('H')" [active]="hitLevels | includes:'H'">HIGH</tg-button>
+  </ng-container>
+</tg-filter-template>

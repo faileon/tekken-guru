@@ -1,8 +1,7 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
-import {HitProperty, Move, MoveProperty, NumberRange} from '../types';
+import {HitLevel, HitProperty, Move, MoveProperty, NumberRange} from '../types';
 import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
-import {debounceTime, map, startWith, switchMap} from 'rxjs/operators';
+import {debounceTime, map,  switchMap} from 'rxjs/operators';
 import {
   satisfiesPropertyFilter,
   satisfiesRangeFilter,
@@ -55,6 +54,12 @@ export class MoveService implements OnDestroy {
   public moveProps$: Observable<MoveProperty[]>;
 
   /********************
+   * HIT LEVELS PROPERTIES:
+   *********************/
+  private _hitLevels: BehaviorSubject<HitLevel[]>;
+  public hitLevels$: Observable<HitLevel[]>;
+
+  /********************
    * ACTIVE FILTERS COUNT:
    *********************/
   private _activeFiltersCount: BehaviorSubject<number>;
@@ -91,6 +96,10 @@ export class MoveService implements OnDestroy {
     this._moveProps.next(properties);
   }
 
+  set hitLevels(hitLevels: HitLevel[]) {
+    this._hitLevels.next(hitLevels);
+  }
+
   set activeFiltersCount(count: number) {
     this._activeFiltersCount.next(count);
   }
@@ -123,6 +132,9 @@ export class MoveService implements OnDestroy {
     this._moveProps = new BehaviorSubject<MoveProperty[]>([]);
     this.moveProps$ = this._moveProps.asObservable();
 
+    this._hitLevels = new BehaviorSubject<HitLevel[]>([]);
+    this.hitLevels$ = this._hitLevels.asObservable();
+
     this._activeFiltersCount = new BehaviorSubject(0);
     this.activeFiltersCount$ = this._activeFiltersCount.asObservable();
   }
@@ -139,7 +151,8 @@ export class MoveService implements OnDestroy {
       combineLatest([
         this.normalProps$,
         this.counterProps$,
-        this.moveProps$
+        this.moveProps$,
+        this.hitLevels$
       ])
     ])
       .pipe(
@@ -154,7 +167,8 @@ export class MoveService implements OnDestroy {
                      [
                        normalProps,
                        counterProps,
-                       moveProps
+                       moveProps,
+                       hitLevels
                      ]
                    ]) =>
           this.characterService.getMoves(characterId)
@@ -165,9 +179,10 @@ export class MoveService implements OnDestroy {
                 const byNormalFrame = shouldFilterNormalFrame(normalRange);
                 const byCounterFrame = shouldFilterCounterFrame(counterRange);
                 const byBlockFrame = shouldFilterBlockFrame(blockRange);
-                const byNormalProps = shouldFilterByProperties<HitProperty>(normalProps);
-                const byCounterProps = shouldFilterByProperties<HitProperty>(counterProps);
-                const byMoveProps = shouldFilterByProperties<MoveProperty>(moveProps);
+                const byNormalProps = shouldFilterByProperties(normalProps);
+                const byCounterProps = shouldFilterByProperties(counterProps);
+                const byMoveProps = shouldFilterByProperties(moveProps);
+                const byHitLevels = shouldFilterByProperties(hitLevels);
 
                 // calculate the number of active filters
                 this.activeFiltersCount = [
@@ -177,12 +192,12 @@ export class MoveService implements OnDestroy {
                   byBlockFrame,
                   byNormalProps,
                   byCounterProps,
-                  byMoveProps
+                  byMoveProps,
+                  byHitLevels
                 ].filter(f => f).length;
 
                 // no filter, just return everything
                 if (this.activeFiltersCount === 0) {
-                  // return [moves[0]];
                   return moves;
                 }
 
@@ -217,6 +232,10 @@ export class MoveService implements OnDestroy {
 
                   if (byMoveProps) {
                     satisfiesFilter.push(satisfiesPropertyFilter<MoveProperty>(moveProps, move.properties));
+                  }
+
+                  if (byHitLevels) {
+                    satisfiesFilter.push(satisfiesPropertyFilter(hitLevels, move.hit.move));
                   }
 
                   // move must satisfy all active filters

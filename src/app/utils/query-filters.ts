@@ -26,10 +26,16 @@ export const satisfiesRangeFilter = (range: NumberRange, property: number, lower
   }
 };
 
-export const satisfiesPropertyFilter = <T>(selectedProperties: T[], properties?: T | T[]): boolean => {
+export const satisfiesPropertyFilter = <T>(selectedProperties: T[], properties: T | T[], atLeastOne = false): boolean => {
   if (Array.isArray(properties)) {
+    if (atLeastOne) {
+      // a OR b
+      return selectedProperties.some(property => properties?.includes(property) ?? false);
+    }
+    // a AND b
     return selectedProperties.every(property => properties?.includes(property) ?? false);
   } else {
+    // property is not array, check if we include
     return selectedProperties.includes(properties);
   }
 };
