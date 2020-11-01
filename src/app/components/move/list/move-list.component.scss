@@ -11,10 +11,13 @@
     align-items: center;
     padding-top: $xs-padding;
 
-    > *:not(:last-child) {
-      margin-right: $sm-margin;
+    > * {
+      margin-right: $md-margin;
     }
 
+    .right-menu {
+      margin-left: auto;
+    }
   }
 
   .list {

@@ -6,6 +6,10 @@
   border: 2px solid $primary-color-light;
   border-radius: $border-radius;
 
+  &.fixed-height {
+    height: $card-height;
+  }
+
   .header {
     display: flex;
     margin-top: -1px;
@@ -19,10 +23,5 @@
       font-weight: 400;
     }
   }
-
-
-
-
-
 
 }

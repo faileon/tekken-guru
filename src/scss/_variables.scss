@@ -18,7 +18,7 @@ $scrollbar-width: 8px;
 $character-avatar-width: 60px;
 $character-avatar-height: 90px;
 
-$card-height: 120px;
+$card-height: 145px;
 $border-radius: 0.3rem;
 
 /*----------------------------------------------------------
@@ -29,8 +29,16 @@ $bp-mobile: 640px;
 /*----------------------------------------------------------
 # COLOURS
 ----------------------------------------------------------*/
+$primary-color-dark: #011f41;
+$primary-color: #2663a7;
+$primary-color-light: #167be7;
+
+$secondary-color: #EA4335;
+
+/*
 $primary-color-dark: #291043;
 $primary-color: #582B85;
 $primary-color-light: #9046DC;
 
 $secondary-color: #D07505;
+ */

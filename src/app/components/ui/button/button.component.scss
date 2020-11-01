@@ -2,6 +2,7 @@
 
 :host {
   display: flex;
+
   div {
     color: whitesmoke;
     border-radius: $border-radius;
@@ -13,6 +14,11 @@
 
   .icon {
     justify-content: space-between;
+
+    &.toggle {
+      color: $primary-color;
+
+    }
   }
 
   .text {
@@ -31,5 +37,10 @@
 
   .active {
     background-color: $secondary-color;
+
+    &.icon {
+      background-color: initial;
+      color: white;
+    }
   }
 }

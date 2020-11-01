@@ -11,7 +11,8 @@
   >
 
     <div buttons>
-      <tg-button tgTooltip="Reset current filters" icon="sync-alt" (click)="resetFilters()" [outlined]="false"></tg-button>
+      <tg-button tgTooltip="Reset current filters" icon="sync-alt" (click)="resetFilters()"
+                 [outlined]="false"></tg-button>
     </div>
 
     <div class="filters" style="height: 100%; overflow-y: auto">
@@ -70,15 +71,24 @@
     </div>
 
 
-
   </tg-pop-over-button>
+
+  <div class="right-menu">
+    <tg-button
+      [tgTooltip]="videoTooltip"
+      icon="video"
+      [outlined]="false"
+      [active]="showVideos"
+      (click)="toggleShowVideos()"
+      [toggleable]="true"
+    ></tg-button>
+  </div>
 </div>
 
 
-<virtual-scroller *ngIf="movelist.length > 0; else noMoves" #scroll [items]="movelist" class="list">
+<virtual-scroller *ngIf="movelist?.length > 0; else noMoves" #scroll [items]="movelist" class="list">
   <tg-card
     *ngFor="let move of scroll.viewPortItems; trackBy: trackByMoveId"
-    [isFixedHeight]="false"
     [title]="move._id"
   >
 
@@ -86,7 +96,8 @@
     <div class="header" header>
       <div class="title">{{move.name}}</div>
       <div class="properties">
-        <img [tgTooltip]="property | movePropertyText" *ngFor="let property of move.properties" [src]="property | movePropertyImg" alt="Move property {{property}}" class="property">
+        <img [tgTooltip]="property | movePropertyText" *ngFor="let property of move.properties"
+             [src]="property | movePropertyImg" alt="Move property {{property}}" class="property">
       </div>
     </div>
 
@@ -109,7 +120,7 @@
 
 
       <!-- video with the move -->
-      <tg-video [src]="move.video | mediaPath" [poster]="move.video | thumbnailPath"></tg-video>
+      <tg-video *ngIf="showVideos" [src]="move.video | mediaPath" [poster]="move.video | thumbnailPath"></tg-video>
       <!--<div>video here {{move.video}}</div>-->
 
       <!--frame data -->
@@ -162,10 +173,7 @@
   </tg-card>
 </virtual-scroller>
 
+<!-- EMPTY LIST -->
 <ng-template #noMoves>
-  <tg-card title="Oops!">
-    <div content class="empty">
-      Ah fam, sorry, no moves found...
-    </div>
-  </tg-card>
+  <tg-empty-card></tg-empty-card>
 </ng-template>

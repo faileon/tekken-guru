@@ -94,15 +94,3 @@ body {
   width: calc(100% - #{$xs-padding}) !important;
 }
 
-.empty {
-  display: flex;
-  flex: 1 1 0;
-  justify-content: center;
-  align-items: center;
-
-  padding: $md-padding;
-  font-size: 1.25rem;
-  font-style: italic;
-  font-weight: 300;
-
-}

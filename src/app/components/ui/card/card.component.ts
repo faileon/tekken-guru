@@ -12,7 +12,7 @@ export class CardComponent implements OnInit {
 
   @Input()
   @HostBinding('class.fixed-height')
-  public isFixedHeight = true;
+  public isFixedHeight = false;
 
   constructor() {
   }

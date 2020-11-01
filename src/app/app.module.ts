@@ -10,7 +10,7 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {RoutingModule} from './modules/routing/routing.module';
 import {FaConfig, FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {faBars, faStar as fasStar, faTimes, faFilter, faSearch, faSyncAlt} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faStar as fasStar, faTimes, faFilter, faSearch, faSyncAlt, faFilm, faVideo} from '@fortawesome/free-solid-svg-icons';
 import {faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 import {ScreenModule} from './screens/screen.module';
 import {ComponentModule} from './components/component.module';
@@ -41,7 +41,7 @@ export class AppModule {
 
   constructor(iconLibrary: FaIconLibrary, faConfig: FaConfig) {
     // create icon library to use in app
-    iconLibrary.addIcons(faBars, faTimes, fasStar, farStar, faFilter, faSearch, faSyncAlt);
+    iconLibrary.addIcons(faBars, faTimes, fasStar, farStar, faFilter, faSearch, faSyncAlt, faVideo, faFilm);
     faConfig.fixedWidth = true;
   }
 }

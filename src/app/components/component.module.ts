@@ -28,6 +28,7 @@ import {DirectiveModule} from '../directives/directive.module';
 import {VirtualScrollerModule} from 'ngx-virtual-scroller';
 import { TooltipComponent } from './ui/tooltip/tooltip.component';
 import { HitLevelFilterComponent } from './ui/filters/hit-level-filter/hit-level-filter.component';
+import { EmptyCardComponent } from './common/empty-card/empty-card.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { HitLevelFilterComponent } from './ui/filters/hit-level-filter/hit-level
     MovePropertiesFilterComponent,
     TooltipComponent,
     HitLevelFilterComponent,
+    EmptyCardComponent,
   ],
   imports: [
     CommonModule,

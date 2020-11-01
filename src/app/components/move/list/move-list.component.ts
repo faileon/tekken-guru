@@ -19,10 +19,14 @@ import {HitLevel, HitProperty, Move, MoveProperty, NumberRange} from '../../../t
 export class MoveListComponent implements OnInit, OnDestroy {
   private isDestroyed$ = new Subject<boolean>();
 
+  public showVideos = false; // constructor will flip this to init the text, todo default value from LocalStorage?
+  public videoTooltip: string;
+
   @Input()
   public movelist!: Move[];
 
   constructor(@SkipSelf() public moveService: MoveService) {
+    this.toggleShowVideos();
   }
 
   ngOnInit(): void {
@@ -37,6 +41,10 @@ export class MoveListComponent implements OnInit, OnDestroy {
     return move._id;
   }
 
+  public toggleShowVideos(): void {
+    this.showVideos = !this.showVideos;
+    this.videoTooltip = this.showVideos ? 'Hide videos' : 'Display videos';
+  }
 
   public filterByStartUpFrame(range: NumberRange): void {
     this.moveService.startUpFilter = range;
