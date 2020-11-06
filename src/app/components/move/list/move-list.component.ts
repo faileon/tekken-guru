@@ -30,6 +30,7 @@ export class MoveListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
   }
 
   ngOnDestroy(): void {
@@ -87,9 +88,10 @@ export class MoveListComponent implements OnInit, OnDestroy {
     this.moveService.counterProps = [];
     this.moveService.moveProps = [];
     this.moveService.hitLevels = [];
+    this.moveService.searchText = '';
   }
 
   public onTextSearch(text: string): void {
-    console.log('searching for', text);
+    this.moveService.searchText = text;
   }
 }

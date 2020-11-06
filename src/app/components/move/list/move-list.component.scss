@@ -40,12 +40,13 @@
       }
 
       .properties {
-        $height: 26px;
-        max-height: $height;
+        display: flex;
+        justify-content: flex-end;
+        max-height: 24px;
 
         > .property {
-          height: $height;
-          width: $height;
+          height: 100%;
+          width: auto;
 
           &:not(:last-child) {
             margin-right: $xs-margin;

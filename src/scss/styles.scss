@@ -41,6 +41,10 @@ body {
       margin-bottom: $md-margin;
     }
   }
+
+  &.fluid {
+    max-width: 100%;
+  }
 }
 
 .title {

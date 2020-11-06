@@ -3,6 +3,8 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {Character, Move} from '../types';
 import {map, takeUntil} from 'rxjs/operators';
+import * as elasticlunr from 'elasticlunr';
+import {Index} from 'elasticlunr';
 
 @Injectable({
   providedIn: 'root'
@@ -58,24 +60,45 @@ export class CharacterService implements OnDestroy {
     );
   }
 
-  public getMoves(characterId: string): Observable<Move[]> {
+  public getMoves(characterId: string): Observable<MoveData> {
     if (!this.moves[characterId]) {
-      console.log('didnt find moves for', characterId, 'fetching it from firestore');
+      // todo this would be a good place to introduce loading screen - on fetch from server, for local data loading screen is pointless
+      console.log(`didnt find moves for ${characterId}, fetching it from server and will keep listening for updates`);
       this.firestore.collection<Move>(`characters/${characterId}/movelist`)
         .valueChanges({idField: '_id'})
         .pipe(
           takeUntil(this.isDestroyed$)
         )
         .subscribe(moves => {
-          console.log('updating moves for', characterId);
-          this._moves.next({
-            ...this._moves.getValue(),
-            [characterId]: moves
-          });
-        });
+            console.log(`got ${moves.length} moves from the server for ${characterId}`);
+
+            // create search indexes on fields
+            const searchIndex = elasticlunr((idx: Index<Move>) => {
+              idx.addField('name');
+              idx.addField('hit');
+              idx.addField('properties');
+              idx.addField('notation');
+              idx.setRef('_id');
+            });
+
+            // add all moves
+            for (const move of moves) {
+              searchIndex.addDoc(move);
+            }
+
+            // notify our subject
+            this._moves.next({
+              ...this._moves.getValue(),
+              [characterId]: {
+                moves,
+                searchIndex
+              }
+            });
+          }
+        );
     }
 
-    console.log('returning moves for', characterId);
+    console.log('returning moves (cached) move data for', characterId);
     return this.moves$.pipe(
       map(moves => moves[characterId])
     );
@@ -84,5 +107,10 @@ export class CharacterService implements OnDestroy {
 }
 
 interface MoveMap {
-  [charId: string]: Move[];
+  [charId: string]: MoveData;
+}
+
+interface MoveData {
+  moves: Move[];
+  searchIndex: Index<Move>;
 }

@@ -28,6 +28,8 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-regular-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "@types/elasticlunr": "^0.9.1",
+    "elasticlunr": "^0.9.5",
     "firebase": "^7.19.1",
     "ng5-slider": "^1.2.4",
     "ngx-virtual-scroller": "^4.0.3",

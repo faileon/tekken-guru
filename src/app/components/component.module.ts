@@ -20,7 +20,7 @@ import {CounterFrameFilterComponent} from './ui/filters/counter-frame-filter/cou
 import {PipeModule} from '../pipes/pipe.module';
 import {Ng5SliderModule} from 'ng5-slider';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RoutingModule} from '../modules/routing/routing.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MovePropertiesFilterComponent} from './ui/filters/move-properties-filter/move-properties-filter.component';
@@ -55,17 +55,18 @@ import { EmptyCardComponent } from './common/empty-card/empty-card.component';
     HitLevelFilterComponent,
     EmptyCardComponent,
   ],
-  imports: [
-    CommonModule,
-    PipeModule,
-    Ng5SliderModule,
-    FontAwesomeModule,
-    ReactiveFormsModule,
-    RoutingModule,
-    FlexLayoutModule,
-    DirectiveModule,
-    VirtualScrollerModule
-  ],
+    imports: [
+        CommonModule,
+        PipeModule,
+        Ng5SliderModule,
+        FontAwesomeModule,
+        ReactiveFormsModule,
+        RoutingModule,
+        FlexLayoutModule,
+        DirectiveModule,
+        VirtualScrollerModule,
+        FormsModule
+    ],
   exports: [
     InputNotationComponent,
     CharacterGridComponent,

@@ -1,6 +1,6 @@
 <div class="option-bar">
   <!-- search bar -->
-  <tg-search-bar (searched)="onTextSearch($event)"></tg-search-bar>
+  <tg-search-bar [text]="moveService.searchText$ | async" (searched)="onTextSearch($event)"></tg-search-bar>
 
   <!-- filters -->
   <tg-pop-over-button
@@ -89,6 +89,7 @@
 <virtual-scroller *ngIf="movelist?.length > 0; else noMoves" #scroll [items]="movelist" class="list">
   <tg-card
     *ngFor="let move of scroll.viewPortItems; trackBy: trackByMoveId"
+    [isFixedHeight]="true"
     [title]="move._id"
   >
 

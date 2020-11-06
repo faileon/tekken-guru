@@ -1,7 +1,7 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {HitLevel, HitProperty, Move, MoveProperty, NumberRange} from '../types';
-import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
-import {debounceTime, map,  switchMap} from 'rxjs/operators';
+import {BehaviorSubject, combineLatest, Observable, of, Subject} from 'rxjs';
+import {debounceTime, map, switchMap, filter} from 'rxjs/operators';
 import {
   satisfiesPropertyFilter,
   satisfiesRangeFilter,
@@ -22,6 +22,12 @@ import {CharacterService} from './character.service';
 
 @Injectable()
 export class MoveService implements OnDestroy {
+
+  /********************
+   * SEARCHING FILTERS:
+   *********************/
+  private _searchText: BehaviorSubject<string>;
+  public searchText$: Observable<string>;
 
   /********************
    * FRAME FILTERS:
@@ -68,6 +74,10 @@ export class MoveService implements OnDestroy {
   /********************
    * SUBJECT SETTERS:
    *********************/
+  set searchText(text: string) {
+    this._searchText.next(text);
+  }
+
   set startUpFilter(range: NumberRange) {
     this._startUpFilter.next(range);
   }
@@ -111,6 +121,9 @@ export class MoveService implements OnDestroy {
   constructor(private characterService: CharacterService) {
     console.log('moveservice created');
 
+    this._searchText = new BehaviorSubject<string>('');
+    this.searchText$ = this._searchText.asObservable();
+
     this._startUpFilter = new BehaviorSubject({from: DEF_STARTUP_MIN_VAL, to: DEF_STARTUP_MAX_VAL} as NumberRange);
     this.startupFilter$ = this._startUpFilter.asObservable();
 
@@ -153,6 +166,9 @@ export class MoveService implements OnDestroy {
         this.counterProps$,
         this.moveProps$,
         this.hitLevels$
+      ]),
+      combineLatest([
+        this.searchText$
       ])
     ])
       .pipe(
@@ -169,12 +185,16 @@ export class MoveService implements OnDestroy {
                        counterProps,
                        moveProps,
                        hitLevels
+                     ],
+                     [
+                       searchText
                      ]
                    ]) =>
           this.characterService.getMoves(characterId)
             .pipe(
-              map(moves => {
-                // determine what will be filtered
+              filter((moves) => !!moves),
+              map(({moves, searchIndex}) => {
+                // determine what will be filtered - see if there are filters set
                 const byStartupFrame = shouldFilterStartupFrame(startUpRange);
                 const byNormalFrame = shouldFilterNormalFrame(normalRange);
                 const byCounterFrame = shouldFilterCounterFrame(counterRange);
@@ -183,6 +203,7 @@ export class MoveService implements OnDestroy {
                 const byCounterProps = shouldFilterByProperties(counterProps);
                 const byMoveProps = shouldFilterByProperties(moveProps);
                 const byHitLevels = shouldFilterByProperties(hitLevels);
+                const withText = searchText?.length > 0;
 
                 // calculate the number of active filters
                 this.activeFiltersCount = [
@@ -193,7 +214,8 @@ export class MoveService implements OnDestroy {
                   byNormalProps,
                   byCounterProps,
                   byMoveProps,
-                  byHitLevels
+                  byHitLevels,
+                  withText
                 ].filter(f => f).length;
 
                 // no filter, just return everything
@@ -201,10 +223,19 @@ export class MoveService implements OnDestroy {
                   return moves;
                 }
 
+                const searchedMoveIds = searchIndex.search(searchText, {expand: true}).map(item => item.ref);
+                console.log(searchedMoveIds);
+
                 // filter moves
                 return moves.filter(move => {
                   const satisfiesFilter: boolean[] = [];
+                  const {_id} = move;
                   const {startUp, onHit, onCounterHit, onBlock} = move.frames;
+
+                  if (withText) {
+                    // best of 2 worlds, elastic does not work very well with "/" and ",'
+                    satisfiesFilter.push(searchedMoveIds.includes(_id));
+                  }
 
                   if (byStartupFrame) {
                     satisfiesFilter.push(satisfiesRangeFilter(startUpRange, startUp, DEF_STARTUP_MIN_VAL, DEF_STARTUP_MAX_VAL));
@@ -238,7 +269,7 @@ export class MoveService implements OnDestroy {
                     satisfiesFilter.push(satisfiesPropertyFilter(hitLevels, move.hit.move));
                   }
 
-                  // move must satisfy all active filters
+                  // move must satisfy all active filters - can switch OR | AND here by switching every() for some()
                   return satisfiesFilter.length > 0 ? satisfiesFilter.every(sf => sf) : true;
                 });
 

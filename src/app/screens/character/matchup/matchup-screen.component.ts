@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Character, MatchupParams} from '../../../types';
 import {CharacterService} from '../../../services/character.service';
 import {interval, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map, startWith} from 'rxjs/operators';
 import {TGMenuItem} from '../../../types/ui.types';
 import {MATCHUP_CHARACTER_1_TABS, MATCHUP_CHARACTER_2_TABS} from '../../../config/navigation.config';
 
@@ -28,6 +28,7 @@ export class MatchupScreenComponent implements OnInit {
     this.secondCharacter$ = characterService.getCharacter(secondId);
 
     this.timeElapsed$ = interval(1000).pipe(
+      startWith(0),
       map(seconds => {
         // big math inc
         const m = Math.floor(seconds / 60);
