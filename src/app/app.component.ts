@@ -3,6 +3,8 @@ import {animate, style, transition, trigger} from '@angular/animations';
 
 import {TGMenuItem} from './types/ui.types';
 import {APP_MENU} from './config/navigation.config';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {filter} from 'rxjs/operators';
 
 @Component({
   selector: 'tg-root',
@@ -44,7 +46,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  constructor(/*private firestore: AngularFirestore*/) {
+  constructor(/*private firestore: AngularFirestore*/ ) {
     // todo example to get cache first
     /*this.firestore.collection<Character>('characters').get({source: 'cache'}).pipe(take(1)).subscribe(chars => {
       console.log('characters from cache:');

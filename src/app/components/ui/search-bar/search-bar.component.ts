@@ -12,7 +12,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   private isDestroyed$ = new Subject<boolean>();
 
   @Input()
-  public debounceTime = 500;
+  public debounceTime = 175;
 
   @Output()
   public searched = new EventEmitter<string>();
@@ -30,6 +30,10 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.isDestroyed$.next(true);
     this.isDestroyed$.unsubscribe();
+  }
+
+  public resetText(): void {
+    this.search.setValue('');
   }
 
 }

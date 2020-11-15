@@ -7,8 +7,9 @@ import {
 } from '../../../config/default-frames.config';
 import {MoveService} from '../../../services/move.service';
 import {Subject} from 'rxjs';
-import {Component, Input, OnDestroy, OnInit, SkipSelf} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, SkipSelf, ViewChild} from '@angular/core';
 import {HitLevel, HitProperty, Move, MoveProperty, NumberRange} from '../../../types';
+import {SearchBarComponent} from '../../ui/search-bar/search-bar.component';
 
 @Component({
   selector: 'tg-move-list',
@@ -21,6 +22,9 @@ export class MoveListComponent implements OnInit, OnDestroy {
 
   public showVideos = false; // constructor will flip this to init the text, todo default value from LocalStorage?
   public videoTooltip: string;
+
+  @ViewChild('searchBar', {static: true})
+  private searchBar: SearchBarComponent;
 
   @Input()
   public movelist!: Move[];
@@ -88,7 +92,7 @@ export class MoveListComponent implements OnInit, OnDestroy {
     this.moveService.counterProps = [];
     this.moveService.moveProps = [];
     this.moveService.hitLevels = [];
-    this.moveService.searchText = '';
+    this.searchBar.resetText();
   }
 
   public onTextSearch(text: string): void {

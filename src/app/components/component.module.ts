@@ -29,6 +29,7 @@ import {VirtualScrollerModule} from 'ngx-virtual-scroller';
 import { TooltipComponent } from './ui/tooltip/tooltip.component';
 import { HitLevelFilterComponent } from './ui/filters/hit-level-filter/hit-level-filter.component';
 import { EmptyCardComponent } from './common/empty-card/empty-card.component';
+import { NavigationBackComponent } from './ui/navigation-back/navigation-back.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { EmptyCardComponent } from './common/empty-card/empty-card.component';
     TooltipComponent,
     HitLevelFilterComponent,
     EmptyCardComponent,
+    NavigationBackComponent,
   ],
     imports: [
         CommonModule,
@@ -67,26 +69,27 @@ import { EmptyCardComponent } from './common/empty-card/empty-card.component';
         VirtualScrollerModule,
         FormsModule
     ],
-  exports: [
-    InputNotationComponent,
-    CharacterGridComponent,
-    ButtonComponent,
-    CharacterHeaderComponent,
-    MoveGridComponent,
-    TabsComponent,
-    CardComponent,
-    VideoComponent,
-    PopOverButtonComponent,
-    SearchBarComponent,
-    SliderComponent,
-    FilterTemplateComponent,
-    StartUpFrameFilterComponent,
-    NormalFrameFilterComponent,
-    BlockFrameFilterComponent,
-    CounterFrameFilterComponent,
-    MovePropertiesFilterComponent,
-    MoveListComponent,
-  ]
+    exports: [
+        InputNotationComponent,
+        CharacterGridComponent,
+        ButtonComponent,
+        CharacterHeaderComponent,
+        MoveGridComponent,
+        TabsComponent,
+        CardComponent,
+        VideoComponent,
+        PopOverButtonComponent,
+        SearchBarComponent,
+        SliderComponent,
+        FilterTemplateComponent,
+        StartUpFrameFilterComponent,
+        NormalFrameFilterComponent,
+        BlockFrameFilterComponent,
+        CounterFrameFilterComponent,
+        MovePropertiesFilterComponent,
+        MoveListComponent,
+        NavigationBackComponent,
+    ]
 })
 export class ComponentModule {
 }

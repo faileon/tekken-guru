@@ -21,7 +21,6 @@ export class CharacterOverviewScreenComponent implements OnInit {
     const characterId = getCharacterIdFromRoute(data, params);
 
     this.character$ = this.characterService.getCharacter(characterId);
-    this.character$.subscribe(char => console.log('char', char));
   }
 
   ngOnInit(): void {
