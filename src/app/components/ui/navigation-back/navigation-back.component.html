@@ -1,8 +1,11 @@
-<tg-button
-  *ngIf="isVisible$ | async"
-  [outlined]="false"
-  [icon]="icon"
-  [iconSize]="iconSize"
-  [routerLink]="backLink"
-></tg-button>
+<ng-container
+  *ngFor="let crumb of breadcrumbService.breadcrumbs$ | async; let last = last;"
+>
+  <a
+    class="link"
+    [routerLink]="crumb.url"
+    routerLinkActive="active"
+  >{{crumb.text}}</a>
+  <span *ngIf="!last" class="chevron">›</span>
+</ng-container>
 

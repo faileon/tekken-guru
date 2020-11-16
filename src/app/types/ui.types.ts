@@ -12,3 +12,7 @@ export interface TGMenuItem {
 }
 
 
+export interface Breadcrumb {
+  url: string;
+  text: string;
+}
