@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {CharacterService} from '../../../../../services/character.service';
+import {CharacterService} from '../../../../services/character.service';
 import {ActivatedRoute} from '@angular/router';
-import {MoveService} from '../../../../../services/move.service';
-import {Character, CharacterParams, CharacterSubscreenSettings} from '../../../../../types';
+import {Character} from '../../../../types';
 import {Observable} from 'rxjs';
-import {getCharacterIdFromRoute} from '../../../../../utils/routing';
+import {getCharacterIdFromRoute} from '../../../../utils/routing';
 
 @Component({
   selector: 'tg-character-overview-screen',

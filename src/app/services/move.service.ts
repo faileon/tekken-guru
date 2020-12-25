@@ -224,7 +224,7 @@ export class MoveService implements OnDestroy {
                 }
 
                 const searchedMoveIds = searchIndex.search(searchText, {expand: true}).map(item => item.ref);
-                console.log(searchedMoveIds);
+                console.log(`searching for "${searchText}" yielded the following results: ${searchedMoveIds}`);
 
                 // filter moves
                 return moves.filter(move => {

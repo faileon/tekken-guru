@@ -3,14 +3,13 @@ import {RouterModule, Routes} from '@angular/router';
 import {DashboardScreenComponent} from '../../screens/dashboard/dashboard-screen.component';
 import {CharacterSelectScreenComponent} from '../../screens/character/detail/select/character-select-screen.component';
 import {CharacterDetailScreenComponent} from '../../screens/character/detail/character-detail-screen.component';
-
-import {CharacterCombosScreenComponent} from '../../screens/character/detail/subscreens/character-combos-screen/character-combos-screen.component';
-import {CharacterKeyMovesScreenComponent} from '../../screens/character/detail/subscreens/key-moves-screen/character-key-moves-screen.component';
-import {CharacterPunishesScreenComponent} from '../../screens/character/detail/subscreens/punishes-screen/character-punishes-screen.component';
-import {CharacterOverviewScreenComponent} from '../../screens/character/detail/subscreens/overview-screen/character-overview-screen.component';
+import {CombosScreenComponent} from '../../screens/character/subscreens/combos-screen/combos-screen.component';
+import {KeyMovesScreenComponent} from '../../screens/character/subscreens/key-moves-screen/key-moves-screen.component';
+import {CharacterPunishesScreenComponent} from '../../screens/character/subscreens/punishes-screen/character-punishes-screen.component';
+import {CharacterOverviewScreenComponent} from '../../screens/character/subscreens/overview-screen/character-overview-screen.component';
 import {MatchupScreenComponent} from '../../screens/character/matchup/matchup-screen.component';
 import {MatchupSelectComponent} from '../../screens/character/matchup/select/matchup-select.component';
-import {MovelistScreenComponent} from '../../screens/character/movelist-screen/movelist-screen.component';
+import {MovelistScreenComponent} from '../../screens/character/subscreens/movelist-screen/movelist-screen.component';
 import {CharacterSubscreenSettings} from '../../types';
 
 const routes: Routes = [
@@ -40,14 +39,14 @@ const routes: Routes = [
       },
       {
         path: 'keymoves',
-        component: CharacterKeyMovesScreenComponent,
+        component: KeyMovesScreenComponent,
         data: {
           index: 0,
         } as CharacterSubscreenSettings
       },
       {
         path: 'combos',
-        component: CharacterCombosScreenComponent,
+        component: CombosScreenComponent,
         data: {
           index: 0,
         } as CharacterSubscreenSettings
@@ -95,7 +94,7 @@ const routes: Routes = [
       },
       {
         path: 'keymoves',
-        component: CharacterKeyMovesScreenComponent,
+        component: KeyMovesScreenComponent,
         outlet: 'tab1',
         data: {
           index: 0,
@@ -103,7 +102,7 @@ const routes: Routes = [
       },
       {
         path: 'combos',
-        component: CharacterCombosScreenComponent,
+        component: CombosScreenComponent,
         outlet: 'tab1',
         data: {
           index: 0,
@@ -135,7 +134,7 @@ const routes: Routes = [
       },
       {
         path: 'keymoves',
-        component: CharacterKeyMovesScreenComponent,
+        component: KeyMovesScreenComponent,
         outlet: 'tab2',
         data: {
           index: 1,
@@ -143,7 +142,7 @@ const routes: Routes = [
       },
       {
         path: 'combos',
-        component: CharacterCombosScreenComponent,
+        component: CombosScreenComponent,
         outlet: 'tab2',
         data: {
           index: 1,

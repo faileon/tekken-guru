@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CharacterCombosScreenComponent } from './character-combos-screen.component';
+import { CombosScreenComponent } from './character-combos-screen.component';
 
 describe('CharacterCombosScreenComponent', () => {
-  let component: CharacterCombosScreenComponent;
-  let fixture: ComponentFixture<CharacterCombosScreenComponent>;
+  let component: CombosScreenComponent;
+  let fixture: ComponentFixture<CombosScreenComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CharacterCombosScreenComponent ]
+      declarations: [ CombosScreenComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CharacterCombosScreenComponent);
+    fixture = TestBed.createComponent(CombosScreenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

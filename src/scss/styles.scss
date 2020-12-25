@@ -98,3 +98,8 @@ body {
   width: calc(100% - #{$xs-padding}) !important;
 }
 
+.subscreen {
+  overflow: hidden;
+  height: 100%;
+}
+

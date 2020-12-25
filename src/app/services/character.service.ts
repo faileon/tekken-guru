@@ -81,6 +81,8 @@ export class CharacterService implements OnDestroy {
               idx.setRef('_id');
             });
 
+            elasticlunr.clearStopWords();
+
             // add all moves
             for (const move of moves) {
               searchIndex.addDoc(move);
