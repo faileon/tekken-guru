@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {AsyncPipe, CommonModule} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {CharacterSelectScreenComponent} from './character/detail/select/character-select-screen.component';
 import {DashboardScreenComponent} from './dashboard/dashboard-screen.component';
 import {CharacterDetailScreenComponent} from './character/detail/character-detail-screen.component';
@@ -11,10 +11,8 @@ import {ComponentModule} from '../components/component.module';
 import {DirectiveModule} from '../directives/directive.module';
 import {RoutingModule} from '../modules/routing/routing.module';
 import {MatchupScreenComponent} from './character/matchup/matchup-screen.component';
-import { MatchupSelectComponent } from './character/matchup/select/matchup-select.component';
+import {MatchupSelectComponent} from './character/matchup/select/matchup-select.component';
 import {MovelistScreenComponent} from './character/movelist-screen/movelist-screen.component';
-import {PipeModule} from '../pipes/pipe.module';
-
 
 @NgModule({
   declarations: [

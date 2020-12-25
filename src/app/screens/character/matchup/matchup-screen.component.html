@@ -22,11 +22,12 @@
 
   <div class="content">
     <div class="col">
-      <router-outlet name="tab1"></router-outlet>
+      <tg-named-router [isFirstTab]="true"></tg-named-router>
     </div>
 
     <div class="col">
-      <router-outlet name="tab2"></router-outlet>
+      <!--<router-outlet name="tab2"></router-outlet>-->
+      <tg-named-router [isFirstTab]="false"></tg-named-router>
     </div>
 
   </div>

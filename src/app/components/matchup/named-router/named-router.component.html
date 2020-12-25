@@ -1,0 +1,10 @@
+<router-outlet
+  *ngIf="isFirstTab; else secondTab"
+  name="tab1">
+</router-outlet>
+
+<ng-template #secondTab>
+  <router-outlet
+    name="tab2">
+  </router-outlet>
+</ng-template>

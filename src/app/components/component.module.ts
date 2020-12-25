@@ -30,6 +30,7 @@ import { TooltipComponent } from './ui/tooltip/tooltip.component';
 import { HitLevelFilterComponent } from './ui/filters/hit-level-filter/hit-level-filter.component';
 import { EmptyCardComponent } from './common/empty-card/empty-card.component';
 import { NavigationBackComponent } from './ui/navigation-back/navigation-back.component';
+import { NamedRouterComponent } from './matchup/named-router/named-router.component';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { NavigationBackComponent } from './ui/navigation-back/navigation-back.co
     HitLevelFilterComponent,
     EmptyCardComponent,
     NavigationBackComponent,
+    NamedRouterComponent,
   ],
     imports: [
         CommonModule,
@@ -89,6 +91,7 @@ import { NavigationBackComponent } from './ui/navigation-back/navigation-back.co
         MovePropertiesFilterComponent,
         MoveListComponent,
         NavigationBackComponent,
+        NamedRouterComponent,
     ]
 })
 export class ComponentModule {
