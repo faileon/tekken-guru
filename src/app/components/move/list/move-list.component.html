@@ -1,6 +1,9 @@
 <div class="option-bar">
   <!-- search bar -->
-  <tg-search-bar #searchBar (searched)="onTextSearch($event)"></tg-search-bar>
+  <tg-search-bar #searchBar
+                 (searched)="onTextSearch($event)"
+                 [searchText]="moveService.searchText$ | async">
+  </tg-search-bar>
 
   <!-- filters -->
   <tg-pop-over-button
