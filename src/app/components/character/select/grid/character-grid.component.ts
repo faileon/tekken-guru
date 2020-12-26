@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SkipSelf} from '@angular/core';
 import {Character} from '../../../../types';
+import {CharacterService} from '../../../../services/character.service';
 
 @Component({
   selector: 'tg-character-grid',
@@ -18,12 +19,15 @@ export class CharacterGridComponent {
   @Output()
   public characterSelected = new EventEmitter<Character>();
 
+  constructor(@SkipSelf() private characterService: CharacterService) {
+  }
+
   public onCharacterClick(character: Character): void {
     this.characterSelected.emit(character);
     this._selectedCharacters.push(character);
   }
 
   public onTextSearch(text: string): void {
-    console.log('searching for', text);
+    this.characterService.searchText = text;
   }
 }

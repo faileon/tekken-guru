@@ -1,8 +1,8 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable, Subject} from 'rxjs';
 import {Character, Move} from '../types';
-import {map, takeUntil} from 'rxjs/operators';
+import {map, switchMap, takeUntil} from 'rxjs/operators';
 import * as elasticlunr from 'elasticlunr';
 import {Index} from 'elasticlunr';
 
@@ -12,22 +12,32 @@ import {Index} from 'elasticlunr';
 export class CharacterService implements OnDestroy {
   private isDestroyed$: Subject<boolean> = new Subject<boolean>();
 
-  private readonly _characters: BehaviorSubject<Character[]>;
-  public readonly characters$: Observable<Character[]>;
+  private _searchText: BehaviorSubject<string>;
+  public searchText$: Observable<string>;
 
-  private readonly _moves: BehaviorSubject<MoveMap>;
-  public readonly moves$: Observable<MoveMap>;
+  private readonly _characters: BehaviorSubject<Data<Character>>;
+  private readonly characters$: Observable<Data<Character>>;
 
-  get moves(): MoveMap {
+  private readonly _moves: BehaviorSubject<DataMap<Move>>;
+  public readonly moves$: Observable<DataMap<Move>>;
+
+  get moves(): DataMap<Move> {
     return this._moves.getValue();
+  }
+
+  set searchText(text: string) {
+    this._searchText.next(text);
   }
 
   constructor(private firestore: AngularFirestore) {
     console.log('character service create');
-    this._characters = new BehaviorSubject<Character[]>([]);
+    this._searchText = new BehaviorSubject('');
+    this.searchText$ = this._searchText.asObservable();
+
+    this._characters = new BehaviorSubject({data: [], searchIndex: null});
     this.characters$ = this._characters.asObservable();
 
-    this._moves = new BehaviorSubject<MoveMap>({});
+    this._moves = new BehaviorSubject({});
     this.moves$ = this._moves.asObservable();
 
     /**
@@ -44,9 +54,27 @@ export class CharacterService implements OnDestroy {
         takeUntil(this.isDestroyed$) // if in root then as long as app is running.
       )
       .subscribe(characters => {
-        console.log('setting character from fs');
-        this._characters.next(characters);
+        console.log('Got characters from server, updating runtime cache.');
+
+        const searchIndex = elasticlunr((idx: Index<Character>) => {
+          idx.addField('_id');
+          idx.addField('fullName');
+
+          idx.setRef('_id');
+        });
+
+        for (const character of characters) {
+          searchIndex.addDoc(character);
+        }
+
+        this._characters.next({
+          data: characters,
+          searchIndex
+        });
       });
+
+    // clear elastic stop words - todo call this elsewhere?
+    elasticlunr.clearStopWords();
   }
 
   ngOnDestroy(): void {
@@ -54,13 +82,37 @@ export class CharacterService implements OnDestroy {
     this.isDestroyed$.unsubscribe();
   }
 
-  public getCharacter(_id: string): Observable<Character> {
-    return this.characters$.pipe(
-      map(characters => characters.find(char => char._id === _id))
+  public getCharacters(): Observable<Character[]> {
+    // combine latest in case of more filters
+    return combineLatest([
+      this.searchText$
+    ]).pipe(
+      switchMap(([text]) => {
+
+        // nothing to search
+        if (text.length === 0) {
+          return this.characters$.pipe(
+            map(({data}) => data)
+          );
+        }
+
+        // search for character
+        return this.characters$.pipe(
+          map(({data, searchIndex}) => {
+            const result = searchIndex.search(text, {expand: true});
+            return data.filter(character => result.some(r => r.ref === character._id));
+          })
+        );
+      })
     );
   }
 
-  public getMoves(characterId: string): Observable<MoveData> {
+  public getCharacter(_id: string): Observable<Character> {
+    return this.characters$.pipe(
+      map(characters => characters.data.find(char => char._id === _id)));
+  }
+
+  public getMoves(characterId: string): Observable<Data<Move>> {
     if (!this.moves[characterId]) {
       // todo this would be a good place to introduce loading screen - on fetch from server, for local data loading screen is pointless
       console.log(`didnt find moves for ${characterId}, fetching it from server and will keep listening for updates`);
@@ -70,7 +122,7 @@ export class CharacterService implements OnDestroy {
           takeUntil(this.isDestroyed$)
         )
         .subscribe(moves => {
-            console.log(`got ${moves.length} moves from the server for ${characterId}`);
+            console.log(`Fetched ${moves.length} moves from the server for ${characterId}`);
 
             // create search indexes on fields
             const searchIndex = elasticlunr((idx: Index<Move>) => {
@@ -78,10 +130,9 @@ export class CharacterService implements OnDestroy {
               idx.addField('hit');
               idx.addField('properties');
               idx.addField('notation');
+
               idx.setRef('_id');
             });
-
-            elasticlunr.clearStopWords();
 
             // add all moves
             for (const move of moves) {
@@ -92,7 +143,7 @@ export class CharacterService implements OnDestroy {
             this._moves.next({
               ...this._moves.getValue(),
               [characterId]: {
-                moves,
+                data: moves,
                 searchIndex
               }
             });
@@ -100,19 +151,18 @@ export class CharacterService implements OnDestroy {
         );
     }
 
-    console.log('returning moves (cached) move data for', characterId);
+    console.log('Returning moves (cached) for', characterId);
     return this.moves$.pipe(
       map(moves => moves[characterId])
     );
   }
-
 }
 
-interface MoveMap {
-  [charId: string]: MoveData;
+interface DataMap<T> {
+  [_id: string]: Data<T>;
 }
 
-interface MoveData {
-  moves: Move[];
-  searchIndex: Index<Move>;
+interface Data<T> {
+  data: T[];
+  searchIndex: Index<T>;
 }

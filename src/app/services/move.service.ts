@@ -153,7 +153,6 @@ export class MoveService implements OnDestroy {
   }
 
   public getMovelist$(characterId: string): Observable<Move[]> {
-    // todo this broke switchmap on reest
     return combineLatest([
       combineLatest([
         this.startupFilter$,
@@ -193,7 +192,7 @@ export class MoveService implements OnDestroy {
           this.characterService.getMoves(characterId)
             .pipe(
               filter((moves) => !!moves),
-              map(({moves, searchIndex}) => {
+              map(({data, searchIndex}) => {
                 // determine what will be filtered - see if there are filters set
                 const byStartupFrame = shouldFilterStartupFrame(startUpRange);
                 const byNormalFrame = shouldFilterNormalFrame(normalRange);
@@ -220,14 +219,14 @@ export class MoveService implements OnDestroy {
 
                 // no filter, just return everything
                 if (this.activeFiltersCount === 0) {
-                  return moves;
+                  return data;
                 }
 
                 const searchedMoveIds = searchIndex.search(searchText, {expand: true}).map(item => item.ref);
                 console.log(`searching for "${searchText}" yielded the following results: ${searchedMoveIds}`);
 
                 // filter moves
-                return moves.filter(move => {
+                return data.filter(move => {
                   const satisfiesFilter: boolean[] = [];
                   const {_id} = move;
                   const {startUp, onHit, onCounterHit, onBlock} = move.frames;

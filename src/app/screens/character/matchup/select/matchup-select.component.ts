@@ -14,11 +14,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class MatchupSelectComponent implements OnInit, OnDestroy {
   private _isDestroyed$ = new Subject<boolean>();
 
+  public characters$: Observable<Character[]>;
+
   private _charactersSelected: Subject<Character>;
   public characterSelected$: Observable<Character>;
   public currentSelectionIdx = 1;
 
   constructor(public characterService: CharacterService, private router: Router, private route: ActivatedRoute) {
+    this.characters$ = this.characterService.getCharacters();
+
     this._charactersSelected = new Subject<Character>();
     this.characterSelected$ = this._charactersSelected.asObservable();
   }

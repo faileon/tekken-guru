@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CharacterService} from '../../../../services/character.service';
 import {Character} from '../../../../types';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'tg-character-select',
@@ -9,7 +10,10 @@ import {Character} from '../../../../types';
 })
 export class CharacterSelectScreenComponent implements OnInit {
 
+  public characters$: Observable<Character[]>;
+
   constructor(public characterService: CharacterService) {
+    this.characters$ = this.characterService.getCharacters();
   }
 
   ngOnInit(): void {

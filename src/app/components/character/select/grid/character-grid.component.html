@@ -20,13 +20,14 @@
 
     </ng-container>
   </ng-template>
-
-  <ng-template #char let-character="character">
-    <div class="character-card"
-         [class.selected]="_selectedCharacters.includes(character)"
-         (click)="onCharacterClick(character)"
-    >
-      <img alt="Avatar of {{character._id}}" [src]="character.avatar | mediaPath"/>
-    </div>
-  </ng-template>
 </div>
+
+<!-- character avatar -->
+<ng-template #char let-character="character">
+  <div class="character-card"
+       [class.selected]="_selectedCharacters.includes(character)"
+       (click)="onCharacterClick(character)"
+  >
+    <img alt="Avatar of {{character._id}}" [src]="character.avatar | mediaPath"/>
+  </div>
+</ng-template>
