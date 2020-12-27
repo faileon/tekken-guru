@@ -98,7 +98,9 @@
 
     <!-- move name -->
     <div class="header" header>
-      <div class="title">{{move.name}}</div>
+      <div class="title">
+        {{move.name}}
+      </div>
       <div class="properties">
         <img [tgTooltip]="property | movePropertyText" *ngFor="let property of move.properties"
              [src]="property | movePropertyImg" alt="Move property {{property}}" class="property">
@@ -132,42 +134,54 @@
         <table>
           <tr>
             <td>Start frame:</td>
-            <td>{{move.frames.startUp}}
-            </td>
+            <td>{{move.frames.startUp}}</td>
           </tr>
 
           <tr>
             <td>On block:</td>
-            <td
-              [class.positive]="move.frames.onBlock > 0"
-              [class.negative]="move.frames.onBlock < 0">
-              {{move.frames.onBlock}}
-            </td>
-            <td *ngIf="move.hit.onBlock">
+            <td>
+              <span [class.positive]="move.frames.onBlock > 0"
+                    [class.negative]="move.frames.onBlock < 0">
+                {{move.frames.onBlock}}
+              </span>
+              <span *ngIf="move.hit.onBlock">
               ({{move.hit.onBlock}})
+            </span>
             </td>
+
           </tr>
 
           <tr>
             <td>On hit:</td>
-            <td
-              [class.positive]="move.frames.onHit > 0"
-              [class.negative]="move.frames.onHit < 0">
-              {{move.frames.onHit}}
-            </td>
-            <td *ngIf="move.hit.onHit">
+            <td>
+              <span [class.positive]="move.frames.onHit > 0"
+                    [class.negative]="move.frames.onHit < 0">
+                {{move.frames.onHit}}
+              </span>
+              <span *ngIf="move.hit.onHit">
               ({{move.hit.onHit}})
+            </span>
             </td>
+
           </tr>
 
           <tr>
             <td>On counter hit:</td>
-            <td [class.positive]="move.frames.onCounterHit > 0"
-                [class.negative]="move.frames.onCounterHit < 0">
-              {{move.frames.onCounterHit}}
-            </td>
-            <td *ngIf="move.hit.onCounterHit">
+            <td>
+              <span [class.positive]="move.frames.onCounterHit > 0"
+                    [class.negative]="move.frames.onCounterHit < 0">
+                {{move.frames.onCounterHit}}
+              </span>
+              <span *ngIf="move.hit.onCounterHit">
               ({{move.hit.onCounterHit}})
+            </span>
+            </td>
+
+          </tr>
+
+          <tr *ngIf="move.punishment">
+            <td>Punish:</td>
+            <td [innerHTML]="move.punishment | punishmentText">
             </td>
           </tr>
         </table>

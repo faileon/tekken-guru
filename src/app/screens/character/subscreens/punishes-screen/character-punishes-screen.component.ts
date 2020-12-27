@@ -14,7 +14,7 @@ export class CharacterPunishesScreenComponent extends MovelistScreenComponent {
   constructor(route: ActivatedRoute, moveService: MoveService) {
     super(route, moveService);
     this.movelist$ = this.movelist$.pipe(
-      map(moves => moves.filter(move => move.isPunishMove))
+      map(moves => moves.filter(move => !!move.punishment))
     );
   }
 

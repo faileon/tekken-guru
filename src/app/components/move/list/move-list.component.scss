@@ -37,6 +37,9 @@
         flex: 1;
         font-family: 'Roboto Condensed', sans-serif;
         font-size: 1rem;
+        display: flex;
+        align-items: center;
+
       }
 
       .properties {
@@ -95,7 +98,7 @@
       }
 
       .frame-data {
-        min-width: 170px;
+        min-width: 205px;
         margin-top: auto;
         padding-left: $xs-padding;
         // padding: 0 $xs-padding;
@@ -104,7 +107,7 @@
         font-weight: 300;
 
         > table {
-
+          width: 100%;
           > tr {
             > td:nth-child(2) {
               text-align: right;
@@ -118,6 +121,8 @@
           .negative {
             color: red;
           }
+
+
         }
       }
     }

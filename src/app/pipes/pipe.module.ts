@@ -8,6 +8,7 @@ import {IncludesPipe} from './includes.pipe';
 import {MovePropertyImgPipe} from './move-property-img.pipe';
 import {MovePropertyTextPipe} from './move-property-text.pipe';
 import { ThumbnailPathPipe } from './thumbnail-path.pipe';
+import { PunishmentTextPipe } from './punishment-text.pipe';
 
 
 @NgModule({
@@ -20,20 +21,22 @@ import { ThumbnailPathPipe } from './thumbnail-path.pipe';
     MovePropertyImgPipe,
     MovePropertyTextPipe,
     ThumbnailPathPipe,
+    PunishmentTextPipe,
   ],
   imports: [
     CommonModule
   ],
-  exports: [
-    CharacterDifficultyPipe,
-    MediaPathPipe,
-    HitMovePipe,
-    HitDamagePipe,
-    IncludesPipe,
-    MovePropertyImgPipe,
-    MovePropertyTextPipe,
-    ThumbnailPathPipe
-  ]
+    exports: [
+        CharacterDifficultyPipe,
+        MediaPathPipe,
+        HitMovePipe,
+        HitDamagePipe,
+        IncludesPipe,
+        MovePropertyImgPipe,
+        MovePropertyTextPipe,
+        ThumbnailPathPipe,
+        PunishmentTextPipe
+    ]
 })
 export class PipeModule {
 }

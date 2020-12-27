@@ -1,4 +1,5 @@
 import {HitProperty, MoveProperty} from './property.type';
+import {Punishment} from './punishment.type';
 
 export type Move = {
   _id: string;
@@ -19,6 +20,7 @@ export type Move = {
   }
   properties?: MoveProperty[];
   isKeyMove?: boolean;
-  isPunishMove?: boolean;
+  punishment?: Punishment,
   video: string;
 };
+
