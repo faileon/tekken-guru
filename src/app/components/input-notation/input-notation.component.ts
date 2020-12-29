@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {flatten} from '../../utils/common';
+import {parseNotationInput} from '../../utils/notation-parser';
 
 @Component({
   selector: 'tg-input-notation',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InputNotationComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  public notation!: string;
+
+  public parsedNotation!: string[];
 
   ngOnInit(): void {
+    this.parsedNotation = parseNotationInput(this.notation);
+
   }
 
 }
+
+

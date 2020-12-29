@@ -9,6 +9,8 @@ import {MovePropertyImgPipe} from './move-property-img.pipe';
 import {MovePropertyTextPipe} from './move-property-text.pipe';
 import { ThumbnailPathPipe } from './thumbnail-path.pipe';
 import { PunishmentTextPipe } from './punishment-text.pipe';
+import { InputPathPipe } from './input-path.pipe';
+import { IsKnownInputPipe } from './is-known-input.pipe';
 
 
 @NgModule({
@@ -22,21 +24,25 @@ import { PunishmentTextPipe } from './punishment-text.pipe';
     MovePropertyTextPipe,
     ThumbnailPathPipe,
     PunishmentTextPipe,
+    InputPathPipe,
+    IsKnownInputPipe,
   ],
   imports: [
     CommonModule
   ],
-    exports: [
-        CharacterDifficultyPipe,
-        MediaPathPipe,
-        HitMovePipe,
-        HitDamagePipe,
-        IncludesPipe,
-        MovePropertyImgPipe,
-        MovePropertyTextPipe,
-        ThumbnailPathPipe,
-        PunishmentTextPipe
-    ]
+  exports: [
+    CharacterDifficultyPipe,
+    MediaPathPipe,
+    HitMovePipe,
+    HitDamagePipe,
+    IncludesPipe,
+    MovePropertyImgPipe,
+    MovePropertyTextPipe,
+    ThumbnailPathPipe,
+    PunishmentTextPipe,
+    IsKnownInputPipe,
+    InputPathPipe
+  ]
 })
 export class PipeModule {
 }

@@ -116,7 +116,9 @@
       <!-- main content with name, notation and hits -->
       <div class="main">
         <!-- move notation -->
-        <div class="notation">{{move.notation}}</div>
+        <div class="notation">
+          <tg-input-notation [notation]="move.notation"></tg-input-notation>
+        </div>
         <!-- move hits -->
         <div class="hits">
           <div class="move">{{move.hit.move | hitMove}}</div>

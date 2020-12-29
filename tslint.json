@@ -73,10 +73,7 @@
     "no-redundant-jsdoc": true,
     "no-switch-case-fall-through": false,
     "no-var-requires": false,
-    "object-literal-key-quotes": [
-      true,
-      "as-needed"
-    ],
+    "object-literal-key-quotes": false,
     "quotemark": [
       true,
       "single"

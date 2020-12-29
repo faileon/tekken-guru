@@ -37,3 +37,10 @@ export const getToggledProperties = <T>(properties: T[], property: T, multiple =
   }
   return res;
 };
+
+// tslint:disable-next-line:no-any
+export const flatten = (arr: any[]): string => {
+  return arr.reduce((flat, toFlatten) => {
+    return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+  }, []);
+};

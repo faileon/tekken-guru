@@ -1,1 +1,13 @@
-<p>input-notation works!</p>
+<ng-container
+  *ngFor="let input of parsedNotation"
+>
+  <ng-container *ngIf="input | isKnownInput; else unknownInput">
+    <!-- image -->
+    <img class="input-image" [src]="input | inputPath" [alt]="input">
+  </ng-container>
+
+  <!-- unknown input or text -->
+  <ng-template #unknownInput>
+    <div class="input-text">{{input}}</div>
+  </ng-template>
+</ng-container>

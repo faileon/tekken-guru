@@ -1,0 +1,11 @@
+@import "src/scss/variables";
+
+:host {
+  display: flex;
+  align-items: center;
+
+  .input-image {
+    height: $input-image-size;
+    width: $input-image-size;
+  }
+}
