@@ -108,10 +108,12 @@
     </div>
 
     <div class="content" content>
+
+
       <!-- actions for auth user - favorite -->
-      <div class="actions">
+      <!--<div class="actions">
         <tg-button [outlined]="false" [icon]="['far','star']" iconSize="2x"></tg-button>
-      </div>
+      </div>-->
 
       <!-- main content with name, notation and hits -->
       <div class="main">
@@ -129,7 +131,6 @@
 
       <!-- video with the move -->
       <tg-video *ngIf="showVideos" [src]="move.video | mediaPath" [poster]="move.video | thumbnailPath"></tg-video>
-      <!--<div>video here {{move.video}}</div>-->
 
       <!--frame data -->
       <div class="frame-data">

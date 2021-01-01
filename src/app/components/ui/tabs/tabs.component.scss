@@ -9,10 +9,13 @@
   > a {
     flex: 1 1 0;
     padding: $xs-padding;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     // mobile first
     @media(min-width: $bp-mobile) {
-      padding: $sm-padding;
+      padding: $xs-padding;
     }
 
     text-align: center;

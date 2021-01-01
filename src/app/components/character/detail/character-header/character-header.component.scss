@@ -12,10 +12,11 @@
     }
 
     .avatar {
-      max-width: $character-avatar-width;
+      max-width: $character-avatar-width-mobile;
       max-height: $character-avatar-height-mobile;
 
       @media(min-width: $bp-mobile) {
+        max-width: $character-avatar-width;
         max-height: $character-avatar-height;
       }
 
@@ -27,9 +28,13 @@
 
     .info {
       display: flex;
-      margin: 0 $lg-margin;
       flex-direction: column;
       justify-content: space-evenly;
+
+      margin: 0 $sm-margin;
+      @media(min-width: $bp-mobile) {
+        margin: 0 $lg-margin;
+      }
 
 
       .difficulty {

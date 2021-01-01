@@ -34,7 +34,10 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: $sm-padding $md-padding 0 $md-padding;
+  padding: $sm-padding $xs-padding 0 $xs-padding;
+  @media(min-width: $bp-mobile) {
+    padding: $sm-padding $md-padding 0 $md-padding;
+  }
 
   > *:not(router-outlet) {
     &:not(:last-child){

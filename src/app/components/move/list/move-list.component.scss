@@ -80,6 +80,11 @@
       flex: 1;
       padding: 0 $xs-padding $xs-padding $xs-padding;
 
+      flex-direction: column;
+      @media(min-width: $bp-mobile) {
+        flex-direction: row;
+      }
+
       .actions {
         display: flex;
         flex-direction: column;
@@ -110,7 +115,15 @@
       }
 
       tg-video {
-        margin-top: -$lg-margin;
+        margin: $sm-margin 0;
+        align-self: center;
+
+
+        @media(min-width: $bp-mobile) {
+          margin-top: -$lg-margin;
+          align-self: flex-start;
+        }
+
       }
 
       .frame-data {
