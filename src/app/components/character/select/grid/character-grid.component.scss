@@ -12,17 +12,17 @@
 
     .character-card {
       width: $character-avatar-width;
-      background-color: darkred;
+      background-color: $secondary-color;
       height: $character-avatar-height;
       margin: $xs-margin;
       cursor: pointer;
 
       &:hover {
-        background-color: green;
+        background-color: $primary-color-highlight;
       }
 
       &.selected {
-        background-color: green;
+        background-color: $primary-color-highlight;
       }
     }
   }

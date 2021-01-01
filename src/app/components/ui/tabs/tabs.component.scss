@@ -3,15 +3,18 @@
 
 :host {
   display: flex;
-  flex-direction: column;
   justify-content: space-evenly;
-  @media(min-width: $bp-mobile) {
-    flex-direction: row;
-  }
+
 
   > a {
     flex: 1 1 0;
-    padding: $sm-padding;
+    padding: $xs-padding;
+
+    // mobile first
+    @media(min-width: $bp-mobile) {
+      padding: $sm-padding;
+    }
+
     text-align: center;
     cursor: pointer;
     border-bottom: 1px solid $secondary-color;

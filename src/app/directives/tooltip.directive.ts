@@ -23,7 +23,7 @@ export class TooltipDirective implements OnDestroy {
     this.overlayRef?.detach();
   }
 
-  @HostListener('mouseover')
+  @HostListener('pointerover')
   show(): void {
     this.overlayRef = this.createOverlayRef();
     const injector = this.createInjector(this.text);
@@ -31,7 +31,7 @@ export class TooltipDirective implements OnDestroy {
     this.overlayRef.attach(portal);
   }
 
-  @HostListener('mouseout')
+  @HostListener('pointerout')
   hide(): void {
     this.overlayRef?.detach();
   }

@@ -38,7 +38,12 @@ body {
 
   > *:not(router-outlet) {
     &:not(:last-child){
-      margin-bottom: $md-margin;
+      margin-bottom: $sm-margin;
+
+      @media(min-width: $bp-mobile) {
+        margin-bottom: $md-margin;
+      }
+
     }
   }
 
@@ -48,22 +53,30 @@ body {
 }
 
 .title {
-  font-size: 1.75rem;
+  font-size: 1rem;
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700;
 
+  @media(min-width: $bp-mobile) {
+    font-size: 1.75rem;
+  }
+
   &.small {
-    font-size: 1rem;
+    font-size: 0.75rem;
+
+    @media(min-width: $bp-mobile) {
+      font-size: 1rem;
+    }
   }
 }
 
 // punishment text colors
 .standing {
-  color: deepskyblue;
+  color: $primary-color-highlight;
 }
 
 .crouching {
-  color: #ffdd4b;
+  color: $ternary-color;
 }
 
 .subtitle {
@@ -83,7 +96,7 @@ body {
   border-radius: 50%;
   width: $size;
   height: $size;
-  background-color: #ff0000;
+  background-color: $secondary-color;
   color: #ffffff;
   text-align: center;
 

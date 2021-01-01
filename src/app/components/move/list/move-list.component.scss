@@ -3,13 +3,16 @@
 
 :host {
   > *:not(:last-child) {
-    margin-bottom: $md-margin;
+    margin-bottom: $sm-margin;
+
+    @media(min-width: $bp-mobile) {
+      margin-bottom: $md-margin;
+    }
   }
 
   .option-bar {
     display: flex;
     align-items: center;
-    padding-top: $xs-padding;
 
     > * {
       margin-right: $md-margin;
@@ -21,11 +24,24 @@
   }
 
   .list {
-    height: calc(100% - 25px - #{$sm-margin} - #{$xs-padding});
+    // calculate the height of virtual scroller: 100% of parent - margin of option bar - height of option bar
+    // mobile:
+    $option-bar-height: 21px;
+    height: calc(100% - #{$sm-margin} - #{$option-bar-height});
+
+    // desktop (different margin)
+    @media(min-width: $bp-mobile) {
+      $option-bar-height: 21px;
+      height: calc(100% - #{$md-margin} - #{$option-bar-height});
+    }
 
 
     tg-card {
-      margin-bottom: $md-margin;
+      margin-bottom: $sm-margin;
+
+      @media(min-width: $bp-mobile) {
+        margin-bottom: $md-margin;
+      }
     }
 
     .header {
@@ -84,11 +100,11 @@
           font-family: 'Roboto Condensed', sans-serif;
 
           .move {
-            color: yellow;
+            color: $primary-color-highlight;
           }
 
           .damage {
-            color: red;
+            color: $secondary-color;
           }
         }
       }
@@ -108,6 +124,7 @@
 
         > table {
           width: 100%;
+
           > tr {
             > td:nth-child(2) {
               text-align: right;
@@ -115,11 +132,11 @@
           }
 
           .positive {
-            color: deepskyblue;
+            color: $primary-color-highlight;
           }
 
           .negative {
-            color: red;
+            color: $secondary-color;
           }
 
 

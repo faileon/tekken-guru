@@ -17,6 +17,7 @@ $scrollbar-width: 8px;
 
 $character-avatar-width: 60px;
 $character-avatar-height: 90px;
+$character-avatar-height-mobile: 45px;
 $input-image-size: 35px;
 
 $card-height: 145px;
@@ -31,11 +32,13 @@ $bp-mobile: 640px;
 /*----------------------------------------------------------
 # COLOURS
 ----------------------------------------------------------*/
-$primary-color-dark: #08212d;
-$primary-color: #1d3557;
+$primary-color-dark: #08212D;
+$primary-color: #1D3557;
 $primary-color-light: #457B9D;
+$primary-color-highlight: #00BFFF;
 
 $secondary-color: #E63946;
+$ternary-color: #FFDD4B;
 
 /*
 $primary-color-dark: #011f41;

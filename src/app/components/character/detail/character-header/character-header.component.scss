@@ -2,7 +2,7 @@
 
 
 :host {
-  margin-bottom: $sm-margin !important;
+  //margin-bottom: $sm-margin !important;
 
   .wrapper {
     display: flex;
@@ -13,7 +13,12 @@
 
     .avatar {
       max-width: $character-avatar-width;
-      max-height: $character-avatar-height;
+      max-height: $character-avatar-height-mobile;
+
+      @media(min-width: $bp-mobile) {
+        max-height: $character-avatar-height;
+      }
+
 
       >img{
         height: 100%;
@@ -26,17 +31,27 @@
       flex-direction: column;
       justify-content: space-evenly;
 
+
       .difficulty {
         display: flex;
         align-items: center;
-        $dot-size: 8px;
         $dot-border-size: 3px;
 
         .dot {
+          $dot-size: 5px;
           height: $dot-size;
           width: $dot-size;
+          margin-right: $xs-margin;
+
+          @media(min-width: $bp-mobile) {
+            $dot-size: 8px;
+            height: $dot-size;
+            width: $dot-size;
+            margin-right: $sm-margin;
+          }
+
           border-radius: 50%;
-          margin-right: $sm-margin;
+
 
           &.easy {
             border: $dot-border-size solid #3DD618;
@@ -53,6 +68,12 @@
 
         .text {
           text-transform: uppercase;
+          font-size: 0.75rem;
+          line-height: 1rem;
+
+          @media(min-width: $bp-mobile) {
+            font-size: 0.85rem;
+          }
         }
       }
     }
