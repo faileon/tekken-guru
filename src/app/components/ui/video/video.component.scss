@@ -1,19 +1,59 @@
 @import "src/scss/variables";
 
 :host {
-  // todo with responsive probably make small/medium/large and change it based on media query
+  $vid-height-mobile: 105px;
+  $vid-width-mobile: 185px;
+
   $vid-height: 124px;
   $vid-width: 214px;
+
+
+  position: relative;
+  display: flex;
 
   video {
     object-fit: fill;
     &.fixed-height {
-      height: $vid-height;
-      width: $vid-width;
+      height: $vid-height-mobile;
+      width: $vid-width-mobile;
 
-      &[poster]{
+      @media(min-width: $bp-mobile){
         height: $vid-height;
         width: $vid-width;
+      }
+
+
+      &[poster]{
+        height: $vid-height-mobile;
+        width: $vid-width-mobile;
+
+        @media(min-width: $bp-mobile){
+          height: $vid-height;
+          width: $vid-width;
+        }
+      }
+    }
+  }
+
+  .controls {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .row {
+      display: flex;
+
+      &.center {
+        flex: 1;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      &.top {
+        justify-content: flex-end;
       }
     }
   }

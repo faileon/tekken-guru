@@ -7,3 +7,26 @@
 >
   <source [src]="src" [type]="mediaType">
 </video>
+
+<div class="controls">
+  <div class="row top">
+    <tg-button [outlined]="false" icon="expand"></tg-button>
+  </div>
+
+  <div class="row center" (pointerenter)="showPlay = true" (pointerout)="showPlay = false" (click)="playVideo()">
+    <tg-button
+      *ngIf="showPlay"
+      style="pointer-events: none"
+      [outlined]="false"
+      [icon]="isPlaying ? 'pause' : 'play'"
+      iconSize="2x"></tg-button>
+  </div>
+
+  <div class="row bottom">
+    <div class="progress">
+      <progress id="progress" value="0" min="0">
+        <span id="progress-bar"></span>
+      </progress>
+    </div>
+  </div>
+</div>

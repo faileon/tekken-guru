@@ -22,7 +22,7 @@ import {SearchBarComponent} from '../../ui/search-bar/search-bar.component';
 export class MoveListComponent implements OnInit, OnDestroy {
   private isDestroyed$ = new Subject<boolean>();
 
-  public showVideos = true; // constructor will flip this to init the text, todo default value from LocalStorage?
+  public showVideos = false; // constructor will flip this to init the text, todo default value from LocalStorage?
   public videoTooltip: string;
 
   @ViewChild('searchBar', {static: true})
