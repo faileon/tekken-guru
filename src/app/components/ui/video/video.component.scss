@@ -26,6 +26,7 @@
 
 
     object-fit: fill;
+    border-radius: $border-radius;
 
     &.fixed-height {
       height: $vid-height-mobile;

@@ -55,7 +55,22 @@ export class AppModule {
 
   constructor(iconLibrary: FaIconLibrary, faConfig: FaConfig) {
     // create icon library to use in app
-    iconLibrary.addIcons(faBars, faTimes, fasStar, farStar, faFilter, faSearch, faSyncAlt, faVideo, faFilm, faChevronLeft, faExpand, faPlay, faPause, faTachometerAlt);
+    iconLibrary.addIcons(
+      faBars,
+      faTimes,
+      fasStar,
+      farStar,
+      faFilter,
+      faSearch,
+      faSyncAlt,
+      faVideo,
+      faFilm,
+      faChevronLeft,
+      faExpand,
+      faPlay,
+      faPause,
+      faTachometerAlt
+    );
     faConfig.fixedWidth = true;
   }
 }
