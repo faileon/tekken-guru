@@ -78,12 +78,12 @@
 
   <div class="right-menu">
     <tg-button
-      [tgTooltip]="videoTooltip"
+      [tgTooltip]="moveService.showVideos ? 'Hide videos' : 'Display videos'"
       icon="video"
       [outlined]="false"
-      [active]="showVideos"
-      (click)="toggleShowVideos()"
-      [toggleable]="true"
+      [active]="moveService.showVideos"
+      (click)="moveService.toggleShowVideos()"
+      toggleable
     ></tg-button>
   </div>
 </div>
@@ -111,27 +111,27 @@
 
 
       <!-- actions for auth user - favorite -->
-      <!--<div class="actions">
-        <tg-button [outlined]="false" [icon]="['far','star']" iconSize="2x"></tg-button>
-      </div>-->
-
-      <!-- main content with name, notation and hits -->
-      <div class="main">
-        <!-- move notation -->
-        <div class="notation">
-          <tg-input-notation [notation]="move.notation"></tg-input-notation>
-        </div>
-        <!-- move hits -->
-        <div class="hits">
-          <div class="move">{{move.hit.move | hitMove}}</div>
-          <div class="damage">{{move.hit.damage | hitDamage}}</div>
-        </div>
+      <div class="actions">
+        <tg-button [outlined]="false" [icon]="['far','star']" iconSize="lg"></tg-button>
       </div>
 
-
       <div class="group">
+        <!-- main content with name, notation and hits -->
+        <div class="main">
+          <!-- move notation -->
+          <div class="notation">
+            <tg-input-notation [notation]="move.notation"></tg-input-notation>
+          </div>
+          <!-- move hits -->
+          <div class="hits">
+            <div class="move">{{move.hit.move | hitMove}}</div>
+            <div class="damage">{{move.hit.damage | hitDamage}}</div>
+          </div>
+        </div>
+
+
         <!-- video with the move -->
-        <tg-video *ngIf="showVideos" [src]="move.video | mediaPath" [poster]="move.video | thumbnailPath"></tg-video>
+        <tg-video *ngIf="moveService.showVideos" [src]="move.video | mediaPath" [poster]="move.video | thumbnailPath"></tg-video>
 
         <!--frame data -->
         <div class="frame-data">

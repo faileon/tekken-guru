@@ -23,11 +23,12 @@ export class ButtonComponent implements OnInit {
     private _toggleable: boolean;
 
     @Input()
-    get toggleable(): boolean {
+    // tslint:disable-next-line:no-any
+    get toggleable(): boolean | any {
         return this._toggleable;
     }
     // tslint:disable-next-line:no-any
-    set toggleable(value) {
+    set toggleable(value: any) {
       this._toggleable = coerceBooleanProperty(value);
     }
 

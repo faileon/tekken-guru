@@ -17,6 +17,7 @@ body {
 
 ::-webkit-scrollbar {
   width: $scrollbar-width; /* width of the entire scrollbar */
+  height: $scrollbar-width;
 }
 
 /*::-webkit-scrollbar-track {

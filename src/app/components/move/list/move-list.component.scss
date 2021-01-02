@@ -80,45 +80,46 @@
       flex: 1;
       padding: 0 $xs-padding $xs-padding $xs-padding;
 
-      flex-direction: column;
-      @media(min-width: $bp-mobile) {
-        flex-direction: row;
-      }
-
       .actions {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        min-width: 52.5px;
+        min-width: 50px;
       }
 
-      .main {
+      .group {
+        flex: 1;
         display: flex;
-        flex-direction: column;
-        margin-right: auto;
-        padding: $sm-padding 0;
-
-        .notation {
-          margin: auto 0;
+        overflow-x: scroll;
+        @media(min-width: $bp-mobile) {
+          overflow-x: initial;
         }
 
-        .hits {
-          font-family: 'Roboto Condensed', sans-serif;
 
-          .move {
-            color: $primary-color-highlight;
+        .main {
+          display: flex;
+          flex-direction: column;
+          margin-right: auto;
+          padding: $sm-padding 0;
+
+
+          .notation {
+            margin: auto 0;
+            min-width: 145px;
           }
 
-          .damage {
-            color: $secondary-color;
+          .hits {
+            font-family: 'Roboto Condensed', sans-serif;
+
+            .move {
+              color: $primary-color-highlight;
+            }
+
+            .damage {
+              color: $secondary-color;
+            }
           }
         }
-      }
-
-      .group{
-        margin-top: auto;
-        display: flex;
-        flex-direction: row;
 
         tg-video {
           margin: 0;
@@ -129,26 +130,16 @@
 
         .frame-data {
           margin-top: auto;
-
-
-          // mobile
-          min-width: initial;
-          padding: 0;
-          flex: 1;
-
-          // desktop
-          @media(min-width: $bp-mobile) {
-            flex: 0;
-            min-width: 205px;
-            padding-left: $xs-padding;
-          }
-
-
-
+          margin-left: $sm-margin;
           font-family: Roboto Condensed, "Helvetica Neue", sans-serif;
           font-weight: 300;
 
+          @media(min-width: $bp-mobile) {
+            min-width: 175px;
+          }
+
           > table {
+            white-space: nowrap;
             width: 100%;
 
             > tr {

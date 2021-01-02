@@ -22,9 +22,6 @@ import {SearchBarComponent} from '../../ui/search-bar/search-bar.component';
 export class MoveListComponent implements OnInit, OnDestroy {
   private isDestroyed$ = new Subject<boolean>();
 
-  public showVideos = false; // constructor will flip this to init the text, todo default value from LocalStorage?
-  public videoTooltip: string;
-
   @ViewChild('searchBar', {static: true})
   private searchBar: SearchBarComponent;
 
@@ -32,7 +29,7 @@ export class MoveListComponent implements OnInit, OnDestroy {
   public movelist!: Move[];
 
   constructor(@SkipSelf() public moveService: MoveService) {
-    this.toggleShowVideos();
+
   }
 
   ngOnInit(): void {
@@ -46,11 +43,6 @@ export class MoveListComponent implements OnInit, OnDestroy {
 
   public trackByMoveId(index: number, move: Move): string {
     return move._id;
-  }
-
-  public toggleShowVideos(): void {
-    this.showVideos = !this.showVideos;
-    this.videoTooltip = this.showVideos ? 'Hide videos' : 'Display videos';
   }
 
   public filterByStartUpFrame(range: NumberRange): void {

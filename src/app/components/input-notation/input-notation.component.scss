@@ -5,7 +5,13 @@
   align-items: center;
 
   .input-image {
-    height: $input-image-size;
-    width: $input-image-size;
+    height: $input-image-size-mobile;
+    width: $input-image-size-mobile;
+
+    @media(min-width: $bp-mobile) {
+      height: $input-image-size;
+      width: $input-image-size;
+    }
+
   }
 }

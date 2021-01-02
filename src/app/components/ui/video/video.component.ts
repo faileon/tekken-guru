@@ -26,7 +26,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   public fixedHeight = true;
 
   public isPlaying = false;
-  public showPlay = false;
+  public showControls = false;
 
   constructor() {
   }
@@ -44,6 +44,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public playVideo(): void {
+    this.showControls = true;
     if (!this.isPlaying) {
       // play and on success set playing to true
       this.videoElement.nativeElement.play().then(_ => this.isPlaying = true);

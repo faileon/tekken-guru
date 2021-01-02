@@ -22,7 +22,8 @@ import {
   faChevronLeft,
   faExpand,
   faPlay,
-  faPause
+  faPause,
+  faTachometerAlt
 } from '@fortawesome/free-solid-svg-icons';
 import {faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 import {ScreenModule} from './screens/screen.module';
@@ -54,7 +55,7 @@ export class AppModule {
 
   constructor(iconLibrary: FaIconLibrary, faConfig: FaConfig) {
     // create icon library to use in app
-    iconLibrary.addIcons(faBars, faTimes, fasStar, farStar, faFilter, faSearch, faSyncAlt, faVideo, faFilm, faChevronLeft, faExpand, faPlay, faPause);
+    iconLibrary.addIcons(faBars, faTimes, fasStar, farStar, faFilter, faSearch, faSyncAlt, faVideo, faFilm, faChevronLeft, faExpand, faPlay, faPause, faTachometerAlt);
     faConfig.fixedWidth = true;
   }
 }

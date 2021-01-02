@@ -7,11 +7,7 @@
   border-radius: $border-radius;
 
   &.fixed-height {
-    height: $card-height-mobile;
-
-    @media(min-width: $bp-mobile) {
-      height: $card-height;
-    }
+    height: $card-height;
 
     .header {
       min-height: $card-header-min-height;
