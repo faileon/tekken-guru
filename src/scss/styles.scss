@@ -17,7 +17,7 @@ body {
 
 ::-webkit-scrollbar {
   width: $scrollbar-width; /* width of the entire scrollbar */
-  height: $scrollbar-width;
+  height: $scrollbar-height;
 }
 
 /*::-webkit-scrollbar-track {
@@ -42,11 +42,7 @@ body {
 
   > *:not(router-outlet) {
     &:not(:last-child){
-      margin-bottom: $sm-margin;
-
-      @media(min-width: $bp-mobile) {
-        margin-bottom: $md-margin;
-      }
+      margin-bottom: $md-margin;
 
     }
   }

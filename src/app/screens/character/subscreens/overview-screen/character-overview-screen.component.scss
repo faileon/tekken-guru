@@ -3,7 +3,8 @@
 :host {
   height: 100%;
   overflow-y: auto;
-  > *:not(:last-child) {
+  padding-right: $xs-padding;
+  > * {
     margin-bottom: $md-margin;
   }
 

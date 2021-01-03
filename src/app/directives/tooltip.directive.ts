@@ -23,16 +23,16 @@ export class TooltipDirective implements OnDestroy {
     this.overlayRef?.detach();
   }
 
-  @HostListener('pointerover')
-  show(): void {
+  @HostListener('mouseenter', ['$event'])
+  show(event: MouseEvent): void {
     this.overlayRef = this.createOverlayRef();
     const injector = this.createInjector(this.text);
     const portal = new ComponentPortal(TooltipComponent, null, injector);
     this.overlayRef.attach(portal);
   }
 
-  @HostListener('pointerout')
-  hide(): void {
+  @HostListener('mouseleave', ['$event'])
+  hide(event: MouseEvent): void {
     this.overlayRef?.detach();
   }
 

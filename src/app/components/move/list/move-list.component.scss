@@ -3,11 +3,7 @@
 
 :host {
   > *:not(:last-child) {
-    margin-bottom: $sm-margin;
-
-    @media(min-width: $bp-mobile) {
-      margin-bottom: $md-margin;
-    }
+    margin-bottom: $md-margin;
   }
 
   .option-bar {
@@ -25,16 +21,8 @@
 
   .list {
     // calculate the height of virtual scroller: 100% of parent - margin of option bar - height of option bar
-    // mobile:
     $option-bar-height: 21px;
-    height: calc(100% - #{$sm-margin} - #{$option-bar-height});
-
-    // desktop (different margin)
-    @media(min-width: $bp-mobile) {
-      $option-bar-height: 21px;
-      height: calc(100% - #{$md-margin} - #{$option-bar-height});
-    }
-
+    height: calc(100% - #{$md-margin} - #{$option-bar-height});
 
     tg-card {
       margin-bottom: $sm-margin;
@@ -91,8 +79,11 @@
         flex: 1;
         display: flex;
         overflow-x: scroll;
+        padding-bottom: $xs-padding;
+
         @media(min-width: $bp-mobile) {
           overflow-x: initial;
+          padding-bottom: 0;
         }
 
 
@@ -100,12 +91,11 @@
           display: flex;
           flex-direction: column;
           margin-right: auto;
-          padding: $sm-padding 0;
 
 
           .notation {
             margin: auto 0;
-            min-width: 145px;
+            //min-width: 125px;
           }
 
           .hits {
@@ -122,9 +112,9 @@
         }
 
         tg-video {
-          margin: 0;
+          margin: 0 0 0 $sm-margin;
           @media(min-width: $bp-mobile) {
-            margin: -$lg-margin 0 0 0;
+            margin: -$sm-margin 0 0 $sm-margin;
           }
         }
 

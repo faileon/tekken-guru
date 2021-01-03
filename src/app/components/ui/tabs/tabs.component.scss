@@ -12,10 +12,11 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 0.775rem;
 
     // mobile first
     @media(min-width: $bp-mobile) {
-      padding: $xs-padding;
+      font-size: 0.85rem;
     }
 
     text-align: center;

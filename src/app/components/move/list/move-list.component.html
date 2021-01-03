@@ -131,7 +131,11 @@
 
 
         <!-- video with the move -->
-        <tg-video *ngIf="moveService.showVideos" [src]="move.video | mediaPath" [poster]="move.video | thumbnailPath"></tg-video>
+        <tg-video
+          *ngIf="moveService.showVideos"
+          [src]="move.video | mediaPath"
+          [poster]="move.video | thumbnailPath"
+        ></tg-video>
 
         <!--frame data -->
         <div class="frame-data">
