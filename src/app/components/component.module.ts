@@ -26,11 +26,11 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {MovePropertiesFilterComponent} from './ui/filters/move-properties-filter/move-properties-filter.component';
 import {DirectiveModule} from '../directives/directive.module';
 import {VirtualScrollerModule} from 'ngx-virtual-scroller';
-import { TooltipComponent } from './ui/tooltip/tooltip.component';
-import { HitLevelFilterComponent } from './ui/filters/hit-level-filter/hit-level-filter.component';
-import { EmptyCardComponent } from './common/empty-card/empty-card.component';
-import { NavigationBackComponent } from './ui/navigation-back/navigation-back.component';
-import { NamedRouterComponent } from './matchup/named-router/named-router.component';
+import {TooltipComponent} from './ui/tooltip/tooltip.component';
+import {HitLevelFilterComponent} from './ui/filters/hit-level-filter/hit-level-filter.component';
+import {EmptyCardComponent} from './common/empty-card/empty-card.component';
+import {NavigationBackComponent} from './ui/navigation-back/navigation-back.component';
+import {NamedRouterComponent} from './matchup/named-router/named-router.component';
 
 
 @NgModule({
@@ -59,40 +59,40 @@ import { NamedRouterComponent } from './matchup/named-router/named-router.compon
     NavigationBackComponent,
     NamedRouterComponent,
   ],
-    imports: [
-        CommonModule,
-        PipeModule,
-        Ng5SliderModule,
-        FontAwesomeModule,
-        ReactiveFormsModule,
-        RoutingModule,
-        FlexLayoutModule,
-        DirectiveModule,
-        VirtualScrollerModule,
-        FormsModule
-    ],
-    exports: [
-        InputNotationComponent,
-        CharacterGridComponent,
-        ButtonComponent,
-        CharacterHeaderComponent,
-        MoveGridComponent,
-        TabsComponent,
-        CardComponent,
-        VideoComponent,
-        PopOverButtonComponent,
-        SearchBarComponent,
-        SliderComponent,
-        FilterTemplateComponent,
-        StartUpFrameFilterComponent,
-        NormalFrameFilterComponent,
-        BlockFrameFilterComponent,
-        CounterFrameFilterComponent,
-        MovePropertiesFilterComponent,
-        MoveListComponent,
-        NavigationBackComponent,
-        NamedRouterComponent,
-    ]
+  imports: [
+    CommonModule,
+    PipeModule,
+    Ng5SliderModule,
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    RoutingModule,
+    FlexLayoutModule,
+    DirectiveModule,
+    VirtualScrollerModule,
+    FormsModule,
+  ],
+  exports: [
+    InputNotationComponent,
+    CharacterGridComponent,
+    ButtonComponent,
+    CharacterHeaderComponent,
+    MoveGridComponent,
+    TabsComponent,
+    CardComponent,
+    VideoComponent,
+    PopOverButtonComponent,
+    SearchBarComponent,
+    SliderComponent,
+    FilterTemplateComponent,
+    StartUpFrameFilterComponent,
+    NormalFrameFilterComponent,
+    BlockFrameFilterComponent,
+    CounterFrameFilterComponent,
+    MovePropertiesFilterComponent,
+    MoveListComponent,
+    NavigationBackComponent,
+    NamedRouterComponent,
+  ]
 })
 export class ComponentModule {
 }

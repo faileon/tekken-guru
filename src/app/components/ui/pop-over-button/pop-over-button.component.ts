@@ -27,6 +27,9 @@ export class PopOverButtonComponent implements OnInit, AfterViewInit, OnDestroy 
   @Input()
   public title?: string;
 
+  @Input()
+  public withHeader = true;
+
   @ViewChild('content')
   private content: TemplateRef<unknown>;
 

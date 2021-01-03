@@ -1,4 +1,6 @@
-import {AfterViewInit, Component, ElementRef, HostBinding, HostListener, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Options} from 'ng5-slider';
+import {ButtonComponent} from '../button/button.component';
 
 @Component({
   selector: 'tg-video',
@@ -40,8 +42,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   public fixedHeight = true;
 
   public isPlaying = false;
-  public showControls = false;
-
+  public isPlaybackOverlayOpen = false;
 
   constructor() {
 
@@ -52,11 +53,21 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    // setup video -> seekbar interaction
     this.videoElementRef.nativeElement.ontimeupdate = () => {
       const {currentTime, duration} = this.videoElementRef.nativeElement;
       const {max} = this.seekbarElementRef.nativeElement;
       const newValue = currentTime / duration * parseInt(max, 10);
       this.seekbarElementRef.nativeElement.value = newValue.toString();
+    };
+
+    // setup seekbar -> video interaction
+    this.seekbarElementRef.nativeElement.oninput = () => {
+
+      const {duration} = this.videoElementRef.nativeElement;
+      const {value, max} = this.seekbarElementRef.nativeElement;
+
+      this.videoElementRef.nativeElement.currentTime = duration * parseInt(value, 10) / parseInt(max, 10);
     };
   }
 
@@ -64,8 +75,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  public playVideo(): void {
-    this.showControls = true;
+  public togglePlay(): void {
     if (!this.isPlaying) {
       // play and on success set playing to true
       this.videoElementRef.nativeElement.play().then(_ => this.isPlaying = true);
@@ -79,6 +89,16 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       this.videoElementRef.nativeElement.pause();
       this.isPlaying = false;
     }
+  }
+
+  public toggleExpand(event: Event): void {
+    event.stopPropagation();
+  }
+
+  public onPlaybackSpeedChange(event: Event): void {
+    const {value} = event.target as HTMLInputElement;
+
+    this.videoElementRef.nativeElement.playbackRate = parseFloat(value);
   }
 
 }

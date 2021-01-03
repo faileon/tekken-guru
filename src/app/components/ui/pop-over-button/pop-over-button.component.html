@@ -6,7 +6,7 @@
 
 <ng-template #content>
   <div class="content">
-    <div class="header">
+    <div class="header" *ngIf="withHeader">
       <span class="title small">{{title}}</span>
       <ng-content select="[buttons]"></ng-content>
       <tg-button (click)="closeContent()" class="close-btn" icon="times" [outlined]="false"></tg-button>

@@ -1,4 +1,4 @@
-<video preload="none"
+<video preload="metadata"
        [poster]="poster"
        #videoElement
        [class.fixed-height]="fixedHeight"
@@ -7,11 +7,37 @@
   <source [src]="src" [type]="mediaType">
 </video>
 
-<div class="controls" (click)="playVideo()">
+<div class="controls" (click)="togglePlay();">
   <!-- TOP ROW: playback speed, expand -->
   <div class="row top">
-    <tg-button id="playback-rate" [outlined]="false" [icon]="playbackSpeedIcon"></tg-button>
-    <tg-button id="expand" [outlined]="false" icon="expand"></tg-button>
+    <!-- playback speed -->
+    <tg-button
+      id="playback-speed-btn"
+      (outOfBoundsClicked)="isPlaybackOverlayOpen = false"
+      [outlined]="false"
+      [icon]="playbackSpeedIcon"
+      (click)="isPlaybackOverlayOpen = !isPlaybackOverlayOpen; $event.stopPropagation()"
+    >
+      <div *ngIf="isPlaybackOverlayOpen" class="playback-speed-pop-over">
+        <span class="text">Playback speed: {{videoElement.playbackRate}}x</span>
+        <input
+          (click)="$event.stopPropagation()"
+          class="tg-range" type="range"
+          min="0.1"
+          max="1"
+          step="0.1"
+          (input)="onPlaybackSpeedChange($event)"
+          [value]="videoElement.playbackRate">
+      </div>
+    </tg-button>
+
+    <!-- expand -->
+    <tg-button
+      id="expand"
+      [outlined]="false"
+      (click)="toggleExpand($event)"
+      icon="expand">
+    </tg-button>
   </div>
 
   <!-- CENTER ROW: play/pause display -->
@@ -20,20 +46,17 @@
   </div>
 
   <!-- BOTTOM ROW: track bar -->
-  <!-- todo https://www.creativebloq.com/html5/build-custom-html5-video-player-9134473,
-  https://stackoverflow.com/questions/41953604/html5-video-custom-additional-seek-bar,
-  https://www.sitepoint.com/community/t/how-to-make-custom-html5-video-player-with-custom-seek-bar/301705
-  -->
   <div class="row bottom">
     <input
-      id="seekbar"
+      class="tg-range"
       #seekbar
       type="range"
       min="0"
       max="100"
       value="0"
       aria-label="Video seekbar"
-      
+      (click)="$event.stopPropagation()"
+
     >
   </div>
 

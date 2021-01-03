@@ -1,6 +1,13 @@
 @import '~@angular/cdk/overlay-prebuilt.css';
 @import "./variables";
 
+@font-face {
+  font-family: Tarrget;
+  src: url("/assets/fonts/tarrget.ttf") format('truetype');
+  src: url("/assets/fonts/tarrget.woff") format('woff2');
+  src: url("/assets/fonts/tarrget.woff") format('woff');
+}
+
 body {
   margin: 0;
   overflow: hidden;
@@ -41,7 +48,7 @@ body {
   }
 
   > *:not(router-outlet) {
-    &:not(:last-child){
+    &:not(:last-child) {
       margin-bottom: $md-margin;
 
     }
@@ -125,3 +132,98 @@ body {
   height: 100%;
 }
 
+.tg-range {
+  $focus-background: #81acc7;
+  $thumb-size: 15px;
+  $track-height: 5px;
+  $track-border-radius: 10px;
+  width: 100%;
+  margin: 5px 0;
+  background-color: transparent;
+  // -webkit-appearance: none; // this fcks up the horizontal scroll
+
+  &:focus {
+    outline: none;
+    &::-webkit-slider-runnable-track {
+      background: $focus-background;
+    }
+  }
+
+  &::-webkit-slider-runnable-track {
+    background: $primary-color-light;
+    border: 0;
+    border-radius: $track-border-radius;
+    width: 100%;
+    height: $track-height;
+    cursor: pointer;
+  }
+
+  &::-webkit-slider-thumb {
+    margin-top: -5px;
+    width: $thumb-size;
+    height: $thumb-size;
+    background: $secondary-color;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-appearance: none;
+  }
+
+  &::-moz-range-track {
+    background: $primary-color-light;
+    border: 0;
+    border-radius: $track-border-radius;
+    width: 100%;
+    height: $track-height;
+    cursor: pointer;
+  }
+
+  &::-moz-range-thumb {
+    width: $thumb-size;
+    height: $thumb-size;
+    background: $secondary-color;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  &::-ms-track {
+    background: transparent;
+    border-color: transparent;
+    border-width: $track-height 0;
+    color: transparent;
+    width: 100%;
+    height: $track-height;
+    cursor: pointer;
+  }
+
+  &::-ms-fill-lower {
+    background: #264356;
+    border: 0;
+    border-radius: 20px;
+    &:focus{
+      background: $primary-color-light;
+    }
+  }
+
+  &::-ms-fill-upper {
+    background: $primary-color-light;
+    border: 0;
+    border-radius: 20px;
+    &:focus{
+      background: $focus-background;
+    }
+  }
+
+  &::-ms-thumb {
+    width: $thumb-size;
+    height: $thumb-size;
+    background: $secondary-color;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: 0px;
+    /*Needed to keep the Edge thumb centred*/
+  }
+
+}
