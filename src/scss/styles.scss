@@ -142,7 +142,7 @@ body {
   background-color: transparent;
 
   // this combination works on mobile that prevents scrolling
-  -webkit-appearance: media-slider;
+  -webkit-appearance: sliderthumb-horizontal; //media-slider
   @media(min-width: $bp-mobile) {
     -webkit-appearance: none;
   }

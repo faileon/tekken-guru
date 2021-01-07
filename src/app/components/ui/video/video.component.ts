@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Options} from 'ng5-slider';
 import {ButtonComponent} from '../button/button.component';
 
@@ -42,9 +42,15 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   public fixedHeight = true;
 
   public isPlaying = false;
+  public isFullscreen = false;
   public isPlaybackOverlayOpen = false;
 
-  constructor() {
+  @HostListener('fullscreenchange', []) fullScreen(): void {
+    this.isFullscreen = !!document.fullscreenElement;
+  }
+
+
+  constructor(private elementRef: ElementRef<HTMLElement>) {
 
   }
 
@@ -91,8 +97,18 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  public toggleExpand(event: Event): void {
+  public async toggleExpand(event: Event): Promise<void> {
     event.stopPropagation();
+    try {
+      if (this.isFullscreen) {
+        await document.exitFullscreen();
+      } else {
+        await this.elementRef.nativeElement.requestFullscreen({navigationUI: 'hide'});
+      }
+    } catch (e) {
+      console.log('Error toggling fullscreen.', e);
+    }
+
   }
 
   public onPlaybackSpeedChange(event: Event): void {

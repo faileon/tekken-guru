@@ -9,7 +9,7 @@
     <div class="header" *ngIf="withHeader">
       <span class="title small">{{title}}</span>
       <ng-content select="[buttons]"></ng-content>
-      <tg-button (click)="closeContent()" class="close-btn" icon="times" [outlined]="false"></tg-button>
+      <tg-button (click)="overlayRef.detach()" class="close-btn" icon="times" [outlined]="false"></tg-button>
     </div>
     <ng-content></ng-content>
   </div>

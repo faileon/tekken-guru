@@ -21,6 +21,7 @@ export class TooltipDirective implements OnDestroy {
 
   ngOnDestroy(): void {
     this.overlayRef?.detach();
+    this.overlayRef?.dispose();
   }
 
   @HostListener('mouseenter', ['$event'])

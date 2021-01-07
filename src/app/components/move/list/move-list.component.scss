@@ -114,7 +114,7 @@
         tg-video {
           margin: 0 0 0 $sm-margin;
           @media(min-width: $bp-mobile) {
-            margin: -$sm-margin 0 0 $sm-margin;
+            margin: -$lg-margin 0 0 $sm-margin;
           }
         }
 

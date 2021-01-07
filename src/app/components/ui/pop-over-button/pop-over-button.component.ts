@@ -33,14 +33,14 @@ export class PopOverButtonComponent implements OnInit, AfterViewInit, OnDestroy 
   @ViewChild('content')
   private content: TemplateRef<unknown>;
 
-  private overlayRef: OverlayRef;
+  public overlayRef: OverlayRef;
   private portal: TemplatePortal;
 
   @HostListener('document:mousedown', ['$event'])
   private outsideClick(event: MouseEvent): void {
     // @ts-ignore
-    if (!this.overlayRef.hostElement.contains(event.target)) {
-      this.closeContent();
+    if (!this.overlayRef.hostElement?.contains(event.target)) {
+      this.overlayRef?.detach();
     }
   }
 
@@ -65,7 +65,8 @@ export class PopOverButtonComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngOnDestroy(): void {
-    this.closeContent();
+    this.overlayRef?.detach();
+    this.overlayRef?.dispose();
   }
 
   ngAfterViewInit(): void {
@@ -76,10 +77,6 @@ export class PopOverButtonComponent implements OnInit, AfterViewInit, OnDestroy 
     if (!this.overlayRef?.hasAttached()) {
       this.overlayRef?.attach(this.portal);
     }
-  }
-
-  public closeContent(): void {
-    this.overlayRef?.detach();
   }
 
 }

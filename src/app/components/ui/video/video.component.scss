@@ -1,31 +1,25 @@
 @import "src/scss/variables";
 
 :host {
-  $vid-height-mobile: 105px;
-  $vid-width-mobile: 185px;
+  $vid-height-mobile: 115px;
+  $vid-width-mobile: 204px;
 
-  $vid-height: 124px;
-  $vid-width: 214px;
+  $vid-height: 140px;
+  $vid-width: 249px;
 
 
   position: relative;
   display: flex;
+  cursor: pointer;
 
   video {
-    /*&::-webkit-media-controls-fullscreen-button {
-      display: none;
-    }
-
-    &::-webkit-media-controls-volume-control-container {
-      display: none;
-    }
-
-    &::-webkit-media-controls-mute-button {
-      display: none;
-    }*/
-
-
     object-fit: fill;
+
+    &.fullscreen {
+      object-fit: scale-down;
+      width: 100% !important;
+      height: auto !important;
+    }
     border-radius: $border-radius;
 
     &.fixed-height {
