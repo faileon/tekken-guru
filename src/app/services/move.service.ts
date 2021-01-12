@@ -219,50 +219,55 @@ export class MoveService implements OnDestroy {
                   byCounterProps,
                   byMoveProps,
                   byHitLevels,
-                  withText
                 ].filter(f => f).length;
 
-                // no filter, just return everything
-                if (this.activeFiltersCount === 0) {
+                // no filters used and not looking for text, just return everything
+                if (this.activeFiltersCount === 0 && !withText) {
                   return data;
                 }
 
                 const searchedMoveIds = searchIndex.search(searchText, {expand: true}).map(item => item.ref);
-                console.log(`searching for "${searchText}" yielded the following results: ${searchedMoveIds}`);
+                // console.log('searching for', searchText);
 
                 // filter moves
                 return data.filter(move => {
                   const satisfiesFilter: boolean[] = [];
-                  const {_id} = move;
-                  const {startUp, onHit, onCounterHit, onBlock} = move.frames;
+                  const {_id, notation} = move;
+                  const {startUp, onHit, onCounterHit, onBlock} = move.frameData;
 
                   if (withText) {
-                    // best of 2 worlds, elastic does not work very well with "/" and ",'
-                    satisfiesFilter.push(searchedMoveIds.includes(_id));
+                    // notation search - strip both texts of [whitespace, /, + and ,] then look for the parts in the notation text
+                    const reg = /[\s\/+,]/g;
+                    const strippedNotation = notation.replace(reg, '');
+                    const strippedSearchText = searchText.replace(reg, '');
+                    const isPartOfNotation = strippedNotation.includes(strippedSearchText);
+
+                    // combine it with elastic
+                    satisfiesFilter.push(searchedMoveIds.includes(_id) || isPartOfNotation);
                   }
 
                   if (byStartupFrame) {
-                    satisfiesFilter.push(satisfiesRangeFilter(startUpRange, startUp, DEF_STARTUP_MIN_VAL, DEF_STARTUP_MAX_VAL));
+                    satisfiesFilter.push(satisfiesRangeFilter(startUpRange, [startUp.frames], DEF_STARTUP_MIN_VAL, DEF_STARTUP_MAX_VAL));
                   }
 
                   if (byNormalFrame) {
-                    satisfiesFilter.push(satisfiesRangeFilter(normalRange, onHit, DEF_NORMAL_MIN_VAL, DEF_NORMAL_MAX_VAL));
+                    satisfiesFilter.push(satisfiesRangeFilter(normalRange, onHit.frames, DEF_NORMAL_MIN_VAL, DEF_NORMAL_MAX_VAL));
                   }
 
                   if (byCounterFrame) {
-                    satisfiesFilter.push(satisfiesRangeFilter(counterRange, onCounterHit, DEF_COUNTER_MIN_VAL, DEF_COUNTER_MAX_VAL));
+                    satisfiesFilter.push(satisfiesRangeFilter(counterRange, onCounterHit.frames, DEF_COUNTER_MIN_VAL, DEF_COUNTER_MAX_VAL));
                   }
 
                   if (byBlockFrame) {
-                    satisfiesFilter.push(satisfiesRangeFilter(blockRange, onBlock, DEF_BLOCK_MIN_VAL, DEF_BLOCK_MAX_VAL));
+                    satisfiesFilter.push(satisfiesRangeFilter(blockRange, onBlock.frames, DEF_BLOCK_MIN_VAL, DEF_BLOCK_MAX_VAL));
                   }
 
                   if (byNormalProps) {
-                    satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(normalProps, move.hit.onHit));
+                    satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(normalProps, onHit.property));
                   }
 
                   if (byCounterProps) {
-                    satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(counterProps, move.hit.onCounterHit));
+                    satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(counterProps, onCounterHit.property));
                   }
 
                   if (byMoveProps) {

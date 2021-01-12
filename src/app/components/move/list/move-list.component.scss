@@ -91,6 +91,7 @@
           display: flex;
           flex-direction: column;
           margin-right: auto;
+          white-space: nowrap;
 
 
           .notation {
@@ -112,15 +113,14 @@
         }
 
         tg-video {
-          margin: 0 0 0 $sm-margin;
+          margin: 0 $lg-margin;
           @media(min-width: $bp-mobile) {
-            margin: -$lg-margin 0 0 $sm-margin;
+            margin: -$lg-margin $md-margin 0 0;
           }
         }
 
         .frame-data {
           margin-top: auto;
-          margin-left: $sm-margin;
           font-family: Roboto Condensed, "Helvetica Neue", sans-serif;
           font-weight: 300;
 
@@ -133,8 +133,15 @@
             width: 100%;
 
             > tr {
-              > td:nth-child(2) {
-                text-align: right;
+
+              > td {
+                &.right-aligned {
+                  text-align: right;
+                }
+
+                > span.hit-property {
+                  font-size: 0.75rem;
+                }
               }
             }
 

@@ -128,7 +128,7 @@ body {
 }
 
 .subscreen {
-  overflow: hidden;
+  overflow: visible; // because of badge on filter, alternatively set padding instead of margin to option-bar in tg-movelist
   height: 100%;
 }
 
@@ -142,7 +142,7 @@ body {
   background-color: transparent;
 
   // this combination works on mobile that prevents scrolling
-  -webkit-appearance: sliderthumb-horizontal; //media-slider
+  -webkit-appearance: media-slider;
   @media(min-width: $bp-mobile) {
     -webkit-appearance: none;
   }

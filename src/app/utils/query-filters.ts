@@ -9,20 +9,23 @@ import {
 } from '../config/default-frames.config';
 
 
-export const satisfiesRangeFilter = (range: NumberRange, property: number, lowerBound: number, upperBound: number): boolean => {
+export const satisfiesRangeFilter = (range: NumberRange, property: number[], lowerBound: number, upperBound: number): boolean => {
   const {to, from} = range;
 
   // (-inf, to>
   if (from === lowerBound && to !== upperBound) {
-    return property <= to;
+    // return property <= to;
+    return property.some(n => n <= to);
   }
   // <from, +inf)
   else if (from !== lowerBound && to === upperBound) {
-    return property >= from;
+    // return property >= from;
+    return property.some(n => n >= from);
   }
   // <from, to>
   else {
-    return property >= from && property <= to;
+    // return property >= from && property <= to;
+    return property.some(n => n >= from && n <= to);
   }
 };
 

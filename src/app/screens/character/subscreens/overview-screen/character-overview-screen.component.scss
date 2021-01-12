@@ -4,6 +4,7 @@
   height: 100%;
   overflow-y: auto;
   padding-right: $xs-padding;
+
   > * {
     margin-bottom: $md-margin;
   }
@@ -17,16 +18,32 @@
     list-style-position: inside;
   }
 
-  .pros-cons {
+  .group {
     display: flex;
-    padding-bottom: $md-padding;
+    flex-direction: column;
+
 
     > * {
       flex: 1;
+      margin-bottom: $md-margin;
     }
 
-    > *:not(:last-child) {
-      margin-right: $md-margin;
+    @media(min-width: $bp-mobile) {
+      flex-direction: row;
+
+      > * {
+        margin-bottom: 0;
+
+        &:first-child {
+          margin-right: $sm-margin;
+        }
+
+        &:nth-child(2) {
+          margin-left: $sm-margin;
+        }
+      }
     }
+
+
   }
 }

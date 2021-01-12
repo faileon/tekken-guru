@@ -108,8 +108,6 @@
     </div>
 
     <div class="content" content>
-
-
       <!-- actions for auth user - favorite -->
       <div class="actions">
         <tg-button [outlined]="false" [icon]="['far','star']" iconSize="lg"></tg-button>
@@ -142,54 +140,69 @@
           <table>
             <tr>
               <td>Start:</td>
-              <td>{{move.frames.startUp}}</td>
+              <td
+                class="right-aligned"
+                [colSpan]="move.frameData.onBlock.frames.length">
+                {{move.frameData.startUp.frames}}
+              </td>
             </tr>
 
             <tr>
               <td>Block:</td>
-              <td>
-              <span [class.positive]="move.frames.onBlock > 0"
-                    [class.negative]="move.frames.onBlock < 0">
-                {{move.frames.onBlock}}
-              </span>
-                <span *ngIf="move.hit.onBlock">
-              ({{move.hit.onBlock}})
-            </span>
-              </td>
+              <ng-container *ngFor="let blockFrame of move.frameData.onBlock.frames; index as i">
+                <td class="right-aligned">
+                  <span class="hit-property" *ngIf="move.frameData.onBlock.property[i].length > 0">
+                    {{move.frameData.onBlock.property[i]}}
+                  </span>
 
+                  <span [class.positive]="blockFrame > 0"
+                        [class.negative]="blockFrame < 0">
+                    {{blockFrame}}
+                  </span>
+                </td>
+              </ng-container>
             </tr>
 
             <tr>
               <td>Hit:</td>
-              <td>
-              <span [class.positive]="move.frames.onHit > 0"
-                    [class.negative]="move.frames.onHit < 0">
-                {{move.frames.onHit}}
-              </span>
-                <span *ngIf="move.hit.onHit">
-              ({{move.hit.onHit}})
-            </span>
-              </td>
+              <ng-container *ngFor="let hitFrame of move.frameData.onHit.frames; index as i">
+                <td class="right-aligned">
+                  <span class="hit-property" *ngIf="move.frameData.onHit.property[i].length > 0">
+                    {{move.frameData.onHit.property[i]}}
+                  </span>
+
+                  <span [class.positive]="hitFrame > 0"
+                        [class.negative]="hitFrame < 0">
+                    {{hitFrame}}
+                  </span>
+                </td>
+              </ng-container>
 
             </tr>
 
             <tr>
               <td>Counter hit:</td>
-              <td>
-              <span [class.positive]="move.frames.onCounterHit > 0"
-                    [class.negative]="move.frames.onCounterHit < 0">
-                {{move.frames.onCounterHit}}
-              </span>
-                <span *ngIf="move.hit.onCounterHit">
-              ({{move.hit.onCounterHit}})
-            </span>
-              </td>
+              <ng-container *ngFor="let counterHitFrame of move.frameData.onCounterHit.frames; index as i">
+                <td class="right-aligned">
+                  <span class="hit-property" *ngIf="move.frameData.onCounterHit.property[i].length > 0">
+                    {{move.frameData.onCounterHit.property[i]}}
+                  </span>
 
+                  <span [class.positive]="counterHitFrame > 0"
+                        [class.negative]="counterHitFrame < 0">
+                    {{counterHitFrame}}
+                  </span>
+                </td>
+              </ng-container>
             </tr>
 
             <tr *ngIf="move.punishment">
               <td>Punish:</td>
-              <td [innerHTML]="move.punishment | punishmentText">
+              <td
+                class="right-aligned"
+                [innerHTML]="move.punishment | punishmentText"
+                [colSpan]="move.frameData.onBlock.frames.length"
+              >
               </td>
             </tr>
           </table>
