@@ -147,54 +147,23 @@
               </td>
             </tr>
 
-            <tr>
-              <td>Block:</td>
-              <ng-container *ngFor="let blockFrame of move.frameData.onBlock.frames; index as i">
-                <td class="right-aligned">
-                  <span class="hit-property" *ngIf="move.frameData.onBlock.property[i].length > 0">
-                    {{move.frameData.onBlock.property[i]}}
-                  </span>
+            <!-- ON BLOCK -->
+            <ng-container
+              [ngTemplateOutlet]="frameDataRow"
+              [ngTemplateOutletContext]="{data:{title:'Block:', frames: move.frameData.onBlock.frames, property: move.frameData.onBlock.property}}"
+            ></ng-container>
 
-                  <span [class.positive]="blockFrame > 0"
-                        [class.negative]="blockFrame < 0">
-                    {{blockFrame}}
-                  </span>
-                </td>
-              </ng-container>
-            </tr>
+            <!-- ON HIT -->
+            <ng-container
+              [ngTemplateOutlet]="frameDataRow"
+              [ngTemplateOutletContext]="{data:{title:'Hit:', frames: move.frameData.onHit.frames, property: move.frameData.onHit.property}}"
+            ></ng-container>
 
-            <tr>
-              <td>Hit:</td>
-              <ng-container *ngFor="let hitFrame of move.frameData.onHit.frames; index as i">
-                <td class="right-aligned">
-                  <span class="hit-property" *ngIf="move.frameData.onHit.property[i].length > 0">
-                    {{move.frameData.onHit.property[i]}}
-                  </span>
-
-                  <span [class.positive]="hitFrame > 0"
-                        [class.negative]="hitFrame < 0">
-                    {{hitFrame}}
-                  </span>
-                </td>
-              </ng-container>
-
-            </tr>
-
-            <tr>
-              <td>Counter hit:</td>
-              <ng-container *ngFor="let counterHitFrame of move.frameData.onCounterHit.frames; index as i">
-                <td class="right-aligned">
-                  <span class="hit-property" *ngIf="move.frameData.onCounterHit.property[i].length > 0">
-                    {{move.frameData.onCounterHit.property[i]}}
-                  </span>
-
-                  <span [class.positive]="counterHitFrame > 0"
-                        [class.negative]="counterHitFrame < 0">
-                    {{counterHitFrame}}
-                  </span>
-                </td>
-              </ng-container>
-            </tr>
+            <!-- ON COUNTER HIT -->
+            <ng-container
+              [ngTemplateOutlet]="frameDataRow"
+              [ngTemplateOutletContext]="{data:{title:'Counter hit:', frames: move.frameData.onCounterHit.frames, property: move.frameData.onCounterHit.property}}"
+            ></ng-container>
 
             <tr *ngIf="move.punishment">
               <td>Punish:</td>
@@ -216,4 +185,26 @@
 <!-- EMPTY LIST -->
 <ng-template #noMoves>
   <tg-empty-card></tg-empty-card>
+</ng-template>
+
+<!-- FRAME DATA ROW data:{
+title:string,
+frames: number[],
+property: string[]}
+-->
+<ng-template #frameDataRow let-data="data">
+  <tr>
+    <td>{{data.title}}</td>
+    <ng-container *ngFor="let blockFrame of data.frames; index as i; last as isLast">
+      <td class="right-aligned">
+                  <span class="hit-property" *ngIf="data.property[i].length > 0">
+                    {{data.property[i]}}
+                  </span>
+
+        <span [class.positive]="blockFrame > 0"
+              [class.negative]="blockFrame < 0">{{blockFrame}}</span>
+        <ng-container *ngIf="!isLast">,</ng-container>
+      </td>
+    </ng-container>
+  </tr>
 </ng-template>

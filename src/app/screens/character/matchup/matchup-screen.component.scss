@@ -24,22 +24,22 @@
     }
 
     .timer {
-      font-family: 'Oswald', sans-serif;
+      font-family: TarrgetCond;
       font-size: 2.5rem;
       font-weight: 500;
       display: flex;
       align-items: center;
 
       &.small {
-        min-width: 45px;
+        min-width: 65px;
       }
 
       &.medium {
-        min-width: 95px;
+        min-width: 110px;
       }
 
       &.large {
-        min-width: 145px;
+        min-width: 165px;
       }
     }
   }

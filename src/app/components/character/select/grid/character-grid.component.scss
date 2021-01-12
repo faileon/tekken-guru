@@ -2,13 +2,18 @@
 
 
 :host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  tg-search-bar{
+    margin-bottom: $sm-margin;
+  }
 
   .items {
     display: flex;
     flex-wrap: wrap-reverse;
     justify-content: center;
-
-
 
     .character-card {
       width: $character-avatar-width;

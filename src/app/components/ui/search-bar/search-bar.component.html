@@ -1,2 +1,10 @@
-<fa-icon icon="search"></fa-icon>
-<input type="text" [formControl]="searchControl">
+<fa-icon class="blue-icon" icon="search"></fa-icon>
+<input type="text" [formControl]="searchControl" placeholder="Search...">
+<tg-button
+  icon="times"
+  class="blue-icon"
+  [outlined]="false"
+  [isDark]="true"
+  (click)="resetText()"
+>
+</tg-button>

@@ -1,3 +1,27 @@
-:host {
+@import "src/scss/variables";
 
+
+:host {
+  border-radius: $border-radius;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  min-height: 1.5rem;
+
+  > * {
+    padding: $xs-padding;
+  }
+
+  input[type=text] {
+    border: none;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
+
+  .blue-icon {
+    color: $primary-color-dark;
+  }
 }

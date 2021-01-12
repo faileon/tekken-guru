@@ -8,6 +8,13 @@
   src: url("/assets/fonts/tarrget.woff") format('woff');
 }
 
+@font-face {
+  font-family: TarrgetCond;
+  src: url("/assets/fonts/tarrgetcond.ttf") format('truetype');
+  src: url("/assets/fonts/tarrgetcond.woff") format('woff2');
+  src: url("/assets/fonts/tarrgetcond.woff") format('woff');
+}
+
 body {
   margin: 0;
   overflow: hidden;
@@ -50,13 +57,21 @@ body {
   > *:not(router-outlet) {
     &:not(:last-child) {
       margin-bottom: $md-margin;
-
     }
   }
 
   &.fluid {
     max-width: 100%;
   }
+
+  &.align-center {
+    align-items: center;
+  }
+}
+
+.tarrget-title {
+  font-size: 1.65rem;
+  font-family: TarrgetCond;
 }
 
 .title {
@@ -149,6 +164,7 @@ body {
 
   &:focus {
     outline: none;
+
     &::-webkit-slider-runnable-track {
       background: $focus-background;
     }
@@ -206,7 +222,8 @@ body {
     background: #264356;
     border: 0;
     border-radius: 20px;
-    &:focus{
+
+    &:focus {
       background: $primary-color-light;
     }
   }
@@ -215,7 +232,8 @@ body {
     background: $primary-color-light;
     border: 0;
     border-radius: 20px;
-    &:focus{
+
+    &:focus {
       background: $focus-background;
     }
   }

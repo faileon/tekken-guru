@@ -21,6 +21,9 @@ export class ButtonComponent implements OnInit {
   @Input()
   public active: boolean;
 
+  @Input()
+  public isDark = false;
+
   private _toggleable: boolean;
 
   @Input()
