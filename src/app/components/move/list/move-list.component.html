@@ -78,11 +78,12 @@
 
   <div class="right-menu">
     <tg-button
-      [tgTooltip]="moveService.showVideos ? 'Hide videos' : 'Display videos'"
+      *ngIf="{value: settingsService.displayVideos$ | async} as context"
+      [tgTooltip]="context.value ? 'Hide videos' : 'Display videos'"
       icon="video"
       [outlined]="false"
-      [active]="moveService.showVideos"
-      (click)="moveService.toggleShowVideos()"
+      [active]="context.value"
+      (click)="settingsService.toggleDisplayVideos()"
       toggleable
     ></tg-button>
   </div>
@@ -130,7 +131,7 @@
 
         <!-- video with the move -->
         <tg-video
-          *ngIf="moveService.showVideos"
+          *ngIf="settingsService.displayVideos$ | async"
           [src]="move.video | mediaPath"
           [poster]="move.video | thumbnailPath"
         ></tg-video>

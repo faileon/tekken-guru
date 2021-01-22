@@ -30,11 +30,6 @@ export class MoveService implements OnDestroy {
   public searchText$: Observable<string>;
 
   /********************
-   * VIDEOS ON/OFF:
-   *********************/
-  public showVideos = true;
-
-  /********************
    * FRAME FILTERS:
    *********************/
   private _startUpFilter: BehaviorSubject<NumberRange>;
@@ -286,10 +281,6 @@ export class MoveService implements OnDestroy {
             )
         )
       );
-  }
-
-  public toggleShowVideos(): void {
-    this.showVideos = !this.showVideos;
   }
 
   ngOnDestroy(): void {
