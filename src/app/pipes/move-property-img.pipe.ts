@@ -21,6 +21,12 @@ export class MovePropertyImgPipe implements PipeTransform {
         return `${prefix}/low-crush.png`;
       case 'HIGH CRUSH':
         return `${prefix}/high-crush.png`;
+      case 'THROW 1':
+        return `${prefix}/throw-1.png`;
+      case 'THROW 2':
+        return `${prefix}/throw-2.png`;
+      case 'THROW 1+2':
+        return `${prefix}/throw-1+2.png`;
       default:
         return `${prefix}/low-crush.png`;
     }

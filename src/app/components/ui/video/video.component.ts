@@ -70,10 +70,13 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     // setup seekbar -> video interaction
     this.seekbarElementRef.nativeElement.oninput = () => {
 
+
       const {duration} = this.videoElementRef.nativeElement;
       const {value, max} = this.seekbarElementRef.nativeElement;
 
-      this.videoElementRef.nativeElement.currentTime = duration * parseInt(value, 10) / parseInt(max, 10);
+      if (duration) {
+        this.videoElementRef.nativeElement.currentTime = duration * parseInt(value, 10) / parseInt(max, 10);
+      }
     };
   }
 

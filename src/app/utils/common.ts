@@ -15,7 +15,7 @@ export const debounce = <F extends (...args: any[]) => any>(func: F, waitFor: nu
 };
 
 export const getDebouncedFilterRange = debounce(() => {
-}, 500);
+}, 175);
 
 export const getToggledProperties = <T>(properties: T[], property: T, multiple = false): T[] => {
   const hasProperty = properties.includes(property);

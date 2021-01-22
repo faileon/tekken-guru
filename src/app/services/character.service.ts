@@ -122,7 +122,7 @@ export class CharacterService implements OnDestroy {
           takeUntil(this.isDestroyed$)
         )
         .subscribe(moves => {
-            console.log(`Fetched ${moves.length} moves from the server for ${characterId}`);
+            console.log(`Fetched ${moves.length} moves from firestore for ${characterId}`);
 
             // create search indexes on fields
             const searchIndex = elasticlunr((idx: Index<Move>) => {
@@ -130,6 +130,7 @@ export class CharacterService implements OnDestroy {
               idx.addField('hit');
               idx.addField('properties');
               idx.addField('notation');
+              idx.addField('tags');
 
               idx.setRef('_id');
             });
@@ -151,7 +152,7 @@ export class CharacterService implements OnDestroy {
         );
     }
 
-    console.log('Returning moves (cached) for', characterId);
+    console.log(`Returning [${this.moves[characterId]?.data.length ?? '?'}] moves from cache for`, characterId);
     return this.moves$.pipe(
       map(moves => moves[characterId])
     );

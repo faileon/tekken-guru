@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 
@@ -768,6 +769,7 @@ export class AppComponent implements OnInit {
         this.newMoves$.next(moves);
       });*/
 
+
   }
 
   // debug functions for inserting documents
@@ -827,5 +829,12 @@ export class AppComponent implements OnInit {
       console.log('DONE');
     });*/
 
+    const movelist = [];
+    for (const move of movelist) {
+      const id = move._id;
+      delete move._id;
+      console.log('adding', id);
+      // await this.firestore.collection<Move>('characters/jin/movelist').doc(id).set(move);
+    }
   }
 }

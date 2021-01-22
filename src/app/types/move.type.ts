@@ -28,8 +28,9 @@ export type Move = {
   };
   properties?: MoveProperty[];
   isKeyMove?: boolean;
-  punishment?: Punishment,
+  punishment?: Punishment;
   video: string;
+  tags?: string[];
 };
 
 
