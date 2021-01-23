@@ -1,6 +1,4 @@
-import {AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Options} from 'ng5-slider';
-import {ButtonComponent} from '../button/button.component';
+import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'tg-video',

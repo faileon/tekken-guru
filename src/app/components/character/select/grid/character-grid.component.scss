@@ -17,17 +17,18 @@
 
     .character-card {
       width: $character-avatar-width;
-      background-color: $secondary-color;
+      background-color: $primary-color-light;
       height: $character-avatar-height;
       margin: $xs-margin;
       cursor: pointer;
+      border-radius: 2px;
 
       &:hover {
-        background-color: $primary-color-highlight;
+        background-color: $secondary-color;
       }
 
       &.selected {
-        background-color: $primary-color-highlight;
+        background-color: $secondary-color;
       }
     }
   }
