@@ -1,9 +1,12 @@
-<div class="tg-container fluid">
-  <div class="header">
-    <div class="character">
-      <tg-character-header *ngIf="firstCharacter$ | async as character" [character]="character"></tg-character-header>
-      <tg-tabs [tabs]="firstCharacterTabs"></tg-tabs>
-    </div>
+<div class="tg-container" [class.fluid]="isFirstColActive && isSecondColActive && !isMobile">
+  <div class="top-row">
+    <tg-character-header
+      *ngIf="firstCharacter$ | async as character"
+      [character]="character"
+      [class.active]="isFirstColActive"
+      (click)="onCharacterHeaderClick(true)"
+    >
+    </tg-character-header>
 
     <div *ngIf="timeElapsed$ | async as time"
          class="timer"
@@ -13,19 +16,25 @@
       {{time}}
     </div>
 
-    <div class="character">
-      <tg-character-header *ngIf="secondCharacter$ | async as character" [character]="character" [reverse]="true"></tg-character-header>
-      <tg-tabs [tabs]="secondCharacterTabs"></tg-tabs>
-    </div>
+    <tg-character-header
+      *ngIf="secondCharacter$ | async as character" [character]="character"
+      [class.active]="isSecondColActive"
+      (click)="onCharacterHeaderClick(false)"
+      class="reversed">
+    </tg-character-header>
 
+  </div>
+  <div class="bottom-row">
+    <tg-tabs [tabs]="firstCharacterTabs" [class.active]="isFirstColActive"></tg-tabs>
+    <tg-tabs [tabs]="secondCharacterTabs" [class.active]="isSecondColActive"></tg-tabs>
   </div>
 
   <div class="content">
-    <div class="col">
+    <div class="col" [class.active]="isFirstColActive">
       <tg-named-router [isFirstTab]="true"></tg-named-router>
     </div>
 
-    <div class="col">
+    <div class="col" [class.active]="isSecondColActive">
       <!--<router-outlet name="tab2"></router-outlet>-->
       <tg-named-router [isFirstTab]="false"></tg-named-router>
     </div>

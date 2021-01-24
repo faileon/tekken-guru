@@ -11,7 +11,10 @@
     align-items: center;
 
     > * {
-      margin-right: $md-margin;
+      margin-right: $xs-margin;
+      @media(min-width: $bp-mobile) {
+        // margin-bottom: $md-margin;
+      }
     }
 
     .right-menu {
@@ -78,11 +81,11 @@
       .group {
         flex: 1;
         display: flex;
-        overflow-x: scroll;
+        overflow-x: auto;
         padding-bottom: $xs-padding;
 
         @media(min-width: $bp-mobile) {
-          overflow-x: initial;
+          // overflow-x: initial;
           padding-bottom: 0;
         }
 

@@ -829,12 +829,14 @@ export class AppComponent implements OnInit {
       console.log('DONE');
     });*/
 
-    const movelist = [];
+    const movelist = []
+
+
     for (const move of movelist) {
       const id = move._id;
       delete move._id;
       console.log('adding', id);
-      // await this.firestore.collection<Move>('characters/jin/movelist').doc(id).set(move);
+      // await this.firestore.collection<Move>('characters/claudio/movelist').doc(id).set(move);
     }
   }
 }

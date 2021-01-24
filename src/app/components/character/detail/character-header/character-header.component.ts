@@ -11,9 +11,6 @@ export class CharacterHeaderComponent implements OnInit {
     @Input()
     public character!: Character;
 
-    @Input()
-    public reverse = false;
-
     constructor() {
     }
 

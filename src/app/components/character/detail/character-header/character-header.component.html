@@ -1,16 +1,15 @@
-<div class="wrapper" [class.reverse]="reverse">
-  <div class="avatar">
-    <img alt="Avatar of {{character._id}}" [src]="character.avatar | mediaPath"/>
+<div class="avatar">
+  <img alt="Avatar of {{character._id}}" [src]="character.avatar | mediaPath"/>
+</div>
+
+<div class="info">
+  <!-- FULLNAME -->
+  <div class="title">
+    {{character.fullName}}
   </div>
 
-  <div class="info">
-    <!-- FULLNAME -->
-    <div class="title">
-      {{character.fullName}}
-    </div>
-
-    <!-- DIFFICULTY -->
-    <div class="difficulty">
+  <!-- DIFFICULTY -->
+  <div class="difficulty">
     <span
       class="dot"
       [class.easy]="character.difficulty === 1"
@@ -18,9 +17,9 @@
       [class.hard]="character.difficulty === 3"
     >
   </span>
-      <div class="text">{{character.difficulty | characterDifficulty}}</div>
-    </div>
-
+    <div class="text">{{character.difficulty | characterDifficulty}}</div>
   </div>
 
 </div>
+
+<ng-content></ng-content>

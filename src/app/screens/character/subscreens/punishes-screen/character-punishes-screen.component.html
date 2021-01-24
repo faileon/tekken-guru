@@ -1,1 +1,6 @@
-<tg-move-list [movelist]="movelist$ | async"></tg-move-list>
+<ng-container *ngIf="movelist$ | async as movelist; else loading">
+  <tg-move-list [movelist]="movelist"></tg-move-list>
+</ng-container>
+<ng-template #loading>
+  <div class="loading">Loading punishes...</div>
+</ng-template>

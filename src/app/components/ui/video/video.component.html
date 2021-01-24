@@ -8,7 +8,7 @@
   <source [src]="src" [type]="mediaType">
 </video>
 
-<div class="controls" (click)="togglePlay();">
+<div class="controls ripple" (click)="togglePlay();">
   <!-- TOP ROW: playback speed, expand -->
   <div class="row top">
     <!-- playback speed -->
@@ -43,7 +43,7 @@
 
   <!-- CENTER ROW: play/pause display -->
   <div class="row center">
-
+    <fa-icon *ngIf="currentIcon" [icon]="currentIcon" class="current-icon" size="2x"></fa-icon>
   </div>
 
   <!-- BOTTOM ROW: track bar -->

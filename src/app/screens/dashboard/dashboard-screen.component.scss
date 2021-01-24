@@ -1,0 +1,21 @@
+@import "src/scss/variables";
+
+:host {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+
+  .tg-container {
+    .tarrget-title {
+      align-self: center;
+    }
+
+    > tg-card {
+      flex: 1;
+
+      div {
+        padding: $sm-padding;
+      }
+    }
+  }
+}

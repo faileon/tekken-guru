@@ -8,41 +8,99 @@
   height: 100%;
   overflow: hidden;
 
-  .header {
+
+  .top-row {
     display: flex;
     justify-content: space-between;
 
-    .character {
-      flex: 1 1 0;
-      display: flex;
-      flex-direction: column;
+    > tg-character-header {
+      flex: 1;
+      cursor: pointer;
 
-      > *:not(:last-child) {
-        margin-bottom: $sm-margin;
+      border-radius: 2px;
+
+      &.active {
+        background: linear-gradient(90deg, rgba(230, 57, 70, 0.6) 0%, rgba(253, 29, 29, 0.35) 20%, rgba(255, 255, 255, 0) 60%);
+
+        &.reversed {
+          background: linear-gradient(270deg, rgba(230, 57, 70, 0.6) 0%, rgba(253, 29, 29, 0.35) 20%, rgba(255, 255, 255, 0) 60%);
+        }
       }
 
+      .icon {
+        align-self: center;
+
+        &.left-auto {
+          margin-left: auto;
+          margin-right: 1.25rem;
+        }
+
+        &.right-auto {
+          margin-right: auto;
+          margin-left: 0.5rem;
+        }
+      }
+    }
+
+    .reversed {
+      flex-direction: row-reverse;
     }
 
     .timer {
       font-family: TarrgetCond;
-      font-size: 2.5rem;
+      font-size: 1.5rem;
       font-weight: 500;
       display: flex;
       align-items: center;
 
+      @media(min-width: $bp-mobile) {
+        font-size: 2.5rem;
+      }
+
       &.small {
-        min-width: 65px;
+        min-width: 27.5px;
+        @media(min-width: $bp-mobile) {
+          min-width: 65px;
+        }
+
       }
 
       &.medium {
-        min-width: 110px;
+        min-width: 70px;
+        @media(min-width: $bp-mobile) {
+          min-width: 110px;
+        }
       }
 
       &.large {
-        min-width: 165px;
+        min-width: 105px;
+        @media(min-width: $bp-mobile) {
+          min-width: 165px;
+        }
       }
     }
   }
+
+  .bottom-row {
+    display: flex;
+
+    > * {
+      flex: 1;
+      display: none;
+
+      &.active {
+        display: flex;
+      }
+
+      &:not(:last-child) {
+        margin-right: 0;
+        @media(min-width: $bp-mobile) {
+          margin-right: $md-margin;
+        }
+      }
+    }
+  }
+
 
   .content {
     display: flex;
@@ -52,13 +110,24 @@
 
     .col {
       flex: 1 1 0;
+      display: none;
 
-      &:first-child {
-        margin-left: 0;
-        margin-right: $xs-margin;
+      > tg-named-router {
+        flex: 1;
+        padding: 0 $xs-padding;
       }
 
-      margin-left: $xs-margin;
+      &.active {
+        display: flex;
+      }
+    ;
+
+      /*&:first-child {
+        margin-left: 0;
+        margin-right: $xs-margin;
+      }*/
+
+      // margin-left: $xs-margin;
 
     }
   }

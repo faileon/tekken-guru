@@ -20,6 +20,7 @@
       width: 100% !important;
       height: auto !important;
     }
+
     border-radius: $border-radius;
 
     &.fixed-height {
@@ -65,6 +66,7 @@
 
         #playback-speed-btn {
           position: relative;
+
           .playback-speed-pop-over {
             position: absolute;
             top: 0;
@@ -72,6 +74,7 @@
             background: rgba(0, 0, 0, 0.75);
             width: 125px;
             padding: $sm-padding;
+
             .text {
               font-size: 0.75rem;
             }
@@ -81,6 +84,12 @@
 
       &.center {
         flex: 1;
+        justify-content: center;
+        align-items: center;
+
+        .current-icon {
+          color: white;
+        }
       }
 
       &.bottom {

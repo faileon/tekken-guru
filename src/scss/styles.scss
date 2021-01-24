@@ -26,6 +26,18 @@ body {
   a {
     color: whitesmoke;
     text-decoration: none;
+
+    &.underline {
+      text-decoration: underline;
+
+      &:hover {
+        color: $primary-color-highlight;
+      }
+    }
+  }
+
+  .secondary {
+    color: $secondary-color;
   }
 }
 
@@ -249,4 +261,21 @@ body {
     /*Needed to keep the Edge thumb centred*/
   }
 
+}
+
+
+.loading {
+  font-size: 1.5rem;
+}
+
+
+/* Ripple effect */
+.ripple {
+  background-position: center;
+  transition: background 0.5s;
+}
+.ripple:active {
+  background-color: rgba(146, 146, 146, 0.76);
+  background-size: 100%;
+  transition: background 0s;
 }

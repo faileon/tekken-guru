@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NumberRange} from '../../../../types';
-import {Options} from 'ng5-slider';
+import {Options} from '@angular-slider/ngx-slider';
 
 @Component({
   selector: 'tg-filter-template',

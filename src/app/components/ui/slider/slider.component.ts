@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ChangeContext, Options} from 'ng5-slider';
+import {ChangeContext, Options} from '@angular-slider/ngx-slider';
 import {NumberRange} from '../../../types';
 
 @Component({

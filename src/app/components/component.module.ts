@@ -18,7 +18,7 @@ import {NormalFrameFilterComponent} from './ui/filters/normal-frame-filter/norma
 import {BlockFrameFilterComponent} from './ui/filters/block-frame-filter/block-frame-filter.component';
 import {CounterFrameFilterComponent} from './ui/filters/counter-frame-filter/counter-frame-filter.component';
 import {PipeModule} from '../pipes/pipe.module';
-import {Ng5SliderModule} from 'ng5-slider';
+import {NgxSliderModule} from '@angular-slider/ngx-slider';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RoutingModule} from '../modules/routing/routing.module';
@@ -62,7 +62,7 @@ import {NamedRouterComponent} from './matchup/named-router/named-router.componen
   imports: [
     CommonModule,
     PipeModule,
-    Ng5SliderModule,
+    NgxSliderModule,
     FontAwesomeModule,
     ReactiveFormsModule,
     RoutingModule,

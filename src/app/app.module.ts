@@ -23,7 +23,8 @@ import {
   faExpand,
   faPlay,
   faPause,
-  faTachometerAlt
+  faTachometerAlt,
+  faSpinner, faCircle, faCheckCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import {faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 import {ScreenModule} from './screens/screen.module';
@@ -69,7 +70,8 @@ export class AppModule {
       faExpand,
       faPlay,
       faPause,
-      faTachometerAlt
+      faTachometerAlt,
+      faSpinner,
     );
     faConfig.fixedWidth = true;
   }

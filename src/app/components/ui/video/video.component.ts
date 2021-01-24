@@ -1,9 +1,22 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'tg-video',
   templateUrl: './video.component.html',
-  styleUrls: ['./video.component.scss']
+  styleUrls: ['./video.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -20,6 +33,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     ]
     // tslint:disable-next-line:no-any
   } as any;
+
+  // private _currentIcon: Subject<IconProp>;
+  // public currentIcon$: Observable<IconProp>;
+  public currentIcon: IconProp;
 
   @Input()
   public src!: string;
@@ -48,8 +65,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  constructor(private elementRef: ElementRef<HTMLElement>) {
-
+  constructor(private elementRef: ElementRef<HTMLElement>, private changeDetectionRef: ChangeDetectorRef) {
+    // this._currentIcon = new Subject();
+    // this.currentIcon$ = this._currentIcon.asObservable();
+    this.currentIcon = 'play';
   }
 
   ngOnInit(): void {
@@ -84,8 +103,13 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public togglePlay(): void {
     if (!this.isPlaying) {
+      this.currentIcon = 'spinner';
       // play and on success set playing to true
-      this.videoElementRef.nativeElement.play().then(_ => this.isPlaying = true);
+      this.videoElementRef.nativeElement.play().then(_ => {
+        this.isPlaying = true;
+        this.currentIcon = null;
+        this.changeDetectionRef.detectChanges();
+      });
 
       // hookup onended function to turn off isPlaying
       this.videoElementRef.nativeElement.onended = () => {
@@ -95,6 +119,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       // pause and turn off isPlaying
       this.videoElementRef.nativeElement.pause();
       this.isPlaying = false;
+      this.currentIcon = 'play';
     }
   }
 

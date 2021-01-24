@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {LabelType, Options} from 'ng5-slider';
+import {LabelType, Options} from '@angular-slider/ngx-slider';
 import {DEF_NORMAL_MAX_VAL, DEF_NORMAL_MIN_VAL} from '../../../../config/default-frames.config';
 import {HitProperty, NumberRange} from '../../../../types';
 import {getDebouncedFilterRange, getToggledProperties} from '../../../../utils/common';

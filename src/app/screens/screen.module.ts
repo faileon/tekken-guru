@@ -13,6 +13,7 @@ import {RoutingModule} from '../modules/routing/routing.module';
 import {MatchupScreenComponent} from './character/matchup/matchup-screen.component';
 import {MatchupSelectComponent} from './character/matchup/select/matchup-select.component';
 import {MovelistScreenComponent} from './character/subscreens/movelist-screen/movelist-screen.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -27,12 +28,13 @@ import {MovelistScreenComponent} from './character/subscreens/movelist-screen/mo
     MovelistScreenComponent,
     MatchupSelectComponent,
   ],
-  imports: [
-    CommonModule,
-    ComponentModule,
-    DirectiveModule,
-    RoutingModule,
-  ],
+    imports: [
+        CommonModule,
+        ComponentModule,
+        DirectiveModule,
+        RoutingModule,
+        FontAwesomeModule,
+    ],
   exports: [
     CharacterSelectScreenComponent,
     DashboardScreenComponent,

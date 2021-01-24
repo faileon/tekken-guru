@@ -31,7 +31,7 @@
     "@types/elasticlunr": "^0.9.1",
     "elasticlunr": "^0.9.5",
     "firebase": "^7.19.1",
-    "ng5-slider": "^1.2.4",
+    "@angular-slider/ngx-slider": "^2.0.3",
     "ngx-virtual-scroller": "^4.0.3",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
