@@ -1,5 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {buttonMap, directionMap} from '../utils/input-map';
+import {PlatformInput} from '../types/buttons.type';
 
 @Pipe({
   name: 'inputPath'
@@ -26,4 +27,4 @@ export class InputPathPipe implements PipeTransform {
 
 }
 
-type PlatformInput = 'ps4' | 'steam' | 'xbox';
+

@@ -3,7 +3,7 @@
 >
   <ng-container *ngIf="input | isKnownInput; else unknownInput">
     <!-- image -->
-    <img class="input-image" [src]="input | inputPath" [alt]="input">
+    <img class="input-image" [src]="input | inputPath:(buttonsIcons$ | async)" [alt]="input">
   </ng-container>
 
   <!-- unknown input or text -->

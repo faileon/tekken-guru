@@ -18,6 +18,7 @@
     }
 
     .right-menu {
+      display: flex;
       margin-left: auto;
     }
   }
@@ -81,11 +82,11 @@
       .group {
         flex: 1;
         display: flex;
-        overflow-x: auto;
+        overflow-x: scroll;
         padding-bottom: $xs-padding;
 
         @media(min-width: $bp-mobile) {
-          // overflow-x: initial;
+          overflow-x: initial;
           padding-bottom: 0;
         }
 
@@ -150,6 +151,10 @@
 
             .positive {
               color: $primary-color-highlight;
+            }
+
+            .neutral {
+              color: $ternary-color;
             }
 
             .negative {

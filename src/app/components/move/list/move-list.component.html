@@ -203,7 +203,8 @@ property: string[]}
                   </span>
 
         <span [class.positive]="blockFrame > 0"
-              [class.negative]="blockFrame < 0">{{blockFrame}}</span>
+              [class.neutral]="blockFrame >= -4 && blockFrame < 0"
+              [class.negative]="blockFrame < -4">{{blockFrame}}</span>
         <ng-container *ngIf="!isLast">,</ng-container>
       </td>
     </ng-container>
