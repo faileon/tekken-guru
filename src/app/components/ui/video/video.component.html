@@ -43,7 +43,7 @@
 
   <!-- CENTER ROW: play/pause display -->
   <div class="row center">
-    <fa-icon *ngIf="currentIcon" [icon]="currentIcon" class="current-icon" size="2x"></fa-icon>
+    <fa-icon [pulse]="currentIcon === 'spinner'" *ngIf="currentIcon" [icon]="currentIcon" class="current-icon" size="2x"></fa-icon>
   </div>
 
   <!-- BOTTOM ROW: track bar -->

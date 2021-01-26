@@ -16,7 +16,8 @@ export class SettingsService {
     this._displayVideos = new BehaviorSubject<boolean>(true);
     this.displayVideos$ = this._displayVideos.asObservable();
 
-    this._platformInput = new BehaviorSubject<PlatformInput>('ps4');
+    const defaultPlatformInput = localStorage.getItem('platformInput') as PlatformInput ?? 'ps4';
+    this._platformInput = new BehaviorSubject<PlatformInput>(defaultPlatformInput);
     this.platformInput$ = this._platformInput.asObservable();
   }
 
@@ -25,6 +26,7 @@ export class SettingsService {
   }
 
   public set platformInput(input: PlatformInput) {
+    localStorage.setItem('platformInput', input);
     this._platformInput.next(input);
   }
 }

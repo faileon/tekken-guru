@@ -11,6 +11,7 @@ import {MatchupScreenComponent} from '../../screens/character/matchup/matchup-sc
 import {MatchupSelectComponent} from '../../screens/character/matchup/select/matchup-select.component';
 import {MovelistScreenComponent} from '../../screens/character/subscreens/movelist-screen/movelist-screen.component';
 import {CharacterSubscreenSettings} from '../../types';
+import {SettingsScreenComponent} from '../../screens/settings-screen/settings-screen.component';
 
 const routes: Routes = [
   {
@@ -165,6 +166,10 @@ const routes: Routes = [
         } as CharacterSubscreenSettings
       },
     ]
+  },
+  {
+    path: 'settings',
+    component: SettingsScreenComponent,
   },
 ];
 

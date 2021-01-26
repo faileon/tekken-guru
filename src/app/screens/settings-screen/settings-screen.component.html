@@ -1,0 +1,38 @@
+<div class="tg-container">
+  <div class="tarrget-title">Settings</div>
+
+  <tg-card title="Site">
+    <div content>
+
+      <p class="title small">Chose your preferred button layout:</p>
+      <div class="fx spaced row" *ngIf="settingsService.platformInput$ | async as platformInput">
+        <!-- PS4 -->
+        <tg-button
+          [toggleable]="true"
+          [active]="platformInput === 'ps4'"
+          (click)="settingsService.platformInput = 'ps4'"
+        >
+          PS4
+        </tg-button>
+
+        <!-- XBOX -->
+        <tg-button
+          [toggleable]="true"
+          [active]="platformInput === 'xbox'"
+          (click)="settingsService.platformInput = 'xbox'"
+        >
+          XBOX
+        </tg-button>
+
+        <!-- steam / arcade -->
+        <tg-button
+          [toggleable]="true"
+          [active]="platformInput === 'steam'"
+          (click)="settingsService.platformInput = 'steam'"
+        >
+          Arcade
+        </tg-button>
+      </div>
+    </div>
+  </tg-card>
+</div>

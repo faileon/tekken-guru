@@ -1,4 +1,9 @@
 :host {
   display: flex;
   justify-content: center;
+  height: 100%;
+
+  > .tg-container {
+    overflow-y: auto;
+  }
 }
