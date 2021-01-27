@@ -15,7 +15,6 @@ export class CombosService {
     return this.characterService.getCombos(characterId).pipe(
       filter((combos) => !!combos),
       map(({data}) => data),
-      map(data => [...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data, ...data,])
     );
   }
 

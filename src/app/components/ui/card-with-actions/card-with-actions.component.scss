@@ -40,13 +40,17 @@
         flex: 1;
         display: flex;
         overflow-x: scroll;
+        overflow-y: hidden;
         padding-bottom: $xs-padding;
 
-        /*@media(min-width: $bp-mobile) {
+        /*
+        @media(min-width: $bp-mobile) {
           overflow-x: initial;
           padding-bottom: 0;
         }*/
       }
+
+
     }
   }
 }

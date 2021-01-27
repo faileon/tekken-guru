@@ -8,12 +8,12 @@
   display: flex;
 
   .avatar {
-    max-width: $character-avatar-width-mobile;
-    max-height: $character-avatar-height-mobile;
+    max-width: $character-avatar-width-detail-mobile;
+    max-height: $character-avatar-height-detail-mobile;
 
     @media(min-width: $bp-mobile) {
-      max-width: $character-avatar-width;
-      max-height: $character-avatar-height;
+      max-width: $character-avatar-width-detail;
+      max-height: $character-avatar-height-detail;
     }
 
 
@@ -31,7 +31,6 @@
     @media(min-width: $bp-mobile) {
       margin: 0 $lg-margin;
     }
-
 
     .difficulty {
       display: flex;
