@@ -6,16 +6,16 @@
     height: calc(100% - #{$md-margin});
 
     tg-card-with-actions {
-      // CARD CONTENT
-      .content {
-        display: flex;
-        flex: 1;
-        padding: $lg-padding $sm-padding;
+      ::ng-deep{
+        tg-card {
+          height: $card-height-small;
+        }
+      }
 
-        .notation {
-          .chevron {
-            color: #37ff05;
-          }
+      // CARD CONTENT
+      .notation {
+        .chevron {
+          color: #37ff05;
         }
       }
     }

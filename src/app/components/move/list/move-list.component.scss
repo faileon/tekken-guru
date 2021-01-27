@@ -31,6 +31,12 @@
     tg-card-with-actions {
       margin-bottom: $sm-margin;
 
+      ::ng-deep{
+        tg-card {
+          height: $card-height;
+        }
+      }
+
       @media(min-width: $bp-mobile) {
         margin-bottom: $md-margin;
       }
