@@ -7,12 +7,13 @@ import {MoveService} from '../../../services/move.service';
 import {Observable} from 'rxjs';
 import {DEFAULT_CHARACTER_TABS} from '../../../config/navigation.config';
 import {BreadcrumbService} from '../../../services/breadcrumb.service';
+import {CombosService} from '../../../services/combos.service';
 
 @Component({
   selector: 'tg-character-detail-screen-component',
   templateUrl: './character-detail-screen.component.html',
   styleUrls: ['./character-detail-screen.component.scss'],
-  providers: [MoveService]
+  providers: [MoveService, CombosService]
 })
 export class CharacterDetailScreenComponent implements OnInit, OnDestroy {
   // private isDestroyed$: Subject<boolean> = new Subject<boolean>();

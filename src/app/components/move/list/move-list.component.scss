@@ -25,30 +25,16 @@
 
   .list {
     // calculate the height of virtual scroller: 100% of parent - margin of option bar - height of option bar
-    $option-bar-height: 21px;
+    $option-bar-height: 30px;
     height: calc(100% - #{$md-margin} - #{$option-bar-height});
 
-    tg-card {
+    tg-card-with-actions {
       margin-bottom: $sm-margin;
 
       @media(min-width: $bp-mobile) {
         margin-bottom: $md-margin;
       }
-    }
 
-    .header {
-      display: flex;
-      flex: 1;
-      padding: $xs-padding;
-
-      .title {
-        flex: 1;
-        font-family: 'Roboto Condensed', sans-serif;
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-
-      }
 
       .properties {
         display: flex;
@@ -63,106 +49,79 @@
             margin-right: $xs-margin;
           }
         }
-
       }
-    }
 
-    .content {
-      display: flex;
-      flex: 1;
-      padding: 0 $xs-padding $xs-padding $xs-padding;
-
-      .actions {
+      .main {
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
-        min-width: 50px;
+        margin-right: auto;
+        white-space: nowrap;
+
+
+        .notation {
+          margin: auto 0;
+          //min-width: 125px;
+        }
+
+        .hits {
+          font-family: 'Roboto Condensed', sans-serif;
+
+          .move {
+            color: $primary-color-highlight;
+          }
+
+          .damage {
+            color: $secondary-color;
+          }
+        }
       }
 
-      .group {
-        flex: 1;
-        display: flex;
-        overflow-x: scroll;
-        padding-bottom: $xs-padding;
+      tg-video {
+        margin: 0 $lg-margin;
+        @media(min-width: $bp-mobile) {
+          margin: -$lg-margin $md-margin 0 0;
+        }
+      }
+
+      .frame-data {
+        margin-top: auto;
+        font-family: Roboto Condensed, "Helvetica Neue", sans-serif;
+        font-weight: 300;
 
         @media(min-width: $bp-mobile) {
-          overflow-x: initial;
-          padding-bottom: 0;
+          min-width: 175px;
         }
 
-
-        .main {
-          display: flex;
-          flex-direction: column;
-          margin-right: auto;
+        > table {
           white-space: nowrap;
+          width: 100%;
 
+          > tr {
 
-          .notation {
-            margin: auto 0;
-            //min-width: 125px;
-          }
+            > td {
+              &.right-aligned {
+                text-align: right;
+              }
 
-          .hits {
-            font-family: 'Roboto Condensed', sans-serif;
-
-            .move {
-              color: $primary-color-highlight;
-            }
-
-            .damage {
-              color: $secondary-color;
-            }
-          }
-        }
-
-        tg-video {
-          margin: 0 $lg-margin;
-          @media(min-width: $bp-mobile) {
-            margin: -$lg-margin $md-margin 0 0;
-          }
-        }
-
-        .frame-data {
-          margin-top: auto;
-          font-family: Roboto Condensed, "Helvetica Neue", sans-serif;
-          font-weight: 300;
-
-          @media(min-width: $bp-mobile) {
-            min-width: 175px;
-          }
-
-          > table {
-            white-space: nowrap;
-            width: 100%;
-
-            > tr {
-
-              > td {
-                &.right-aligned {
-                  text-align: right;
-                }
-
-                > span.hit-property {
-                  font-size: 0.75rem;
-                }
+              > span.hit-property {
+                font-size: 0.75rem;
               }
             }
-
-            .positive {
-              color: $primary-color-highlight;
-            }
-
-            .neutral {
-              color: $ternary-color;
-            }
-
-            .negative {
-              color: $secondary-color;
-            }
-
-
           }
+
+          .positive {
+            color: $primary-color-highlight;
+          }
+
+          .neutral {
+            color: $ternary-color;
+          }
+
+          .negative {
+            color: $secondary-color;
+          }
+
+
         }
       }
     }

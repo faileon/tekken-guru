@@ -98,7 +98,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-
+    this.isPlaying = false;
   }
 
   public togglePlay(): void {

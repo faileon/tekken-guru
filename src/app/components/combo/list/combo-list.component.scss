@@ -1,0 +1,25 @@
+@import "src/scss/variables";
+
+:host {
+
+  .list {
+    height: calc(100% - #{$md-margin});
+
+    tg-card-with-actions {
+      // CARD CONTENT
+      .content {
+        display: flex;
+        flex: 1;
+        padding: $lg-padding $sm-padding;
+
+        .notation {
+          .chevron {
+            color: #37ff05;
+          }
+        }
+      }
+    }
+  }
+
+
+}

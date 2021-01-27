@@ -11,6 +11,7 @@ import { ThumbnailPathPipe } from './thumbnail-path.pipe';
 import { PunishmentTextPipe } from './punishment-text.pipe';
 import { InputPathPipe } from './input-path.pipe';
 import { IsKnownInputPipe } from './is-known-input.pipe';
+import { ComboNotationPipe } from './combo-notation.pipe';
 
 
 @NgModule({
@@ -26,23 +27,25 @@ import { IsKnownInputPipe } from './is-known-input.pipe';
     PunishmentTextPipe,
     InputPathPipe,
     IsKnownInputPipe,
+    ComboNotationPipe,
   ],
   imports: [
     CommonModule
   ],
-  exports: [
-    CharacterDifficultyPipe,
-    MediaPathPipe,
-    HitMovePipe,
-    HitDamagePipe,
-    IncludesPipe,
-    MovePropertyImgPipe,
-    MovePropertyTextPipe,
-    ThumbnailPathPipe,
-    PunishmentTextPipe,
-    IsKnownInputPipe,
-    InputPathPipe
-  ]
+    exports: [
+        CharacterDifficultyPipe,
+        MediaPathPipe,
+        HitMovePipe,
+        HitDamagePipe,
+        IncludesPipe,
+        MovePropertyImgPipe,
+        MovePropertyTextPipe,
+        ThumbnailPathPipe,
+        PunishmentTextPipe,
+        IsKnownInputPipe,
+        InputPathPipe,
+        ComboNotationPipe
+    ]
 })
 export class PipeModule {
 }

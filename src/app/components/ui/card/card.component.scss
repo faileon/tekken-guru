@@ -6,17 +6,18 @@
   border: 2px solid $primary-color-light;
   border-radius: $border-radius;
 
-  &.fixed-height {
+  /*&.fixed-height {
     height: $card-height;
 
     .header {
       min-height: $card-header-min-height;
     }
-  }
+  }*/
 
   .header {
     display: flex;
     margin-top: -1px;
+    min-height: $card-header-min-height;
 
 
     .corner {

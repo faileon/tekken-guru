@@ -5,11 +5,13 @@ import {Character, Move} from '../types';
 import {map, switchMap, takeUntil} from 'rxjs/operators';
 import * as elasticlunr from 'elasticlunr';
 import {Index} from 'elasticlunr';
+import {Combo} from '../types/combo.type';
+import {Category} from '../types/category.type';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CharacterService implements OnDestroy {
+export class CharacterService implements OnDestroy { // consider renaming this to DATA SERVICE
   private isDestroyed$: Subject<boolean> = new Subject<boolean>();
 
   private _searchText: BehaviorSubject<string>;
@@ -21,8 +23,15 @@ export class CharacterService implements OnDestroy {
   private readonly _moves: BehaviorSubject<DataMap<Move>>;
   public readonly moves$: Observable<DataMap<Move>>;
 
+  private readonly _combos: BehaviorSubject<DataMap<Combo>>;
+  public readonly combos$: Observable<DataMap<Combo>>;
+
   get moves(): DataMap<Move> {
     return this._moves.getValue();
+  }
+
+  get combos(): DataMap<Combo> {
+    return this._combos.getValue();
   }
 
   set searchText(text: string) {
@@ -34,11 +43,14 @@ export class CharacterService implements OnDestroy {
     this._searchText = new BehaviorSubject('');
     this.searchText$ = this._searchText.asObservable();
 
-    this._characters = new BehaviorSubject({data: [], searchIndex: null});
+    this._characters = new BehaviorSubject({data: []});
     this.characters$ = this._characters.asObservable();
 
     this._moves = new BehaviorSubject({});
     this.moves$ = this._moves.asObservable();
+
+    this._combos = new BehaviorSubject({});
+    this.combos$ = this._combos.asObservable();
 
     /**
      * trying to reduce firestore calls, but still keep some freshness:
@@ -157,6 +169,39 @@ export class CharacterService implements OnDestroy {
       map(moves => moves[characterId])
     );
   }
+
+  public getCombos(characterId: string): Observable<Data<Combo>> {
+    if (!this.combos[characterId]) {
+      // combos for character not in runtime cachem hookup to firestore live updates
+      this.firestore.collection<Combo>(`characters/${characterId}/combos`)
+        .valueChanges({idField: '_id'})
+        .pipe(
+          takeUntil(this.isDestroyed$),
+        )
+        .subscribe(combos => {
+          console.log(`Fetched ${combos.length} moves from firestore for ${characterId}`);
+          console.log(combos);
+
+          // emit to our combos data map observable
+          this._combos.next({
+            ...this._combos.getValue(),
+            [characterId]: {
+              data: combos
+            }
+          });
+        });
+    }
+
+    // first proc here will be undefined,
+    // then firestore kicks in and fetches the data (from server or indexed db preferably?? i hope, they claim so),
+    // then it should always return runtime cached data (that firestore observable refreshes on change)
+    console.log(`Returning [${this.combos[characterId]?.data.length ?? '?'}] moves from cache for`, characterId);
+    return this.combos$.pipe(
+      map(combos => combos[characterId])
+    );
+  }
+
+
 }
 
 interface DataMap<T> {
@@ -165,5 +210,5 @@ interface DataMap<T> {
 
 interface Data<T> {
   data: T[];
-  searchIndex: Index<T>;
+  searchIndex?: Index<T>;
 }

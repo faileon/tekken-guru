@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, HostBinding, Input, OnInit} from '@angular/core';
+import {Component, HostBinding, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'tg-card',
@@ -11,7 +11,7 @@ export class CardComponent implements OnInit {
   public title!: string;
 
   @Input()
-  @HostBinding('class.fixed-height')
+  // @HostBinding('class.fixed-height')
   public isFixedHeight = false;
 
   constructor() {

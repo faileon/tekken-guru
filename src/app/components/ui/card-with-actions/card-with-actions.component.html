@@ -1,0 +1,26 @@
+<tg-card
+  [title]="title"
+>
+
+  <!-- move name -->
+  <div class="header" header>
+    <div class="title">
+      {{subtitle}}
+    </div>
+    <ng-content select="[properties]"></ng-content>
+  </div>
+
+  <!-- main wrapper with actions and content -->
+  <div class="main" content>
+    <!-- actions for auth user - favorite -->
+    <div class="actions">
+      <ng-content select="[actions]"></ng-content>
+    </div>
+
+    <!-- the actual content after actions -->
+    <div class="content">
+      <ng-content select="[content]"></ng-content>
+    </div>
+
+  </div>
+</tg-card>

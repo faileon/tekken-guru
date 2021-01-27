@@ -1,0 +1,30 @@
+<virtual-scroller *ngIf="combolist?.length > 0; else noCombos" #scroll [items]="combolist" class="list">
+  <tg-card-with-actions
+    *ngFor="let combo of scroll.viewPortItems;"
+    [title]="combo._id"
+    [subtitle]="combo.name"
+  >
+
+    <!-- actions for auth user - favorite -->
+    <div actions class="actions">
+      <tg-button [outlined]="false" [icon]="['far','star']" iconSize="lg"></tg-button>
+    </div>
+
+    <!-- CONTENT -->
+    <ng-container content>
+      <div
+        *ngFor="let notation of combo.notation | comboNotation; last as isLast"
+        class="fx centered row notation">
+        <tg-input-notation [notation]="notation"></tg-input-notation>
+        <fa-icon *ngIf="!isLast" icon="chevron-right" size="2x" class="chevron"></fa-icon>
+      </div>
+    </ng-container>
+
+
+  </tg-card-with-actions>
+</virtual-scroller>
+
+<!-- EMPTY LIST -->
+<ng-template #noCombos>
+  <tg-empty-card></tg-empty-card>
+</ng-template>

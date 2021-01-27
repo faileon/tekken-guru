@@ -19,13 +19,13 @@ import {
   faSyncAlt,
   faFilm,
   faVideo,
-  faChevronLeft,
+  faChevronRight,
   faExpand,
   faPlay,
   faPause,
   faTachometerAlt,
   faSpinner,
-  faGamepad
+  faGamepad,
 } from '@fortawesome/free-solid-svg-icons';
 import {faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 import {ScreenModule} from './screens/screen.module';
@@ -67,13 +67,14 @@ export class AppModule {
       faSyncAlt,
       faVideo,
       faFilm,
-      faChevronLeft,
+      faChevronRight,
       faExpand,
       faPlay,
       faPause,
       faTachometerAlt,
       faSpinner,
       faGamepad,
+
     );
     faConfig.fixedWidth = true;
   }

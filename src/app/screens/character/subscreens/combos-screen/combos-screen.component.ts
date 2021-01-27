@@ -1,5 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostBinding, OnInit, SkipSelf} from '@angular/core';
 import {CharacterService} from '../../../../services/character.service';
+import {CombosService} from '../../../../services/combos.service';
+import {Observable} from 'rxjs';
+import {CategorizedCombo, Combo} from '../../../../types/combo.type';
+import {getCharacterIdFromRoute} from '../../../../utils/routing';
+import {ActivatedRoute} from '@angular/router';
+import {MoveService} from '../../../../services/move.service';
 
 @Component({
   selector: 'tg-character-combos-screen',
@@ -7,13 +13,19 @@ import {CharacterService} from '../../../../services/character.service';
   styleUrls: ['./combos-screen.component.scss'],
 })
 export class CombosScreenComponent implements OnInit {
+  @HostBinding('class')
+  public classes = 'subscreen';
 
-  constructor(private characterService: CharacterService) {
+  public combos$: Observable<Combo[]>;
+
+  constructor(private route: ActivatedRoute, @SkipSelf() public combosService: CombosService) {
+    const {data} = route.snapshot;
+    const {params} = route.parent.snapshot;
+    const characterId = getCharacterIdFromRoute(data, params);
+
+    this.combos$ = this.combosService.getCombos$(characterId);
   }
 
   ngOnInit(): void {
   }
-
-
-
 }

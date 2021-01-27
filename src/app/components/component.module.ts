@@ -31,6 +31,8 @@ import {HitLevelFilterComponent} from './ui/filters/hit-level-filter/hit-level-f
 import {EmptyCardComponent} from './common/empty-card/empty-card.component';
 import {NavigationBackComponent} from './ui/navigation-back/navigation-back.component';
 import {NamedRouterComponent} from './matchup/named-router/named-router.component';
+import { CardWithActionsComponent } from './ui/card-with-actions/card-with-actions.component';
+import { ComboListComponent } from './combo/list/combo-list.component';
 
 
 @NgModule({
@@ -58,6 +60,8 @@ import {NamedRouterComponent} from './matchup/named-router/named-router.componen
     EmptyCardComponent,
     NavigationBackComponent,
     NamedRouterComponent,
+    CardWithActionsComponent,
+    ComboListComponent,
   ],
   imports: [
     CommonModule,
@@ -92,6 +96,9 @@ import {NamedRouterComponent} from './matchup/named-router/named-router.componen
     MoveListComponent,
     NavigationBackComponent,
     NamedRouterComponent,
+    CardWithActionsComponent,
+    EmptyCardComponent,
+    ComboListComponent,
   ]
 })
 export class ComponentModule {

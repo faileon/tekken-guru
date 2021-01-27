@@ -91,96 +91,89 @@
 
 
 <virtual-scroller *ngIf="movelist?.length > 0; else noMoves" #scroll [items]="movelist" class="list">
-  <tg-card
+  <tg-card-with-actions
     *ngFor="let move of scroll.viewPortItems; trackBy: trackByMoveId"
-    [isFixedHeight]="true"
     [title]="move._id"
+    [subtitle]="move.name"
   >
-
-    <!-- move name -->
-    <div class="header" header>
-      <div class="title">
-        {{move.name}}
-      </div>
-      <div class="properties">
-        <img [tgTooltip]="property | movePropertyText" *ngFor="let property of move.properties"
-             [src]="property | movePropertyImg" alt="Move property {{property}}" class="property">
-      </div>
+    <!-- HEADER PROPS -->
+    <div class="properties" properties>
+      <img [tgTooltip]="property | movePropertyText" *ngFor="let property of move.properties"
+           [src]="property | movePropertyImg" alt="Move property {{property}}" class="property">
     </div>
 
-    <div class="content" content>
-      <!-- actions for auth user - favorite -->
-      <div class="actions">
-        <tg-button [outlined]="false" [icon]="['far','star']" iconSize="lg"></tg-button>
-      </div>
+    <!-- actions for auth user - favorite -->
+    <div actions class="actions">
+      <tg-button [outlined]="false" [icon]="['far','star']" iconSize="lg"></tg-button>
+    </div>
 
-      <div class="group">
-        <!-- main content with name, notation and hits -->
-        <div class="main">
-          <!-- move notation -->
-          <div class="notation">
-            <tg-input-notation [notation]="move.notation"></tg-input-notation>
-          </div>
-          <!-- move hits -->
-          <div class="hits">
-            <div class="move">{{move.hit.move | hitMove}}</div>
-            <div class="damage">{{move.hit.damage | hitDamage}}</div>
-          </div>
+    <!-- CONTENT -->
+    <ng-container content>
+      <!-- main content with name, notation and hits -->
+      <div class="main">
+        <!-- move notation -->
+        <div class="notation">
+          <tg-input-notation [notation]="move.notation"></tg-input-notation>
         </div>
-
-
-        <!-- video with the move -->
-        <tg-video
-          *ngIf="settingsService.displayVideos$ | async"
-          [src]="move.video | mediaPath"
-          [poster]="move.video | thumbnailPath"
-        ></tg-video>
-
-        <!--frame data -->
-        <div class="frame-data">
-          <table>
-            <tr>
-              <td>Start:</td>
-              <td
-                class="right-aligned"
-                [colSpan]="move.frameData.onBlock.frames.length">
-                {{move.frameData.startUp.frames}}
-              </td>
-            </tr>
-
-            <!-- ON BLOCK -->
-            <ng-container
-              [ngTemplateOutlet]="frameDataRow"
-              [ngTemplateOutletContext]="{data:{title:'Block:', frames: move.frameData.onBlock.frames, property: move.frameData.onBlock.property}}"
-            ></ng-container>
-
-            <!-- ON HIT -->
-            <ng-container
-              [ngTemplateOutlet]="frameDataRow"
-              [ngTemplateOutletContext]="{data:{title:'Hit:', frames: move.frameData.onHit.frames, property: move.frameData.onHit.property}}"
-            ></ng-container>
-
-            <!-- ON COUNTER HIT -->
-            <ng-container
-              [ngTemplateOutlet]="frameDataRow"
-              [ngTemplateOutletContext]="{data:{title:'Counter hit:', frames: move.frameData.onCounterHit.frames, property: move.frameData.onCounterHit.property}}"
-            ></ng-container>
-
-            <tr *ngIf="move.punishment">
-              <td>Punish:</td>
-              <td
-                class="right-aligned"
-                [innerHTML]="move.punishment | punishmentText"
-                [colSpan]="move.frameData.onBlock.frames.length"
-              >
-              </td>
-            </tr>
-          </table>
+        <!-- move hits -->
+        <div class="hits">
+          <div class="move">{{move.hit.move | hitMove}}</div>
+          <div class="damage">{{move.hit.damage | hitDamage}}</div>
         </div>
       </div>
 
-    </div>
-  </tg-card>
+      <!-- video with the move -->
+      <tg-video
+        *ngIf="settingsService.displayVideos$ | async"
+        [src]="move.video | mediaPath"
+        [poster]="move.video | thumbnailPath"
+      ></tg-video>
+
+      <!--frame data -->
+      <div class="frame-data">
+        <table>
+          <tr>
+            <td>Start:</td>
+            <td
+              class="right-aligned"
+              [colSpan]="move.frameData.onBlock.frames.length">
+              {{move.frameData.startUp.frames}}
+            </td>
+          </tr>
+
+          <!-- ON BLOCK -->
+          <ng-container
+            [ngTemplateOutlet]="frameDataRow"
+            [ngTemplateOutletContext]="{data:{title:'Block:', frames: move.frameData.onBlock.frames, property: move.frameData.onBlock.property}}"
+          ></ng-container>
+
+          <!-- ON HIT -->
+          <ng-container
+            [ngTemplateOutlet]="frameDataRow"
+            [ngTemplateOutletContext]="{data:{title:'Hit:', frames: move.frameData.onHit.frames, property: move.frameData.onHit.property}}"
+          ></ng-container>
+
+          <!-- ON COUNTER HIT -->
+          <ng-container
+            [ngTemplateOutlet]="frameDataRow"
+            [ngTemplateOutletContext]="{data:{title:'Counter hit:', frames: move.frameData.onCounterHit.frames, property: move.frameData.onCounterHit.property}}"
+          ></ng-container>
+
+          <tr *ngIf="move.punishment">
+            <td>Punish:</td>
+            <td
+              class="right-aligned"
+              [innerHTML]="move.punishment | punishmentText"
+              [colSpan]="move.frameData.onBlock.frames.length"
+            >
+            </td>
+          </tr>
+        </table>
+      </div>
+    </ng-container>
+
+
+  </tg-card-with-actions>
 </virtual-scroller>
 
 <!-- EMPTY LIST -->

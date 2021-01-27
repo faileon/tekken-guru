@@ -145,6 +145,10 @@ body {
   &.row {
     flex-direction: row;
 
+    &.centered {
+      align-items: center;
+    }
+
     &.spaced {
       > *:not(:last-child) {
         margin-right: $sm-margin;
@@ -154,6 +158,10 @@ body {
 
   &.col {
     flex-direction: column;
+
+    &.centered {
+      justify-content: center;
+    }
 
     &.spaced {
       > *:not(:last-child) {

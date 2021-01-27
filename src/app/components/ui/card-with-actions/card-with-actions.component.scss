@@ -1,0 +1,52 @@
+@import "src/scss/variables";
+
+:host {
+  height: 120px !important;
+  tg-card {
+    margin-bottom: $sm-margin;
+
+    @media(min-width: $bp-mobile) {
+      margin-bottom: $md-margin;
+    }
+
+
+    .header {
+      display: flex;
+      flex: 1;
+      padding: $xs-padding;
+
+      .title {
+        flex: 1;
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .main {
+      display: flex;
+      flex: 1;
+      padding: 0 $xs-padding $xs-padding $xs-padding;
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-width: 50px;
+      }
+
+      .content {
+        flex: 1;
+        display: flex;
+        overflow-x: scroll;
+        padding-bottom: $xs-padding;
+
+        /*@media(min-width: $bp-mobile) {
+          overflow-x: initial;
+          padding-bottom: 0;
+        }*/
+      }
+    }
+  }
+}

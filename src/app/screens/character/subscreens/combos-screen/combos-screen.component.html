@@ -1,1 +1,6 @@
-<h3>Recommended character combos are coming soon, stay tuned!</h3>
+<ng-container *ngIf="combos$ | async as combos; else loading">
+  <tg-combo-list [combolist]="combos"></tg-combo-list>
+</ng-container>
+<ng-template #loading>
+  <div class="loading">Loading combos...</div>
+</ng-template>

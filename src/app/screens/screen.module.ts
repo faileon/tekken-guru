@@ -14,7 +14,7 @@ import {MatchupScreenComponent} from './character/matchup/matchup-screen.compone
 import {MatchupSelectComponent} from './character/matchup/select/matchup-select.component';
 import {MovelistScreenComponent} from './character/subscreens/movelist-screen/movelist-screen.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import { SettingsScreenComponent } from './settings-screen/settings-screen.component';
+import {SettingsScreenComponent} from './settings-screen/settings-screen.component';
 
 @NgModule({
   declarations: [
@@ -30,13 +30,13 @@ import { SettingsScreenComponent } from './settings-screen/settings-screen.compo
     MatchupSelectComponent,
     SettingsScreenComponent,
   ],
-    imports: [
-        CommonModule,
-        ComponentModule,
-        DirectiveModule,
-        RoutingModule,
-        FontAwesomeModule,
-    ],
+  imports: [
+    CommonModule,
+    ComponentModule,
+    DirectiveModule,
+    RoutingModule,
+    FontAwesomeModule,
+  ],
   exports: [
     CharacterSelectScreenComponent,
     DashboardScreenComponent,
