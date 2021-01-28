@@ -13,9 +13,13 @@
       }
 
       // CARD CONTENT
-      .notation {
-        .chevron {
-          color: #37ff05;
+      .notation-wrapper{
+        display: flex;
+        padding-top: 5rem; // put it back in center due to overflow
+        .notation {
+          .chevron {
+            color: #37ff05;
+          }
         }
       }
     }

@@ -18,8 +18,12 @@
     </div>
 
     <!-- the actual content after actions -->
-    <div class="content">
-      <ng-content select="[content]"></ng-content>
+    <div class="content-placeholder">
+      <div class="content-container">
+        <div class="content">
+          <ng-content select="[content]"></ng-content>
+        </div>
+      </div>
     </div>
 
   </div>

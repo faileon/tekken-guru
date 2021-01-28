@@ -27,28 +27,53 @@
     .main {
       display: flex;
       flex: 1;
-      padding: 0 $xs-padding $xs-padding $xs-padding;
+      padding: 0 $sm-padding;
 
       .actions {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
         min-width: 50px;
+        padding-bottom: $sm-padding; // margin + padding of content, must be larger due to scrollbar
       }
 
-      .content {
+      .content-placeholder {
+        height: 100%; // card
+        position: relative;
+        flex: 1;
+        .content-container {
+          overflow-x: auto;
+          position: absolute;
+          height: $card-height; // or something bigger for overflow
+          width: 100%;
+          bottom: 0;
+          margin-bottom: $xs-margin;
+
+          .content {
+            position: absolute;
+            bottom: 0;
+            height: calc(#{$card-height} - 10px);
+            display: flex;
+            width: 100%;
+            overflow-y: hidden; // hidden so video can pop out
+            padding-bottom: $xs-padding;
+          }
+        }
+      }
+
+      /*.content {
         flex: 1;
         display: flex;
         overflow-x: scroll;
         overflow-y: hidden;
         padding-bottom: $xs-padding;
 
-        /*
+        !*
         @media(min-width: $bp-mobile) {
           overflow-x: initial;
           padding-bottom: 0;
-        }*/
-      }
+        }*!
+      }*/
 
 
     }

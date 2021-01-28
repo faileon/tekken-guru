@@ -1,19 +1,29 @@
 @import "src/scss/variables";
 
 :host {
-  $vid-height-mobile: 115px;
-  $vid-width-mobile: 204px;
+  $vid-height-mobile: 130px;
+  $vid-width-mobile: 250px;
 
-  $vid-height: 125px;
-  $vid-width: 235px;
+  $vid-height: 150px;
+  $vid-width: 270px;
 
 
   position: relative;
   display: flex;
   cursor: pointer;
 
+  height: $vid-height-mobile;
+  width: $vid-width-mobile;
+
+  @media(min-width: $bp-mobile) {
+    height: $vid-height;
+    width: $vid-width;
+  }
+
   video {
     object-fit: fill;
+    height: 100%;
+    width: auto;
 
     &.fullscreen {
       object-fit: scale-down;
@@ -31,7 +41,6 @@
         height: $vid-height;
         width: $vid-width;
       }
-
 
       &[poster] {
         height: $vid-height-mobile;

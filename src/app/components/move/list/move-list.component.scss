@@ -62,11 +62,12 @@
         flex-direction: column;
         margin-right: auto;
         white-space: nowrap;
+        padding-top: $card-header-min-height; // offset due to overflowing vid, so we keep notation centered
+
 
 
         .notation {
           margin: auto 0;
-          //min-width: 125px;
         }
 
         .hits {
@@ -83,9 +84,9 @@
       }
 
       tg-video {
-        margin: 0 $lg-margin;
+        margin: $lg-margin $lg-margin 0 $lg-margin;
         @media(min-width: $bp-mobile) {
-          margin: 0 $md-margin;
+          margin: $xs-margin $md-margin 0 $md-margin;
         }
       }
 
