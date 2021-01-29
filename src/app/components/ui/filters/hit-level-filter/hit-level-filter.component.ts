@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {HitLevel} from '../../../../types';
+import {FilterType, HitLevel} from '../../../../types';
 import {getToggledProperties} from '../../../../utils/common';
 
 @Component({
@@ -14,6 +14,13 @@ export class HitLevelFilterComponent implements OnInit {
 
   @Output()
   public hitLevelsChange = new EventEmitter<HitLevel[]>();
+
+
+  @Input()
+  public hitFilterType!: FilterType;
+
+  @Output()
+  public hitFilterTypeChange = new EventEmitter<FilterType>();
 
   ngOnInit(): void {
   }

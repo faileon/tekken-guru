@@ -18,6 +18,9 @@ export class FilterTemplateComponent implements OnInit {
   @Input()
   public range?: NumberRange;
 
+  @Input()
+  public withFilterType = false;
+
   @Output()
   public rangeChange = new EventEmitter<NumberRange>();
 
@@ -35,6 +38,7 @@ export class FilterTemplateComponent implements OnInit {
   ngOnInit(): void {
     this.showHitPropsPresets = this.hitPropsPresets.nativeElement?.children.length > 0 ?? false;
     this.showFramePresets = this.framePresets.nativeElement?.children.length > 0 ?? false;
+
   }
 
 }

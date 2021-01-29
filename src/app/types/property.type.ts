@@ -12,5 +12,5 @@ export type MoveProperty =
   'THROW 2' |
   'THROW 1+2';
 
-export type HitProperty = 'KND' | 'LAUNCH' | 'CROUCH' | 'CS' | string;
+export type HitProperty = 'KND' | 'LAUNCH' | 'CROUCH' | 'CS';
 export type HitLevel = 'L' | 'M' | 'H';

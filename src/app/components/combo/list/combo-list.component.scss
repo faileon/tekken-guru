@@ -9,16 +9,44 @@
       ::ng-deep{
         tg-card {
           height: $card-height-small;
+
+          .main {
+            .content-placeholder {
+              .content-container {
+                height: $card-height-small !important;
+              }
+            }
+          }
         }
       }
 
       // CARD CONTENT
-      .notation-wrapper{
+      .main {
         display: flex;
-        padding-top: 5rem; // put it back in center due to overflow
-        .notation {
-          .chevron {
-            color: #37ff05;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-right: auto;
+        white-space: nowrap;
+
+        .notation-wrapper{
+          display: flex;
+          padding-top: 4.5rem; // put it back in center due to overflow
+          .notation {
+            .chevron {
+              color: #37ff05;
+            }
+          }
+        }
+
+        .hits {
+          font-family: 'Roboto Condensed', sans-serif;
+
+          .move {
+            color: $primary-color-highlight;
+          }
+
+          .damage {
+            color: $secondary-color;
           }
         }
       }

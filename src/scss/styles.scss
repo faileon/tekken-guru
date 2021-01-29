@@ -179,7 +179,7 @@ body {
     padding: $md-padding;
 
     &:not(:last-child) {
-      border-bottom: 1px solid $primary-color;
+      border-bottom: 3px solid $primary-color;
     }
   }
 }

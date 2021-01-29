@@ -23,7 +23,6 @@ export class MovelistScreenComponent {
     const characterId = getCharacterIdFromRoute(data, params);
 
     this.movelist$ = this.moveService.getMovelist$(characterId);
-
   }
 }
 

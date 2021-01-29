@@ -26,6 +26,7 @@ import {
   faTachometerAlt,
   faSpinner,
   faGamepad,
+  faCog
 } from '@fortawesome/free-solid-svg-icons';
 import {faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 import {ScreenModule} from './screens/screen.module';
@@ -74,7 +75,7 @@ export class AppModule {
       faTachometerAlt,
       faSpinner,
       faGamepad,
-
+      faCog
     );
     faConfig.fixedWidth = true;
   }

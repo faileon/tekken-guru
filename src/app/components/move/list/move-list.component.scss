@@ -50,6 +50,7 @@
         > .property {
           height: 100%;
           width: auto;
+          z-index: 30;
 
           &:not(:last-child) {
             margin-right: $xs-margin;
@@ -84,6 +85,7 @@
       }
 
       tg-video {
+        z-index: 20;
         margin: $lg-margin $lg-margin 0 $lg-margin;
         @media(min-width: $bp-mobile) {
           margin: $xs-margin $md-margin 0 $md-margin;

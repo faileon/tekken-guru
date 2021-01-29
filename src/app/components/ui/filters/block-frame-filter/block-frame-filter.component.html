@@ -9,4 +9,8 @@
     <tg-button (click)="setSafeFrames()">SAFE</tg-button>
     <tg-button (click)="setPlusFrames()">PLUS</tg-button>
   </ng-container>
+
+  <ng-container properties-presets>
+    <tg-button (click)="toggleCrouchProperty()" [active]="hitProperties | includes:'CROUCH'">CROUCH</tg-button>
+  </ng-container>
 </tg-filter-template>

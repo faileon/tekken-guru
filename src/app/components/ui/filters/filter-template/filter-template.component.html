@@ -1,16 +1,28 @@
-<span class="small title">{{title}}</span>
+<!-- TITLE -->
+<div style="display: flex; align-items: center; justify-content: space-between">
+  <span class="small title">{{title}}</span>
+  <tg-pop-over-button [withHeader]="false" icon="cog" *ngIf="withFilterType">
+    <ng-content select="[filter-type]"></ng-content>
+  </tg-pop-over-button>
+</div>
+
+<!-- PRESETS -->
 <div class="presets" [class.hidden]="!showFramePresets">
   <span class="subtitle">Presets:</span>
   <div class="buttons" #framePresets>
     <ng-content select="[frame-presets]"></ng-content>
   </div>
 </div>
+
+<!-- SLIDER -->
 <tg-slider
   *ngIf="sliderOptions"
   [range]="range"
   (rangeChange)="rangeChange.emit($event)"
   [options]="sliderOptions">
 </tg-slider>
+
+<!-- PROPS -->
 <div class="presets" [class.hidden]="!showHitPropsPresets">
   <span class="subtitle">Properties:</span>
   <div class="buttons" #hitPropsPresets>

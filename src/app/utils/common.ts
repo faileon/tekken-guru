@@ -1,6 +1,4 @@
 // tslint:disable-next-line:no-any
-import {HitProperty} from '../types';
-
 export const debounce = <F extends (...args: any[]) => any>(func: F, waitFor: number) => {
   let timeout: number;
 
@@ -39,8 +37,8 @@ export const getToggledProperties = <T>(properties: T[], property: T, multiple =
 };
 
 // tslint:disable-next-line:no-any
-export const flatten = (arr: any[]): string => {
+/*export const flatten = (arr: any[]): string => {
   return arr.reduce((flat, toFlatten) => {
     return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
   }, []);
-};
+};*/

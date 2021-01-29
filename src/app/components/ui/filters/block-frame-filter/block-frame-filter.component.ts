@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {LabelType, Options} from '@angular-slider/ngx-slider';
 import {DEF_BLOCK_MAX_VAL, DEF_BLOCK_MIN_VAL} from '../../../../config/default-frames.config';
-import {NumberRange} from '../../../../types';
-import {getDebouncedFilterRange} from '../../../../utils/common';
+import {HitProperty, NumberRange} from '../../../../types';
+import {getDebouncedFilterRange, getToggledProperties} from '../../../../utils/common';
 
 
 @Component({
@@ -16,6 +16,12 @@ export class BlockFrameFilterComponent {
 
   @Output()
   public rangeChange = new EventEmitter<NumberRange>();
+
+  @Input()
+  public hitProperties!: HitProperty[];
+
+  @Output()
+  public hitPropertiesChange = new EventEmitter<HitProperty[]>();
 
   options: Options = {
     floor: DEF_BLOCK_MIN_VAL,
@@ -50,6 +56,11 @@ export class BlockFrameFilterComponent {
     getDebouncedFilterRange().then(() => {
       this.rangeChange.emit(range);
     });
+  }
+
+  public toggleCrouchProperty(): void {
+    const toggleProperties = getToggledProperties(this.hitProperties, 'CROUCH');
+    this.hitPropertiesChange.emit(toggleProperties);
   }
 
 }

@@ -1,4 +1,4 @@
-import {HitProperty, MoveProperty} from './property.type';
+import {HitLevel, HitProperty, MoveProperty} from './property.type';
 import {Punishment} from './punishment.type';
 
 export type Move = {
@@ -24,7 +24,7 @@ export type Move = {
   };
   hit: {
     damage: number[];
-    move: string[];
+    move: HitLevel[];
   };
   properties?: MoveProperty[];
   isKeyMove?: boolean;

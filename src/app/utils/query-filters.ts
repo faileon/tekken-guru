@@ -1,4 +1,4 @@
-import {HitProperty, MoveProperty, NumberRange} from '../types';
+import {FilterType, HitProperty, MoveProperty, NumberRange} from '../types';
 import {
   DEF_BLOCK_MAX_VAL,
   DEF_BLOCK_MIN_VAL, DEF_COUNTER_MAX_VAL, DEF_COUNTER_MIN_VAL,
@@ -29,17 +29,19 @@ export const satisfiesRangeFilter = (range: NumberRange, property: number[], low
   }
 };
 
-export const satisfiesPropertyFilter = <T>(selectedProperties: T[], properties: T | T[], atLeastOne = false): boolean => {
-  if (Array.isArray(properties)) {
-    if (atLeastOne) {
-      // a OR b
-      return selectedProperties.some(property => properties?.includes(property) ?? false);
-    }
-    // a AND b
-    return selectedProperties.every(property => properties?.includes(property) ?? false);
-  } else {
-    // property is not array, check if we include
-    return selectedProperties.includes(properties);
+export const satisfiesPropertyFilter = <T>(selectedProperties: T[], properties: T[], filterType?: FilterType): boolean => {
+  switch (filterType) {
+    case 'only':
+      // if multiple selected, its ALL of each. e.g. if Low and High is selected, move that contains either all Low or all High will be filtered
+      return properties.length > 0 ? selectedProperties.some(selProp => properties.every(prop => prop === selProp)) : false;
+    case 'ends-with':
+      return properties.length > 0 ? selectedProperties.some(selProp => properties[properties.length - 1] === selProp) : false;
+    case 'starts-with':
+      return properties.length > 0 ? selectedProperties.some(selProp => properties[0] === selProp) : false;
+    case 'contains':
+    default:
+      // if multiple selected, its AND. eg if low and mid is selected, move that contains Low and Mid will be filtered
+      return selectedProperties.every(selectedProperty => properties?.includes(selectedProperty) ?? false);
   }
 };
 

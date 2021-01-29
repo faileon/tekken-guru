@@ -1,5 +1,5 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {HitLevel, HitProperty, Move, MoveProperty, NumberRange} from '../types';
+import {FilterType, HitLevel, HitProperty, Move, MoveProperty, NumberRange} from '../types';
 import {BehaviorSubject, combineLatest, Observable, of, Subject} from 'rxjs';
 import {debounceTime, map, switchMap, filter} from 'rxjs/operators';
 import {
@@ -47,6 +47,9 @@ export class MoveService implements OnDestroy {
   /********************
    * HIT PROPERTIES FILTER
    *********************/
+  private _blockProps: BehaviorSubject<HitProperty[]>; // only crouch here
+  public blockProps$: Observable<HitProperty[]>;
+
   private _normalProps: BehaviorSubject<HitProperty[]>;
   public normalProps$: Observable<HitProperty[]>;
 
@@ -62,6 +65,9 @@ export class MoveService implements OnDestroy {
   /********************
    * HIT LEVELS PROPERTIES:
    *********************/
+  private _hitLevelsFilterType: BehaviorSubject<FilterType>;
+  public hitLevelsFilterType$: Observable<FilterType>;
+
   private _hitLevels: BehaviorSubject<HitLevel[]>;
   public hitLevels$: Observable<HitLevel[]>;
 
@@ -86,6 +92,10 @@ export class MoveService implements OnDestroy {
     this._blockFilter.next(range);
   }
 
+  set blockProps(properties: HitProperty[]) {
+    this._blockProps.next(properties);
+  }
+
   set normalFilter(range: NumberRange) {
     this._normalFilter.next(range);
   }
@@ -108,6 +118,10 @@ export class MoveService implements OnDestroy {
 
   set hitLevels(hitLevels: HitLevel[]) {
     this._hitLevels.next(hitLevels);
+  }
+
+  set hitLevelsFilterType(filterType: FilterType) {
+    this._hitLevelsFilterType.next(filterType);
   }
 
   set activeFiltersCount(count: number) {
@@ -136,6 +150,9 @@ export class MoveService implements OnDestroy {
     this._counterFilter = new BehaviorSubject<NumberRange>({from: DEF_COUNTER_MIN_VAL, to: DEF_COUNTER_MAX_VAL} as NumberRange);
     this.counterFilter$ = this._counterFilter.asObservable();
 
+    this._blockProps = new BehaviorSubject<HitProperty[]>([]);
+    this.blockProps$ = this._blockProps.asObservable();
+
     this._normalProps = new BehaviorSubject<HitProperty[]>([]);
     this.normalProps$ = this._normalProps.asObservable();
 
@@ -145,6 +162,8 @@ export class MoveService implements OnDestroy {
     this._moveProps = new BehaviorSubject<MoveProperty[]>([]);
     this.moveProps$ = this._moveProps.asObservable();
 
+    this._hitLevelsFilterType = new BehaviorSubject<FilterType>('contains');
+    this.hitLevelsFilterType$ = this._hitLevelsFilterType.asObservable();
     this._hitLevels = new BehaviorSubject<HitLevel[]>([]);
     this.hitLevels$ = this._hitLevels.asObservable();
 
@@ -161,9 +180,11 @@ export class MoveService implements OnDestroy {
         this.counterFilter$,
       ]),
       combineLatest([
+        this.blockProps$,
         this.normalProps$,
         this.counterProps$,
         this.moveProps$,
+        this.hitLevelsFilterType$,
         this.hitLevels$
       ]),
       combineLatest([
@@ -180,9 +201,11 @@ export class MoveService implements OnDestroy {
                        counterRange
                      ],
                      [
+                       blockProps,
                        normalProps,
                        counterProps,
                        moveProps,
+                       hitLevelsFilterType,
                        hitLevels
                      ],
                      [
@@ -198,6 +221,7 @@ export class MoveService implements OnDestroy {
                 const byNormalFrame = shouldFilterNormalFrame(normalRange);
                 const byCounterFrame = shouldFilterCounterFrame(counterRange);
                 const byBlockFrame = shouldFilterBlockFrame(blockRange);
+                const byBlockProps = shouldFilterByProperties(blockProps);
                 const byNormalProps = shouldFilterByProperties(normalProps);
                 const byCounterProps = shouldFilterByProperties(counterProps);
                 const byMoveProps = shouldFilterByProperties(moveProps);
@@ -210,6 +234,7 @@ export class MoveService implements OnDestroy {
                   byNormalFrame,
                   byCounterFrame,
                   byBlockFrame,
+                  byBlockProps,
                   byNormalProps,
                   byCounterProps,
                   byMoveProps,
@@ -237,8 +262,12 @@ export class MoveService implements OnDestroy {
                     const strippedSearchText = searchText.replace(reg, '');
                     const isPartOfNotation = strippedNotation.includes(strippedSearchText);
 
+                    // hit level search - for example searching for LH should find moves that have "L","H" level
+                    const joinedHitLevels = move.hit.move.join('').toLowerCase();
+                    const includesHitLevel = joinedHitLevels.includes(strippedSearchText.toLowerCase());
+
                     // combine it with elastic
-                    satisfiesFilter.push(searchedMoveIds.includes(_id) || isPartOfNotation);
+                    satisfiesFilter.push(searchedMoveIds.includes(_id) || isPartOfNotation || includesHitLevel);
                   }
 
                   if (byStartupFrame) {
@@ -257,6 +286,10 @@ export class MoveService implements OnDestroy {
                     satisfiesFilter.push(satisfiesRangeFilter(blockRange, onBlock.frames, DEF_BLOCK_MIN_VAL, DEF_BLOCK_MAX_VAL));
                   }
 
+                  if (byBlockProps) {
+                    satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(blockProps, onBlock.property));
+                  }
+
                   if (byNormalProps) {
                     satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(normalProps, onHit.property));
                   }
@@ -270,7 +303,7 @@ export class MoveService implements OnDestroy {
                   }
 
                   if (byHitLevels) {
-                    satisfiesFilter.push(satisfiesPropertyFilter(hitLevels, move.hit.move));
+                    satisfiesFilter.push(satisfiesPropertyFilter<HitLevel>(hitLevels, move.hit.move, hitLevelsFilterType));
                   }
 
                   // move must satisfy all active filters - can switch OR | AND here by switching every() for some()

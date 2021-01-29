@@ -1,6 +1,10 @@
 @import "src/scss/variables";
 
 :host {
+  .title {
+    color: $ternary-color;
+  }
+
   .presets {
     display: flex;
     flex-direction: column;

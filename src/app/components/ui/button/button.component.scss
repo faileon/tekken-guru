@@ -41,6 +41,7 @@
 
   .active {
     background-color: $secondary-color;
+    flex: 1 0 0;
 
     &.icon {
       background-color: initial;

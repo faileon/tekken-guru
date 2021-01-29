@@ -11,7 +11,7 @@ import {
 import {MoveService} from '../../../services/move.service';
 import {Subject} from 'rxjs';
 import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, SkipSelf, ViewChild} from '@angular/core';
-import {HitLevel, HitProperty, Move, MoveProperty, NumberRange} from '../../../types';
+import {FilterType, HitLevel, HitProperty, Move, MoveProperty, NumberRange} from '../../../types';
 import {SearchBarComponent} from '../../ui/search-bar/search-bar.component';
 import {SettingsService} from '../../../services/settings.service';
 
@@ -62,6 +62,10 @@ export class MoveListComponent implements OnInit, OnDestroy {
     this.moveService.normalProps = properties;
   }
 
+  public setBlockHitProperties(properties: HitProperty[]): void {
+    this.moveService.blockProps = properties;
+  }
+
   public filterByCounterFrame(range: NumberRange): void {
     this.moveService.counterFilter = range;
   }
@@ -78,11 +82,17 @@ export class MoveListComponent implements OnInit, OnDestroy {
     this.moveService.hitLevels = hitLevels;
   }
 
+  public setHitFilterType(filterType: FilterType): void {
+    console.log('setting', filterType);
+    this.moveService.hitLevelsFilterType = filterType;
+  }
+
   public resetFilters(): void {
     this.moveService.startUpFilter = {from: DEF_STARTUP_MIN_VAL, to: DEF_STARTUP_MAX_VAL};
     this.moveService.blockFilter = {from: DEF_BLOCK_MIN_VAL, to: DEF_BLOCK_MAX_VAL};
     this.moveService.normalFilter = {from: DEF_NORMAL_MIN_VAL, to: DEF_NORMAL_MAX_VAL};
     this.moveService.counterFilter = {from: DEF_COUNTER_MIN_VAL, to: DEF_COUNTER_MAX_VAL};
+    this.moveService.blockProps = [];
     this.moveService.normalProps = [];
     this.moveService.counterProps = [];
     this.moveService.moveProps = [];

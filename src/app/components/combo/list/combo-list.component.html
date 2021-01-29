@@ -12,14 +12,24 @@
 
     <!-- CONTENT -->
     <ng-container content>
-      <div class="notation-wrapper">
-        <div
-          *ngFor="let notation of combo.notation | comboNotation; last as isLast"
-          class="fx centered row notation">
-          <tg-input-notation [notation]="notation"></tg-input-notation>
-          <fa-icon *ngIf="!isLast" icon="chevron-right" size="2x" class="chevron"></fa-icon>
+      <div class="main">
+        <!-- notation -->
+        <div class="notation-wrapper">
+          <div
+            *ngFor="let notation of combo.notation | comboNotation; last as isLast"
+            class="fx centered row notation">
+            <tg-input-notation [notation]="notation"></tg-input-notation>
+            <fa-icon *ngIf="!isLast" icon="chevron-right" size="2x" class="chevron"></fa-icon>
+          </div>
+        </div>
+
+        <!-- hit level and damage -->
+        <div class="hits">
+          <div class="move">{{combo.hit.move | hitMove}}</div>
+          <div class="damage">{{combo.hit.damage | hitDamage}}</div>
         </div>
       </div>
+
     </ng-container>
 
 
