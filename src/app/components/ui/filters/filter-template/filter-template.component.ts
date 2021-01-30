@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NumberRange} from '../../../../types';
+import {FilterType, NumberRange} from '../../../../types';
 import {Options} from '@angular-slider/ngx-slider';
 
 @Component({
@@ -18,11 +18,15 @@ export class FilterTemplateComponent implements OnInit {
   @Input()
   public range?: NumberRange;
 
-  @Input()
-  public withFilterType = false;
-
   @Output()
   public rangeChange = new EventEmitter<NumberRange>();
+
+
+  @Input()
+  public filterType?: FilterType;
+
+  @Output()
+  public filterTypeChange = new EventEmitter<FilterType>();
 
   @ViewChild('hitPropsPresets', {static: true})
   public hitPropsPresets: ElementRef<HTMLElement>;

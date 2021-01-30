@@ -1,8 +1,11 @@
 <!-- TITLE -->
 <div style="display: flex; align-items: center; justify-content: space-between">
   <span class="small title">{{title}}</span>
-  <tg-pop-over-button [withHeader]="false" icon="cog" *ngIf="withFilterType">
-    <ng-content select="[filter-type]"></ng-content>
+  <tg-pop-over-button [withHeader]="false" title="Filter type settings" icon="cog" *ngIf="filterType">
+    <tg-button [outlined]="false" (click)="filterTypeChange.emit('contains')" [active]="filterType === 'contains'">Contains</tg-button>
+    <tg-button [outlined]="false" (click)="filterTypeChange.emit('only')" [active]="filterType === 'only'">Only</tg-button>
+    <tg-button [outlined]="false" (click)="filterTypeChange.emit('starts-with')" [active]="filterType === 'starts-with'">Starts with</tg-button>
+    <tg-button [outlined]="false" (click)="filterTypeChange.emit('ends-with')" [active]="filterType === 'ends-with'">Ends with</tg-button>
   </tg-pop-over-button>
 </div>
 

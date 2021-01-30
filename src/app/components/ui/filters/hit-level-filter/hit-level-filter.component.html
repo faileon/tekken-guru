@@ -1,13 +1,8 @@
 <tg-filter-template
   title="Hit levels:"
-  [withFilterType]="true"
+  [filterType]="hitFilterType"
+  (filterTypeChange)="hitFilterTypeChange.emit($event)"
 >
-  <ng-container filter-type>
-    <tg-button [outlined]="false" (click)="hitFilterTypeChange.emit('contains')" [active]="hitFilterType === 'contains'">Contains</tg-button>
-    <tg-button [outlined]="false" (click)="hitFilterTypeChange.emit('only')" [active]="hitFilterType === 'only'">Only</tg-button>
-    <tg-button [outlined]="false" (click)="hitFilterTypeChange.emit('starts-with')" [active]="hitFilterType === 'starts-with'">Starts with</tg-button>
-    <tg-button [outlined]="false" (click)="hitFilterTypeChange.emit('ends-with')" [active]="hitFilterType === 'ends-with'">Ends with</tg-button>
-  </ng-container>
 
   <ng-container properties-presets>
     <tg-button (click)="toggleProperty('L')" [active]="hitLevels | includes:'L'">LOW</tg-button>
