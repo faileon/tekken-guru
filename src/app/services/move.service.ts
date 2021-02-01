@@ -35,14 +35,20 @@ export class MoveService implements OnDestroy {
   private _startUpFilter: BehaviorSubject<NumberRange>;
   public startupFilter$: Observable<NumberRange>;
 
+  private _blockFilterType: BehaviorSubject<FilterType>;
+  public blockFilterType$: Observable<FilterType>;
   private _blockFilter: BehaviorSubject<NumberRange>;
   public blockFilter$: Observable<NumberRange>;
 
-  private _normalFilter: BehaviorSubject<NumberRange>;
-  public normalFilter$: Observable<NumberRange>;
+  private _normalHitFilterType: BehaviorSubject<FilterType>;
+  public normalHitFilterType$: Observable<FilterType>;
+  private _normalHitFilter: BehaviorSubject<NumberRange>;
+  public normalHitFilter$: Observable<NumberRange>;
 
-  private _counterFilter: BehaviorSubject<NumberRange>;
-  public counterFilter$: Observable<NumberRange>;
+  private _counterHitFilterType: BehaviorSubject<FilterType>;
+  public counterHitFilterType$: Observable<FilterType>;
+  private _counterHitFilter: BehaviorSubject<NumberRange>;
+  public counterHitFilter$: Observable<NumberRange>;
 
   /********************
    * HIT PROPERTIES FILTER
@@ -88,6 +94,10 @@ export class MoveService implements OnDestroy {
     this._startUpFilter.next(range);
   }
 
+  set blockFilterType(filterType: FilterType) {
+    this._blockFilterType.next(filterType);
+  }
+
   set blockFilter(range: NumberRange) {
     this._blockFilter.next(range);
   }
@@ -96,16 +106,24 @@ export class MoveService implements OnDestroy {
     this._blockProps.next(properties);
   }
 
-  set normalFilter(range: NumberRange) {
-    this._normalFilter.next(range);
+  set normalHitFilter(range: NumberRange) {
+    this._normalHitFilter.next(range);
+  }
+
+  set normalHitFilterType(type: FilterType) {
+    this._normalHitFilterType.next(type);
   }
 
   set normalProps(properties: HitProperty[]) {
     this._normalProps.next(properties);
   }
 
-  set counterFilter(range: NumberRange) {
-    this._counterFilter.next(range);
+  set counterHitFilter(range: NumberRange) {
+    this._counterHitFilter.next(range);
+  }
+
+  set counterHitFilterType(type: FilterType) {
+    this._counterHitFilterType.next(type);
   }
 
   set counterProps(properties: HitProperty[]) {
@@ -141,14 +159,20 @@ export class MoveService implements OnDestroy {
     this._startUpFilter = new BehaviorSubject({from: DEF_STARTUP_MIN_VAL, to: DEF_STARTUP_MAX_VAL} as NumberRange);
     this.startupFilter$ = this._startUpFilter.asObservable();
 
+    this._blockFilterType = new BehaviorSubject<FilterType>('contains');
+    this.blockFilterType$ = this._blockFilterType.asObservable();
     this._blockFilter = new BehaviorSubject<NumberRange>({from: DEF_BLOCK_MIN_VAL, to: DEF_BLOCK_MAX_VAL} as NumberRange);
     this.blockFilter$ = this._blockFilter.asObservable();
 
-    this._normalFilter = new BehaviorSubject<NumberRange>({from: DEF_NORMAL_MIN_VAL, to: DEF_NORMAL_MAX_VAL} as NumberRange);
-    this.normalFilter$ = this._normalFilter.asObservable();
+    this._normalHitFilterType = new BehaviorSubject<FilterType>('contains');
+    this.normalHitFilterType$ = this._normalHitFilterType.asObservable();
+    this._normalHitFilter = new BehaviorSubject<NumberRange>({from: DEF_NORMAL_MIN_VAL, to: DEF_NORMAL_MAX_VAL} as NumberRange);
+    this.normalHitFilter$ = this._normalHitFilter.asObservable();
 
-    this._counterFilter = new BehaviorSubject<NumberRange>({from: DEF_COUNTER_MIN_VAL, to: DEF_COUNTER_MAX_VAL} as NumberRange);
-    this.counterFilter$ = this._counterFilter.asObservable();
+    this._counterHitFilterType = new BehaviorSubject<FilterType>('contains');
+    this.counterHitFilterType$ = this._counterHitFilterType.asObservable();
+    this._counterHitFilter = new BehaviorSubject<NumberRange>({from: DEF_COUNTER_MIN_VAL, to: DEF_COUNTER_MAX_VAL} as NumberRange);
+    this.counterHitFilter$ = this._counterHitFilter.asObservable();
 
     this._blockProps = new BehaviorSubject<HitProperty[]>([]);
     this.blockProps$ = this._blockProps.asObservable();
@@ -176,15 +200,20 @@ export class MoveService implements OnDestroy {
       combineLatest([
         this.startupFilter$,
         this.blockFilter$,
-        this.normalFilter$,
-        this.counterFilter$,
+        this.normalHitFilter$,
+        this.counterHitFilter$,
+      ]),
+      combineLatest([
+        this.blockFilterType$,
+        this.normalHitFilterType$,
+        this.counterHitFilterType$,
+        this.hitLevelsFilterType$,
       ]),
       combineLatest([
         this.blockProps$,
         this.normalProps$,
         this.counterProps$,
         this.moveProps$,
-        this.hitLevelsFilterType$,
         this.hitLevels$
       ]),
       combineLatest([
@@ -201,11 +230,16 @@ export class MoveService implements OnDestroy {
                        counterRange
                      ],
                      [
+                       blockFilterType,
+                       normalHitFilterType,
+                       counterHitFilterType,
+                       hitLevelsFilterType,
+                     ],
+                     [
                        blockProps,
                        normalProps,
                        counterProps,
                        moveProps,
-                       hitLevelsFilterType,
                        hitLevels
                      ],
                      [
@@ -275,27 +309,27 @@ export class MoveService implements OnDestroy {
                   }
 
                   if (byNormalFrame) {
-                    satisfiesFilter.push(satisfiesRangeFilter(normalRange, onHit.frames, DEF_NORMAL_MIN_VAL, DEF_NORMAL_MAX_VAL));
+                    satisfiesFilter.push(satisfiesRangeFilter(normalRange, onHit.frames, DEF_NORMAL_MIN_VAL, DEF_NORMAL_MAX_VAL, normalHitFilterType));
                   }
 
                   if (byCounterFrame) {
-                    satisfiesFilter.push(satisfiesRangeFilter(counterRange, onCounterHit.frames, DEF_COUNTER_MIN_VAL, DEF_COUNTER_MAX_VAL));
+                    satisfiesFilter.push(satisfiesRangeFilter(counterRange, onCounterHit.frames, DEF_COUNTER_MIN_VAL, DEF_COUNTER_MAX_VAL, counterHitFilterType));
                   }
 
                   if (byBlockFrame) {
-                    satisfiesFilter.push(satisfiesRangeFilter(blockRange, onBlock.frames, DEF_BLOCK_MIN_VAL, DEF_BLOCK_MAX_VAL));
+                    satisfiesFilter.push(satisfiesRangeFilter(blockRange, onBlock.frames, DEF_BLOCK_MIN_VAL, DEF_BLOCK_MAX_VAL, blockFilterType));
                   }
 
                   if (byBlockProps) {
-                    satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(blockProps, onBlock.property));
+                    satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(blockProps, onBlock.property, blockFilterType));
                   }
 
                   if (byNormalProps) {
-                    satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(normalProps, onHit.property));
+                    satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(normalProps, onHit.property, normalHitFilterType));
                   }
 
                   if (byCounterProps) {
-                    satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(counterProps, onCounterHit.property));
+                    satisfiesFilter.push(satisfiesPropertyFilter<HitProperty>(counterProps, onCounterHit.property, counterHitFilterType));
                   }
 
                   if (byMoveProps) {

@@ -55,7 +55,7 @@ export class MoveListComponent implements OnInit, OnDestroy {
   }
 
   public filterByNormalFrame(range: NumberRange): void {
-    this.moveService.normalFilter = range;
+    this.moveService.normalHitFilter = range;
   }
 
   public setNormalHitProperties(properties: HitProperty[]): void {
@@ -67,7 +67,7 @@ export class MoveListComponent implements OnInit, OnDestroy {
   }
 
   public filterByCounterFrame(range: NumberRange): void {
-    this.moveService.counterFilter = range;
+    this.moveService.counterHitFilter = range;
   }
 
   public setCounterHitProperties(properties: HitProperty[]): void {
@@ -82,16 +82,27 @@ export class MoveListComponent implements OnInit, OnDestroy {
     this.moveService.hitLevels = hitLevels;
   }
 
-  public setHitFilterType(filterType: FilterType): void {
-    console.log('setting', filterType);
+  public setHitLevelsFilterType(filterType: FilterType): void {
     this.moveService.hitLevelsFilterType = filterType;
+  }
+
+  public setBlockFilterType(filterType: FilterType): void {
+    this.moveService.blockFilterType = filterType;
+  }
+
+  public setCounterHitFilterType(filterType: FilterType): void {
+    this.moveService.counterHitFilterType = filterType;
+  }
+
+  public setNormalHitFilterType(filterType: FilterType): void {
+    this.moveService.normalHitFilterType = filterType;
   }
 
   public resetFilters(): void {
     this.moveService.startUpFilter = {from: DEF_STARTUP_MIN_VAL, to: DEF_STARTUP_MAX_VAL};
     this.moveService.blockFilter = {from: DEF_BLOCK_MIN_VAL, to: DEF_BLOCK_MAX_VAL};
-    this.moveService.normalFilter = {from: DEF_NORMAL_MIN_VAL, to: DEF_NORMAL_MAX_VAL};
-    this.moveService.counterFilter = {from: DEF_COUNTER_MIN_VAL, to: DEF_COUNTER_MAX_VAL};
+    this.moveService.normalHitFilter = {from: DEF_NORMAL_MIN_VAL, to: DEF_NORMAL_MAX_VAL};
+    this.moveService.counterHitFilter = {from: DEF_COUNTER_MIN_VAL, to: DEF_COUNTER_MAX_VAL};
     this.moveService.blockProps = [];
     this.moveService.normalProps = [];
     this.moveService.counterProps = [];

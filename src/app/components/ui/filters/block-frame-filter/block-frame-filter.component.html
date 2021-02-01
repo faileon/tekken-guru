@@ -3,6 +3,8 @@
   [sliderOptions]="options"
   [range]="range"
   (rangeChange)="onRangeChange($event)"
+  [filterType]="blockFilterType"
+  (filterTypeChange)="blockFilterTypeChange.emit($event)"
 >
   <ng-container frame-presets>
     <tg-button (click)="setUnsafeFrames()">UNSAFE</tg-button>

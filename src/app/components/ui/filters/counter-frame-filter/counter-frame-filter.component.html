@@ -3,6 +3,8 @@
   [range]="range"
   [sliderOptions]="options"
   (rangeChange)="onRangeChange($event)"
+  [filterType]="counterHitFilterType"
+  (filterTypeChange)="counterHitFilterTypeChange.emit($event)"
 >
   <ng-container frame-presets>
     <tg-button (click)="setMinusFrames()">MINUS</tg-button>

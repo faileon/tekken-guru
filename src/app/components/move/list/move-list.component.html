@@ -35,26 +35,32 @@
           (rangeChange)="filterByBlockFrame($event)"
           [hitProperties]="moveService.blockProps$ | async"
           (hitPropertiesChange)="setBlockHitProperties($event)"
+          [blockFilterType]="moveService.blockFilterType$ | async"
+          (blockFilterTypeChange)="setBlockFilterType($event)"
         ></tg-block-frame-filter>
       </div>
 
       <!-- normal hit frame filter -->
       <div class="section">
         <tg-normal-frame-filter
-          [range]="moveService.normalFilter$ | async"
+          [range]="moveService.normalHitFilter$ | async"
           (rangeChange)="filterByNormalFrame($event)"
           [hitProperties]="moveService.normalProps$ | async"
           (hitPropertiesChange)="setNormalHitProperties($event)"
+          [hitFilterType]="moveService.normalHitFilterType$ | async"
+          (hitFilterTypeChange)="setNormalHitFilterType($event)"
         ></tg-normal-frame-filter>
       </div>
 
       <!-- counter frame filter -->
       <div class="section">
         <tg-counter-frame-filter
-          [range]="moveService.counterFilter$ | async"
+          [range]="moveService.counterHitFilter$ | async"
           (rangeChange)="filterByCounterFrame($event)"
           [hitProperties]="moveService.counterProps$ | async"
           (hitPropertiesChange)="setCounterHitProperties($event)"
+          [counterHitFilterType]="moveService.counterHitFilterType$ | async"
+          (counterHitFilterTypeChange)="setCounterHitFilterType($event)"
         ></tg-counter-frame-filter>
       </div>
 
@@ -72,7 +78,7 @@
           [hitLevels]="moveService.hitLevels$ | async"
           (hitLevelsChange)="setHitLevels($event)"
           [hitFilterType]="moveService.hitLevelsFilterType$ | async"
-          (hitFilterTypeChange)="setHitFilterType($event)"
+          (hitFilterTypeChange)="setHitLevelsFilterType($event)"
         ></tg-hit-level-filter>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {LabelType, Options} from '@angular-slider/ngx-slider';
 import {DEF_NORMAL_MAX_VAL, DEF_NORMAL_MIN_VAL} from '../../../../config/default-frames.config';
-import {HitProperty, NumberRange} from '../../../../types';
+import {FilterType, HitProperty, NumberRange} from '../../../../types';
 import {getDebouncedFilterRange, getToggledProperties} from '../../../../utils/common';
 
 
@@ -22,6 +22,12 @@ export class NormalFrameFilterComponent {
 
   @Output()
   public hitPropertiesChange = new EventEmitter<HitProperty[]>();
+
+  @Input()
+  public hitFilterType!: FilterType;
+
+  @Output()
+  public hitFilterTypeChange = new EventEmitter<FilterType>();
 
   options: Options = {
     floor: DEF_NORMAL_MIN_VAL,

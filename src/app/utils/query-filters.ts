@@ -9,24 +9,91 @@ import {
 } from '../config/default-frames.config';
 
 
-export const satisfiesRangeFilter = (range: NumberRange, property: number[], lowerBound: number, upperBound: number): boolean => {
+const upperBoundLimited = (n: number, upper: number) => n <= upper;
+const lowerBoundLimited = (n: number, lower: number) => n >= lower;
+const lowerAndUpperBoundLimited = (n: number, lower: number, upper: number) => n >= lower && n <= upper;
+
+export const satisfiesRangeFilter = (
+  range: NumberRange,
+  property: number[],
+  lowerBound: number,
+  upperBound: number,
+  filterType?: FilterType,
+): boolean => {
+
+  // destructure range
   const {to, from} = range;
 
-  // (-inf, to>
-  if (from === lowerBound && to !== upperBound) {
-    // return property <= to;
-    return property.some(n => n <= to);
+
+  switch (filterType) {
+    case 'ends-with':
+      // (-inf, to>
+      if (from === lowerBound && to !== upperBound) {
+        // return property <= to;
+        return property.length > 0 ? upperBoundLimited(property[property.length - 1], to) : false;
+      }
+      // <from, +inf)
+      else if (from !== lowerBound && to === upperBound) {
+        // return property >= from;
+        return property.length > 0 ? lowerBoundLimited(property[property.length - 1], from) : false;
+      }
+      // <from, to>
+      else {
+        // return property >= from && property <= to;
+        return property.length > 0 ? lowerAndUpperBoundLimited(property[property.length - 1], from, to) : false;
+      }
+    case 'starts-with':
+      // (-inf, to>
+      if (from === lowerBound && to !== upperBound) {
+        // return property <= to;
+        return property.length > 0 ? upperBoundLimited(property[0], to) : false;
+      }
+      // <from, +inf)
+      else if (from !== lowerBound && to === upperBound) {
+        // return property >= from;
+        return property.length > 0 ? lowerBoundLimited(property[0], from) : false;
+      }
+      // <from, to>
+      else {
+        // return property >= from && property <= to;
+        return property.length > 0 ? lowerAndUpperBoundLimited(property[0], from, to) : false;
+      }
+    case 'only':
+      // (-inf, to>
+      if (from === lowerBound && to !== upperBound) {
+        // return property <= to;
+        return property.length > 0 ? property.every(n => upperBoundLimited(n, to)) : false;
+      }
+      // <from, +inf)
+      else if (from !== lowerBound && to === upperBound) {
+        // return property >= from;
+        return property.length > 0 ? property.every(n => lowerBoundLimited(n, from)) : false;
+      }
+      // <from, to>
+      else {
+        // return property >= from && property <= to;
+        return property.length > 0 ? property.every(n => lowerAndUpperBoundLimited(n, from, to)) : false;
+      }
+    case 'contains':
+    default:
+      // (-inf, to>
+      if (from === lowerBound && to !== upperBound) {
+        // return property <= to;
+        return property.length > 0 ? property.some(n => upperBoundLimited(n, to)) : false;
+      }
+      // <from, +inf)
+      else if (from !== lowerBound && to === upperBound) {
+        // return property >= from;
+        return property.length > 0 ? property.some(n => lowerBoundLimited(n, from)) : false;
+      }
+      // <from, to>
+      else {
+        // return property >= from && property <= to;
+        return property.length > 0 ? property.some(n => lowerAndUpperBoundLimited(n, from, to)) : false;
+      }
   }
-  // <from, +inf)
-  else if (from !== lowerBound && to === upperBound) {
-    // return property >= from;
-    return property.some(n => n >= from);
-  }
-  // <from, to>
-  else {
-    // return property >= from && property <= to;
-    return property.some(n => n >= from && n <= to);
-  }
+
+
 };
 
 export const satisfiesPropertyFilter = <T>(selectedProperties: T[], properties: T[], filterType?: FilterType): boolean => {
