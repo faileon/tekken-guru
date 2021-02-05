@@ -5,8 +5,22 @@
   .list {
     height: calc(100% - #{$md-margin});
 
+    .combo-category {
+      margin-bottom: 2.5rem;
+
+      .header {
+        display: flex;
+        align-items: center;
+        padding: $sm-padding 0;
+
+        > :not(:last-child) {
+          margin-right: $sm-margin;
+        }
+      }
+    }
+
     tg-card-with-actions {
-      ::ng-deep{
+      ::ng-deep {
         tg-card {
           height: $card-height-small;
 
@@ -28,7 +42,7 @@
         margin-right: auto;
         white-space: nowrap;
 
-        .notation-wrapper{
+        .notation-wrapper {
           display: flex;
           padding-top: 4.5rem; // put it back in center due to overflow
           .notation {

@@ -17,6 +17,7 @@ export class CombosScreenComponent implements OnInit {
   public classes = 'subscreen';
 
   public combos$: Observable<Combo[]>;
+  public categorizedCombos$: Observable<CategorizedCombo[]>;
 
   constructor(private route: ActivatedRoute, @SkipSelf() public combosService: CombosService) {
     const {data} = route.snapshot;
@@ -24,6 +25,7 @@ export class CombosScreenComponent implements OnInit {
     const characterId = getCharacterIdFromRoute(data, params);
 
     this.combos$ = this.combosService.getCombos$(characterId);
+    this.categorizedCombos$ = this.combosService.getCategorizedCombos$(characterId);
   }
 
   ngOnInit(): void {

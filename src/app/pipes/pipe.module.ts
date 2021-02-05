@@ -12,6 +12,7 @@ import { PunishmentTextPipe } from './punishment-text.pipe';
 import { InputPathPipe } from './input-path.pipe';
 import { IsKnownInputPipe } from './is-known-input.pipe';
 import { ComboNotationPipe } from './combo-notation.pipe';
+import { ComboNamePipe } from './combo-name.pipe';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { ComboNotationPipe } from './combo-notation.pipe';
     InputPathPipe,
     IsKnownInputPipe,
     ComboNotationPipe,
+    ComboNamePipe,
   ],
   imports: [
     CommonModule
@@ -44,7 +46,8 @@ import { ComboNotationPipe } from './combo-notation.pipe';
         PunishmentTextPipe,
         IsKnownInputPipe,
         InputPathPipe,
-        ComboNotationPipe
+        ComboNotationPipe,
+        ComboNamePipe
     ]
 })
 export class PipeModule {

@@ -7,7 +7,7 @@ export type Combo = {
   _id: string;
   name: string;
   notation: string;
-  category?: string;
+  category?: string; // <category;notation>, e.g. Counter Hit;b+1+2
   frameData: {
     startUp: {
       frames: number;

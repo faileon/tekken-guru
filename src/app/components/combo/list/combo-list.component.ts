@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Combo} from '../../../types/combo.type';
+import {CategorizedCombo, Combo} from '../../../types/combo.type';
 
 @Component({
   selector: 'tg-combo-list',
@@ -11,10 +11,14 @@ export class ComboListComponent implements OnInit {
   @Input()
   public combolist!: Combo[];
 
+  @Input()
+  public categorizedCombos!: CategorizedCombo[];
+
   constructor() {
   }
 
   ngOnInit(): void {
+    console.log(this.categorizedCombos);
   }
 
 }

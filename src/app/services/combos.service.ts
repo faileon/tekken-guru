@@ -27,7 +27,7 @@ export class CombosService {
 
           // category already exists
           if (categoryIdx >= 0) {
-            acc[0].data.push(curr);
+            acc[categoryIdx].data.push(curr);
           } else {
             // category does not exist yet,
             acc.push({

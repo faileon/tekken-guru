@@ -1,19 +1,19 @@
-<virtual-scroller *ngIf="combolist?.length > 0; else noCombos" #scroll [items]="combolist" class="list">
+<!--<virtual-scroller *ngIf="combolist?.length > 0; else noCombos" #scroll [items]="combolist" class="list">
   <tg-card-with-actions
     *ngFor="let combo of scroll.viewPortItems;"
     [title]="combo._id"
     [subtitle]="combo.name"
   >
 
-    <!-- actions for auth user - favorite -->
+    &lt;!&ndash; actions for auth user - favorite &ndash;&gt;
     <div actions class="actions">
       <tg-button [outlined]="false" [icon]="['far','star']" iconSize="lg"></tg-button>
     </div>
 
-    <!-- CONTENT -->
+    &lt;!&ndash; CONTENT &ndash;&gt;
     <ng-container content>
       <div class="main">
-        <!-- notation -->
+        &lt;!&ndash; notation &ndash;&gt;
         <div class="notation-wrapper">
           <div
             *ngFor="let notation of combo.notation | comboNotation; last as isLast"
@@ -23,7 +23,7 @@
           </div>
         </div>
 
-        <!-- hit level and damage -->
+        &lt;!&ndash; hit level and damage &ndash;&gt;
         <div class="hits">
           <div class="move">{{combo.hit.move | hitMove}}</div>
           <div class="damage">{{combo.hit.damage | hitDamage}}</div>
@@ -34,8 +34,55 @@
 
 
   </tg-card-with-actions>
-</virtual-scroller>
+</virtual-scroller>-->
 
+
+<!-- CATEGORIZED -->
+<virtual-scroller *ngIf="categorizedCombos?.length > 0; else noCombos" #scroll [items]="categorizedCombos" class="list">
+  <div
+    *ngFor="let comboCategory of scroll.viewPortItems"
+    class="combo-category">
+    <div class="header" *ngIf="comboCategory.name | comboName as comboName">
+      <h2>{{comboName.title}}</h2>
+      <tg-input-notation [notation]="comboName.notation"></tg-input-notation>
+    </div>
+    <tg-card-with-actions
+      *ngFor="let combo of comboCategory.data"
+      [title]="combo._id"
+      [subtitle]="combo.name"
+    >
+
+      <!-- actions for auth user - favorite -->
+      <div actions class="actions">
+        <tg-button [outlined]="false" [icon]="['far','star']" iconSize="lg"></tg-button>
+      </div>
+
+      <!-- CONTENT -->
+      <ng-container content>
+        <div class="main">
+          <!-- notation -->
+          <div class="notation-wrapper">
+            <div
+              *ngFor="let notation of combo.notation | comboNotation; last as isLast"
+              class="fx centered row notation">
+              <tg-input-notation [notation]="notation"></tg-input-notation>
+              <fa-icon *ngIf="!isLast" icon="chevron-right" size="2x" class="chevron"></fa-icon>
+            </div>
+          </div>
+
+          <!-- hit level and damage -->
+          <div class="hits">
+            <div class="move">{{combo.hit.move | hitMove}}</div>
+            <div class="damage">{{combo.hit.damage | hitDamage}}</div>
+          </div>
+        </div>
+
+      </ng-container>
+
+
+    </tg-card-with-actions>
+  </div>
+</virtual-scroller>
 <!-- EMPTY LIST -->
 <ng-template #noCombos>
   <tg-empty-card></tg-empty-card>
