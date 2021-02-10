@@ -7,6 +7,7 @@ import {
   DEF_STARTUP_MAX_VAL,
   DEF_STARTUP_MIN_VAL
 } from '../config/default-frames.config';
+import {abbreviationsMap} from './abbreviations-map';
 
 
 const upperBoundLimited = (n: number, upper: number) => n <= upper;
@@ -148,3 +149,13 @@ export const shouldFilterCounterFrame = (range: NumberRange): boolean => {
 };
 
 export const shouldFilterByProperties = <T>(properties: T[]): boolean => properties.length > 0;
+
+
+export const replaceAbbreviations = (searchText: string): string => {
+  const entry = Object.entries(abbreviationsMap).find(([_, abrev]) => searchText.startsWith(abrev));
+  if (entry) {
+    const [term, abrev] = entry;
+    return searchText.replace(abrev, term);
+  }
+  return searchText;
+};

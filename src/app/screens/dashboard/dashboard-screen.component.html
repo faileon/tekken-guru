@@ -11,6 +11,11 @@
 
       <p>The app should work both on desktop and mobile, including in offline. For best mobile experience, don't forget
         to install the actual PWA with the <strong class="secondary">"Add to Home Screen"</strong> button.</p>
+
+      <p class="secondary">
+        I am currently investigating two issues with iOS and MacOS. One being scrolling issues on all
+        iOS devices at the character select screen. Second issue is playing videos in Safari browser, where the videos
+        do not play due to autoplay restrictions enforced by the browser.</p>
     </div>
   </tg-card>
 
@@ -21,10 +26,13 @@
 
       <p>This site would not be possible without the help of few a people that I would like to mention:</p>
       <ul>
-        <li><strong>Fergus</strong> for allowing me to use part of this written character guides for the overview texts.
+        <li><strong>Fergus</strong> - for allowing me to use part of this written character guides for the overview texts.
           Check out his
           <a class="secondary underline" href="https://www.twitch.tv/fergus2k8" target="_blank">twitch</a> for good tekken content.
         </li>
+        <li><strong>mspkvp</strong> - the notation assets were borrowed from his <a class="secondary underline" href="https://github.com/mspkvp/tk7movespretty">https://github.com/mspkvp/tk7movespretty</a></li>
+        <li><strong>TOOLASSISTED</strong>  - parts of the data were scraped from <a class="secondary underline" href="https://toolassisted.github.io/T7/MOVELIST/">TOOLASSISTED's github repo</a>.</li>
+        <li><strong>TLNBS2405</strong> - parts of the data were scraped from <a class="secondary underline" href="https://github.com/TLNBS2405/mokujin">TLNBS2405's github page</a></li>
       </ul>
     </div>
   </tg-card>
@@ -33,22 +41,20 @@
     <div content>
       <p>I have created a semi automate way, so I can add characters and their data rather quickly, however there will
         be errors that will need a manual fix. If you wish to participate, I will be eternally grateful for any sort of bug
-        report and/or an incorrect data report, please do so on the <a class="secondary underline" href="https://discord.gg/fZwvttrt" target="_blank">tekken.guru discord server.</a></p>
+        report and/or an incorrect data report, please do so on the <a class="secondary underline" href="https://discord.gg/ryKyJESqga" target="_blank">tekken.guru discord server.</a></p>
     </div>
   </tg-card>
 
   <tg-card title="Roadmap">
     <div content>
-      <p>I am more or less done with the core of the app and now the main focus is to provide all the data, but there
-        are still a few things on my mind that I would like to slowly implement.</p>
+      <p>I am more or less done with the core of the app and now the main focus is to sanitize all the
+        errors in the data and fill out the key moves and combos for all characters.</p>
 
       <ol>
-        <li>Ability to add moves to favorites - dilemma between offline and online storage. Pros and cons for each.</li>
         <li>Sorting. (by damage, frames, hits, ...)</li>
-        <li>Filtering by hit level - ability to toggle between <i>all hits</i> vs <i>at least one</i> (currently only the latter is implemented).</li>
+        <li>Ability to add moves to favorites. (Offline storage or online with auth?)</li>
         <li>Ability to filter throws.</li>
         <li>Ability to copy link for specific move. (e.g. characters/leroy/movelist/#002)</li>
-        <li>Input notation display settings - tired of playstation layout?</li>
       </ol>
     </div>
   </tg-card>

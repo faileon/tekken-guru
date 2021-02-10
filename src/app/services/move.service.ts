@@ -3,6 +3,7 @@ import {FilterType, HitLevel, HitProperty, Move, MoveProperty, NumberRange} from
 import {BehaviorSubject, combineLatest, Observable, of, Subject} from 'rxjs';
 import {debounceTime, map, switchMap, filter} from 'rxjs/operators';
 import {
+  replaceAbbreviations,
   satisfiesPropertyFilter,
   satisfiesRangeFilter,
   shouldFilterBlockFrame,
@@ -280,7 +281,7 @@ export class MoveService implements OnDestroy {
                   return data;
                 }
 
-                const searchedMoveIds = searchIndex.search(searchText, {expand: true}).map(item => item.ref);
+                const searchedMoveIds = searchIndex.search(searchText).map(item => item.ref);
                 // console.log('searching for', searchText);
 
                 // filter moves
@@ -292,9 +293,12 @@ export class MoveService implements OnDestroy {
                   if (withText) {
                     // notation search - strip both texts of [whitespace, /, + and ,] then look for the parts in the notation text
                     const reg = /[\s\/+,]/g;
-                    const strippedNotation = notation.replace(reg, '');
-                    const strippedSearchText = searchText.replace(reg, '');
-                    const isPartOfNotation = strippedNotation.includes(strippedSearchText);
+                    const strippedNotation = notation.replace(reg, '').toLowerCase();
+                    const strippedSearchText = searchText.replace(reg, '').toLowerCase();
+                    // replace ss,ws,wr,<stance name> to full name
+                    const replacedSearchText = replaceAbbreviations(strippedSearchText);
+                    const isPartOfNotation = strippedNotation.includes(replacedSearchText);
+                    console.log('searching for', replacedSearchText, 'in move:', strippedNotation);
 
                     // hit level search - for example searching for LH should find moves that have "L","H" level
                     const joinedHitLevels = move.hit.move.join('').toLowerCase();

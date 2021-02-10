@@ -4,6 +4,7 @@
   height: 100%;
 
   > .tg-container {
-    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
   }
 }
