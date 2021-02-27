@@ -3,6 +3,14 @@ export const abbreviationsMap = {
   'whilerising': 'ws',
   'fff': 'wr',
   'duringsidestep': 'ss',
+  'whilecrouching': 'fc',
+  'backtowardsenemy': 'bt',
+  'fnddf': 'cd',
+  'ddff': 'qcf',
+  'ddbb': 'qcb',
+  'bdbddff': 'hcf',
+  'fdfddbb': 'hcb',
+
 
   // bob
   'duringspinnerball': 'bal',
@@ -116,4 +124,10 @@ export const abbreviationsMap = {
   'duringscarecrowstance': 'scr',
   'duringmantisstance': 'mnt',
   'duringtarantulastance': 'trt',
+
+  // kuni
+  'duringsetsunagake': 'set',
+
+  // marduk
+  'duringreadyposition': 'vts'
 };
