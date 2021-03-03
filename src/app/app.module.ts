@@ -26,6 +26,8 @@ import {
   faTachometerAlt,
   faSpinner,
   faGamepad,
+  faCircle,
+  faCheckCircle,
   faCog
 } from '@fortawesome/free-solid-svg-icons';
 import {faStar as farStar} from '@fortawesome/free-regular-svg-icons';
@@ -75,7 +77,9 @@ export class AppModule {
       faTachometerAlt,
       faSpinner,
       faGamepad,
-      faCog
+      faCog,
+      faCircle,
+      faCheckCircle
     );
     faConfig.fixedWidth = true;
   }

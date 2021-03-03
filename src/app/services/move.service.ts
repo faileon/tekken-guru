@@ -298,7 +298,7 @@ export class MoveService implements OnDestroy {
                     // replace ss,ws,wr,<stance name> to full name
                     const replacedSearchText = replaceAbbreviations(strippedSearchText);
                     const isPartOfNotation = strippedNotation.includes(replacedSearchText);
-                    console.log('searching for', replacedSearchText, 'in move:', strippedNotation);
+                    // console.log('searching for', replacedSearchText, 'in move:', strippedNotation);
 
                     // hit level search - for example searching for LH should find moves that have "L","H" level
                     const joinedHitLevels = move.hit.move.join('').toLowerCase();

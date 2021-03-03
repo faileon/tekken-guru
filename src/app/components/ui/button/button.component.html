@@ -10,7 +10,7 @@
     [size]="iconSize"
     [class.dark]="isDark"
   ></fa-icon>
-  <span class="text">
+  <span class="text" [class.with-icon]="icon !== undefined">
       <ng-content></ng-content>
   </span>
 </div>

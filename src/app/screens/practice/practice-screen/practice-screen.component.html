@@ -1,0 +1,51 @@
+<div class="tg-container">
+  <div class="tarrget-title">Dashboard</div>
+
+  <tg-card title="Select a gamepad">
+    <div class="gamepads fx col" content *ngIf="gamepads$ | async as gamepads">
+      <div class="title">Number of connected gamepads: {{gamepads.length}}</div>
+      <div class="secondary" *ngIf="gamepads.length === 0">Connect your gamepad and press a button to initialize it.
+      </div>
+
+      <div class="gamepad-lists">
+        <div class="gamepad fx row centered"
+             (click)="onGamepadSelected(gamepad)"
+             [class.selected]="gamepad === (selectedGamepad$ | async)"
+             *ngFor="let gamepad of gamepads">
+          <fa-icon icon="gamepad" size="2x"></fa-icon>
+          <div>gp: {{gamepad?.id}}</div>
+          <fa-icon size="lg" [icon]="gamepad === (selectedGamepad$ | async) ? 'check-circle' : 'circle'"></fa-icon>
+        </div>
+      </div>
+    </div>
+  </tg-card>
+
+  <tg-card title="Throw Breaking" >
+    <div content>
+      <div class="pressed-buttons fx row centered" style="min-height: 40px">
+        <ng-container *ngIf="pressedButtons$ | async as pressedButtons">
+          <div *ngIf="!(pressedButtons[0] || pressedButtons[1])">Press a button!</div>
+          <tg-input-notation notation="1" *ngIf="pressedButtons[0] && !pressedButtons[1]"></tg-input-notation>
+          <tg-input-notation notation="2" *ngIf="pressedButtons[1] && !pressedButtons[0]"></tg-input-notation>
+          <tg-input-notation notation="1+2" *ngIf="pressedButtons[0] && pressedButtons[1]"></tg-input-notation>
+        </ng-container>
+      </div>
+
+      <div class="controls fx row centered" *ngIf="selectedGamepad$ | async">
+        <tg-button (click)="videoElement.play()">
+          Start training
+        </tg-button>
+
+        <tg-button (click)="videoElement.pause()">
+          Stop training
+        </tg-button>
+      </div>
+
+      <video style="display: none" #videoElement width="1250" height="690">
+        <source [src]="'assets/videos/throw-breaks/' + (currentVideoSrc$ | async) + '.mp4'">
+      </video>
+
+      <canvas #canvasElement style="width: 1250px; height: 690px"></canvas>
+    </div>
+  </tg-card>
+</div>

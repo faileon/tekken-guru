@@ -1,5 +1,5 @@
 import {TGMenuItem} from '../types/ui.types';
-import {faTh, faUsers, faInfinity, faCog} from '@fortawesome/free-solid-svg-icons';
+import {faTh, faUsers, faInfinity, faCog, faDumbbell} from '@fortawesome/free-solid-svg-icons';
 
 
 // MAIN MENU
@@ -21,6 +21,12 @@ export const APP_MENU: TGMenuItem[] = [
     icon: faInfinity,
     routeTo: '/matchup',
     ariaLabel: 'Matchup select'
+  },
+  {
+    title: 'Practice',
+    icon: faDumbbell,
+    routeTo: '/practice',
+    ariaLabel: 'Practice mode'
   },
   {
     title: 'Settings',
