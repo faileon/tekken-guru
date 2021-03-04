@@ -16,6 +16,7 @@ import {MovelistScreenComponent} from './character/subscreens/movelist-screen/mo
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {SettingsScreenComponent} from './settings-screen/settings-screen.component';
 import { PracticeScreenComponent } from './practice/practice-screen/practice-screen.component';
+import {PipeModule} from '../pipes/pipe.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { PracticeScreenComponent } from './practice/practice-screen/practice-scr
     DirectiveModule,
     RoutingModule,
     FontAwesomeModule,
+    PipeModule,
   ],
   exports: [
     CharacterSelectScreenComponent,

@@ -1,8 +1,8 @@
 <div class="tg-container">
-  <div class="tarrget-title">Dashboard</div>
+  <div class="tarrget-title">Practice</div>
 
   <tg-card title="Select a gamepad">
-    <div class="gamepads fx col" content *ngIf="gamepads$ | async as gamepads">
+    <div class="gamepads fx col" content *ngIf="gamepads$ | async as gamepads" style="min-height: 120px">
       <div class="title">Number of connected gamepads: {{gamepads.length}}</div>
       <div class="secondary" *ngIf="gamepads.length === 0">Connect your gamepad and press a button to initialize it.
       </div>
@@ -13,39 +13,94 @@
              [class.selected]="gamepad === (selectedGamepad$ | async)"
              *ngFor="let gamepad of gamepads">
           <fa-icon icon="gamepad" size="2x"></fa-icon>
-          <div>gp: {{gamepad?.id}}</div>
-          <fa-icon size="lg" [icon]="gamepad === (selectedGamepad$ | async) ? 'check-circle' : 'circle'"></fa-icon>
+          <div>{{gamepad?.id}}</div>
+          <fa-icon style="margin-left: auto" size="lg" [icon]="gamepad === (selectedGamepad$ | async) ? 'check-circle' : 'circle'"></fa-icon>
         </div>
       </div>
     </div>
   </tg-card>
 
-  <tg-card title="Throw Breaking" >
+  <tg-card title="Throw Breaking">
+    <div header class="fx fluid row centered">
+      <tg-pop-over-button
+        style="margin-left: auto"
+        title="Settings"
+        icon="cog"
+      >
+       <div class="settings" style="padding: 1rem">
+         <!-- TIME INTERVAL aka neutral window count -->
+         <span class="small title highlighted">Time interval:</span>
+         <tg-slider [(range)]="neutralRange" [options]="{floor: 1, ceil: 5, animate: false}"></tg-slider>
+
+         <!-- TIME INTERVAL aka neutral window count -->
+         <span class="small title highlighted">Decoy chance:</span>
+         <tg-slider [(range)]="decoyRange" [options]="{floor: 0, ceil: 1, animate: false, step: 0.1}"></tg-slider>
+
+         <!-- TIME INTERVAL aka neutral window count -->
+         <span class="small title highlighted">Desired throws:</span>
+         <div class="fx row spaced">
+           <tg-button (click)="toggleDesiredThrow('throw-1')" [active]="desiredThrows | includes:'throw-1'">1</tg-button>
+           <tg-button (click)="toggleDesiredThrow('throw-2')" [active]="desiredThrows | includes:'throw-2'">2</tg-button>
+           <tg-button (click)="toggleDesiredThrow('throw-1+2')" [active]="desiredThrows | includes:'throw-1+2'">1+2</tg-button>
+         </div>
+       </div>
+      </tg-pop-over-button>
+    </div>
     <div content>
-      <div class="pressed-buttons fx row centered" style="min-height: 40px">
-        <ng-container *ngIf="pressedButtons$ | async as pressedButtons">
-          <div *ngIf="!(pressedButtons[0] || pressedButtons[1])">Press a button!</div>
-          <tg-input-notation notation="1" *ngIf="pressedButtons[0] && !pressedButtons[1]"></tg-input-notation>
-          <tg-input-notation notation="2" *ngIf="pressedButtons[1] && !pressedButtons[0]"></tg-input-notation>
-          <tg-input-notation notation="1+2" *ngIf="pressedButtons[0] && pressedButtons[1]"></tg-input-notation>
-        </ng-container>
+      <div class="fx row centered" style="min-height: 140px">
+        <div class="fx col">
+          <!-- DEBUG WINDOW FOR BUTTONS PRESS -->
+          <div class="pressed-buttons fx row centered" style="min-height: 40px">
+            <ng-container *ngIf="pressedButtons$ | async as pressedButtons">
+              <div *ngIf="!(pressedButtons[0] || pressedButtons[1])">Press a button!</div>
+              <tg-input-notation notation="1" *ngIf="pressedButtons[0] && !pressedButtons[1]"></tg-input-notation>
+              <tg-input-notation notation="2" *ngIf="pressedButtons[1] && !pressedButtons[0]"></tg-input-notation>
+              <tg-input-notation notation="1+2" *ngIf="pressedButtons[0] && pressedButtons[1]"></tg-input-notation>
+            </ng-container>
+          </div>
+
+          <!-- CONTROLS -->
+          <div class="controls fx row centered" *ngIf="selectedGamepad$ | async">
+            <tg-button (click)="videoElement.play()">
+              Start training
+            </tg-button>
+            <tg-button (click)="videoElement.pause()">
+              Stop training
+            </tg-button>
+          </div>
+        </div>
+        <div class="fx row score">
+          <table class="score-table">
+            <tr class="header">
+              <th></th>
+              <th>Throws</th>
+              <th>Decoys</th>
+              <th>Overall</th>
+            </tr>
+            <tr class="success">
+              <td>SUCCESS:</td>
+              <td>{{score.breaks.success}}</td>
+              <td>{{score.decoys.success}}</td>
+              <td class="overall" rowspan="2" [class.positive]="((score.breaks.success + score.decoys.success) / (score.breaks.success + score.breaks.miss + score.breaks.fail + score.decoys.success + score.decoys.fail) || 1) > 0">
+                {{((score.breaks.success + score.decoys.success) / (score.breaks.success + score.breaks.miss + score.breaks.fail + score.decoys.success + score.decoys.fail) || 0) | percent}}
+              </td>
+            </tr>
+            <tr class="fail">
+              <td>FAIL:</td>
+              <td>{{score.breaks.fail}}</td>
+              <td>{{score.decoys.fail}}</td>
+            </tr>
+            <tr class="miss">
+              <td>MISS:</td>
+              <td>{{score.breaks.miss}}</td>
+            </tr>
+          </table>
+        </div>
       </div>
 
-      <div class="controls fx row centered" *ngIf="selectedGamepad$ | async">
-        <tg-button (click)="videoElement.play()">
-          Start training
-        </tg-button>
+      <video style="display: none" preload="auto" #videoElement width="1250" height="690"></video>
 
-        <tg-button (click)="videoElement.pause()">
-          Stop training
-        </tg-button>
-      </div>
-
-      <video style="display: none" #videoElement width="1250" height="690">
-        <source [src]="'assets/videos/throw-breaks/' + (currentVideoSrc$ | async) + '.mp4'">
-      </video>
-
-      <canvas #canvasElement style="width: 1250px; height: 690px"></canvas>
+      <canvas #canvasElement></canvas>
     </div>
   </tg-card>
 </div>

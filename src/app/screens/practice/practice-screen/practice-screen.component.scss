@@ -31,4 +31,62 @@
       background-color: $primary-color-highlight;
     }
   }
+
+  .score {
+    margin-left: auto;
+
+    .score-table {
+      font-family: 'Roboto Condensed', sans-serif;
+      border-spacing: 0;
+      td, th {
+        padding: $xs-padding $sm-padding;
+        &:nth-child(2) {
+          background-color: #204b54;
+        }
+
+        &:nth-child(3) {
+          background-color: #56513e;
+        }
+
+        &:nth-child(4) {
+          background-color: #354a30;
+        }
+      }
+
+      tr {
+        text-align: center;
+
+        td:first-child {
+          text-align: left;
+        }
+      }
+
+      .success {
+        color: green;
+
+        .overall {
+          color: red;
+          font-size: 1.25rem;
+          font-weight: 600;
+
+          &.positive {
+            color: green;
+          }
+        }
+      }
+
+      .fail {
+        color: red;
+      }
+
+      .miss {
+        color: darkgoldenrod;
+      }
+    }
+  }
+
+  .settings {
+    padding: 1rem;
+  }
+
 }

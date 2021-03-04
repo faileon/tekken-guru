@@ -1,4 +1,4 @@
-import {FilterType, HitProperty, MoveProperty, NumberRange} from '../types';
+import {FilterType, NumberRange} from '../types';
 import {
   DEF_BLOCK_MAX_VAL,
   DEF_BLOCK_MIN_VAL, DEF_COUNTER_MAX_VAL, DEF_COUNTER_MIN_VAL,
@@ -111,19 +111,6 @@ export const satisfiesPropertyFilter = <T>(selectedProperties: T[], properties: 
       // if multiple selected, its AND. eg if low and mid is selected, move that contains Low and Mid will be filtered
       return selectedProperties.every(selectedProperty => properties?.includes(selectedProperty) ?? false);
   }
-};
-
-/*export const satisfiesHitPropertyFilter = (hitProperties: HitProperty[], moveHitProperty: HitProperty): boolean => {
-  return hitProperties.includes(moveHitProperty);
-};
-
-export const satisfiesMovePropertyFilter = (selectedProperties: MoveProperty[], moveProperties?: MoveProperty[]): boolean => {
-  return selectedProperties.every(property => moveProperties?.includes(property) ?? false);
-};*/
-
-// tslint:disable-next-line:no-any
-const getPropertyByPath = (element: any, parts: string[]): number | string | null => {
-  return parts.reduce((acc, curr) => acc && acc[curr] || null, element);
 };
 
 const shouldFilter = (range: NumberRange, lowerBound: number, upperBound: number): boolean => {

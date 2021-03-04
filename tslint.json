@@ -44,6 +44,7 @@
       true,
       175
     ],
+
     "member-ordering": [
       true,
       {
@@ -66,7 +67,7 @@
     "no-any": true,
     "no-empty": false,
     "no-inferrable-types": [
-      true,
+      false,
       "ignore-params"
     ],
     "no-non-null-assertion": true,

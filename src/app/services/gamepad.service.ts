@@ -1,37 +1,16 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, interval, Observable, Subject} from 'rxjs';
-import {distinctUntilChanged, map, switchMap} from 'rxjs/operators';
+import {distinctUntilChanged, filter, map, switchMap} from 'rxjs/operators';
 
 @Injectable()
 export class GamepadService {
-  public pressedButtons$: Observable<readonly GamepadButton[]>;
-
-
-  constructor(private gamepadSettingsService: GamepadSettingsService) {
-    console.log('created gamepad service!!!!!!!!!!!!');
-    this.pressedButtons$ = this.gamepadSettingsService.selectedGamepad$.pipe(
-      switchMap(gamepad => {
-        return interval(16).pipe(
-          map(_ => navigator.getGamepads()[gamepad.index].buttons),
-          distinctUntilChanged()
-        );
-      }),
-    );
-
-
-    // this.pressedButtons$.subscribe(buttons => {
-    //   console.log('PRESSED BUTTONS', buttons);
-    // });
-  }
-}
-
-@Injectable()
-export class GamepadSettingsService {
   private _gamepadList: BehaviorSubject<{ [key: number]: Gamepad }>;
   public gamepadList$: Observable<{ [key: number]: Gamepad }>;
 
   private _selectedGamepad = new Subject<Gamepad>();
   public selectedGamepad$ = this._selectedGamepad.asObservable();
+
+  public pressedButtons$: Observable<readonly GamepadButton[]>;
 
   set selectedGamepad(gamepad: Gamepad) {
     this._selectedGamepad.next(gamepad);
@@ -40,6 +19,16 @@ export class GamepadSettingsService {
   constructor() {
     this._gamepadList = new BehaviorSubject<{ [key: number]: Gamepad }>(navigator.getGamepads());
     this.gamepadList$ = this._gamepadList.asObservable();
+
+    this.pressedButtons$ = this.selectedGamepad$.pipe(
+      switchMap(gamepad => {
+        return interval(16).pipe(
+          map(_ => navigator.getGamepads()[gamepad.index].buttons),
+          distinctUntilChanged(),
+          // filter(buttons => buttons.every(b => !b))
+        );
+      }),
+    );
 
     // whenever gamepad connects, refetch gamepad list
     window.addEventListener('gamepadconnected', evt => {

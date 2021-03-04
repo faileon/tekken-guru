@@ -95,6 +95,10 @@ body {
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700;
 
+  &.highlighted {
+    color: $ternary-color;
+  }
+
   @media(min-width: $bp-mobile) {
     font-size: 1.35rem;
   }
@@ -145,6 +149,10 @@ body {
 
 .fx {
   display: flex;
+
+  &.fluid {
+    flex: 1;
+  }
 
   &.row {
     flex-direction: row;

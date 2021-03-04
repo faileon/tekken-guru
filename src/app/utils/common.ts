@@ -36,6 +36,8 @@ export const getToggledProperties = <T>(properties: T[], property: T, multiple =
   return res;
 };
 
+
+export const getRandomNumber = (lower: number, upper: number) => Math.floor(Math.random() * upper) + lower;
 // tslint:disable-next-line:no-any
 /*export const flatten = (arr: any[]): string => {
   return arr.reduce((flat, toFlatten) => {
