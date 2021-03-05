@@ -2,6 +2,16 @@
   <div class="tarrget-title">Practice</div>
 
   <tg-card title="Select a gamepad">
+    <div header class="fx fluid row centered">
+      <tg-button
+        *ngIf="(selectedGamepad$ | async) && !changeMapping"
+        style="margin-left: auto"
+        icon="wrench"
+        [outlined]="false"
+        tgTooltip="Change button mapping"
+        (click)="changeMapping = true">
+      </tg-button>
+    </div>
     <div class="gamepads fx col" content *ngIf="gamepads$ | async as gamepads" style="min-height: 120px">
       <div class="title">Number of connected gamepads: {{gamepads.length}}</div>
       <div class="secondary" *ngIf="gamepads.length === 0">Connect your gamepad and press a button to initialize it.
@@ -17,31 +27,69 @@
           <fa-icon style="margin-left: auto" size="lg" [icon]="gamepad === (selectedGamepad$ | async) ? 'check-circle' : 'circle'"></fa-icon>
         </div>
       </div>
+
+      <ng-container *ngIf="selectedGamepad$ | async">
+        <!-- ask about button mapping -->
+        <ng-container *ngIf="!changeMapping">
+          <div class="fx col" style="align-items: flex-start" *ngIf="!(buttonsMapping$ | async)">
+            <p class="secondary">It appears you did not set mapping for your gamepad yet, would you like to configure it?</p>
+            <tg-button (click)="changeMapping = true">Yes, configure mapping</tg-button>
+          </div>
+        </ng-container>
+
+        <div class="mapping" *ngIf="changeMapping">
+          Press button for <tg-input-notation [notation]="currentButtonToMap$ | async"></tg-input-notation>
+        </div>
+
+      </ng-container>
     </div>
   </tg-card>
 
   <tg-card title="Throw Breaking">
     <div header class="fx fluid row centered">
       <tg-pop-over-button
-        style="margin-left: auto"
+        style="margin-left: auto;"
         title="Settings"
         icon="cog"
       >
-       <div class="settings" style="padding: 1rem">
-         <!-- TIME INTERVAL aka neutral window count -->
-         <span class="small title highlighted">Time interval:</span>
-         <tg-slider [(range)]="neutralRange" [options]="{floor: 1, ceil: 5, animate: false}"></tg-slider>
+        <!-- THROW SETTINGS -->
+       <div class="settings fx col spaced" style="padding: 1rem;">
+         <!-- SOUND EFFECTS -->
+         <div class="section">
+           <span class="small title highlighted">Sound effects:</span>
+           <div class="fx row">
+             <tg-button (click)="playSoundEffects = !playSoundEffects" [active]="playSoundEffects">
+               {{playSoundEffects ? 'On' : 'Off'}}
+             </tg-button>
+           </div>
+         </div>
+
+         <!-- PLAYBAK SPEED -->
+         <div class="section">
+           <span class="small title highlighted">Playback speed:</span>
+           <tg-slider [(range)]="playbackSpeed" [options]="{floor: 0.1, ceil: 1, animate: false, step: 0.1}"></tg-slider>
+         </div>
 
          <!-- TIME INTERVAL aka neutral window count -->
-         <span class="small title highlighted">Decoy chance:</span>
-         <tg-slider [(range)]="decoyRange" [options]="{floor: 0, ceil: 1, animate: false, step: 0.1}"></tg-slider>
+         <div class="section">
+           <span class="small title highlighted">Interval between actions:</span>
+           <tg-slider [(range)]="neutralRange" [options]="{floor: 1, ceil: 5, animate: false}"></tg-slider>
+         </div>
 
          <!-- TIME INTERVAL aka neutral window count -->
-         <span class="small title highlighted">Desired throws:</span>
-         <div class="fx row spaced">
-           <tg-button (click)="toggleDesiredThrow('throw-1')" [active]="desiredThrows | includes:'throw-1'">1</tg-button>
-           <tg-button (click)="toggleDesiredThrow('throw-2')" [active]="desiredThrows | includes:'throw-2'">2</tg-button>
-           <tg-button (click)="toggleDesiredThrow('throw-1+2')" [active]="desiredThrows | includes:'throw-1+2'">1+2</tg-button>
+         <div class="section">
+           <span class="small title highlighted">Decoy chance:</span>
+           <tg-slider [(range)]="decoyRange" [options]="{floor: 0, ceil: 1, animate: false, step: 0.05}"></tg-slider>
+         </div>
+
+         <!-- DESIRED THROWS -->
+         <div class="section">
+           <span class="small title highlighted">Desired throws:</span>
+           <div class="fx row spaced">
+             <tg-button (click)="toggleDesiredThrow('throw-1')" [active]="desiredThrows | includes:'throw-1'">1</tg-button>
+             <tg-button (click)="toggleDesiredThrow('throw-2')" [active]="desiredThrows | includes:'throw-2'">2</tg-button>
+             <tg-button (click)="toggleDesiredThrow('throw-1+2')" [active]="desiredThrows | includes:'throw-1+2'">1+2</tg-button>
+           </div>
          </div>
        </div>
       </tg-pop-over-button>
@@ -61,11 +109,8 @@
 
           <!-- CONTROLS -->
           <div class="controls fx row centered" *ngIf="selectedGamepad$ | async">
-            <tg-button (click)="videoElement.play()">
-              Start training
-            </tg-button>
-            <tg-button (click)="videoElement.pause()">
-              Stop training
+            <tg-button (click)="videoElement.paused ? videoElement.play() : videoElement.pause()">
+              {{videoElement.paused ? 'Start training' : 'Pause training'}}
             </tg-button>
           </div>
         </div>
@@ -98,7 +143,7 @@
         </div>
       </div>
 
-      <video style="display: none" preload="auto" #videoElement width="1250" height="690"></video>
+      <video [defaultPlaybackRate]="playbackSpeed.from" style="display: none" preload="auto" #videoElement width="1250" height="690"></video>
 
       <canvas #canvasElement></canvas>
     </div>

@@ -1,10 +1,10 @@
-/* tslint:disable:no-inferrable-types */
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {GamepadService} from '../../../services/gamepad.service';
 import {BehaviorSubject, combineLatest, Observable, Subject} from 'rxjs';
-import {filter, map, takeUntil} from 'rxjs/operators';
+import {bufferCount, count, distinct, distinctUntilChanged, filter, map, startWith, take, takeUntil, tap} from 'rxjs/operators';
 import {NumberRange} from '../../../types';
 import {getRandomNumber, getToggledProperties} from '../../../utils/common';
+import {ButtonsMapping} from '../../../types/buttons.type';
 
 @Component({
   selector: 'tg-practice-screen',
@@ -20,6 +20,7 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
   public gamepads$: Observable<Gamepad[]>;
   public selectedGamepad$: Observable<Gamepad>;
   public pressedButtons$: Observable<boolean[]>; // max-size:2, notation press: [one, two]
+  public buttonsMapping$: Observable<ButtonsMapping>;
 
   @ViewChild('canvasElement')
   private canvasElement!: ElementRef<HTMLCanvasElement>;
@@ -27,17 +28,26 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
   @ViewChild('videoElement')
   private videoElementRef!: ElementRef<HTMLVideoElement>;
 
-  public neutralRange: NumberRange = {from: 3, to: 3}; // 1 - 5
-  public decoyRange: NumberRange = {from: 0.2}; // 0 - 1
+  // settings
+  public neutralRange: NumberRange = {from: 1, to: 3}; // 1 - 5
+  public decoyRange: NumberRange = {from: 0.15}; // 0 - 1
   public desiredThrows: ThrowType[] = ['throw-1', 'throw-2', 'throw-1+2'];
+  public playSoundEffects = true;
+  public playbackSpeed: NumberRange = {from: 1.0};
 
   // flag about pressing
   public guessedAlready = false;
+
+  // flag about mapping
+  public changeMapping = false;
 
   // track timeline and current item
   private timeline: TimelineItem[];
   public currentTimelineItem$: BehaviorSubject<TimelineItem>;
 
+  // sound effects
+  private audioSuccess = new Audio('/assets/audio/effects/success.mp4');
+  private audioFail = new Audio('/assets/audio/effects/fail.mp4');
 
   // current score count
   public score = {
@@ -52,25 +62,67 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
     }
   };
 
+  // for mapping
+  public buttonsToMap$: Subject<number> = new Subject<number>();
+  public currentButtonToMap$: BehaviorSubject<string> = new BehaviorSubject<string>('1');
+
 
   constructor(private gamepadService: GamepadService) {
-    this.gamepads$ = this.gamepadService.gamepadList$.pipe(
-      map(list => Object.values(list).filter(gamepad => !!gamepad))
-    );
-
+    this.gamepads$ = this.gamepadService.gamepadList$.pipe(map(list => Object.values(list).filter(gamepad => !!gamepad)));
     this.selectedGamepad$ = this.gamepadService.selectedGamepad$;
+    this.buttonsMapping$ = this.gamepadService.buttonsMapping$;
 
-    this.pressedButtons$ = this.gamepadService.pressedButtons$.pipe(
-      map(buttons => {
+    // watch mapper
+    let counter = 1;
+    this.buttonsToMap$.pipe(
+      takeUntil(this.isDestroyed$),
+      tap(_ => {
+        counter += 1;
+        if (counter === 2) {
+          this.currentButtonToMap$.next('2');
+        } else {
+          this.currentButtonToMap$.next('1+2');
+        }
+      }),
+      bufferCount(3)
+    ).subscribe(buttonsToMap => {
+      const [one, two, onePlusTwo] = buttonsToMap;
+
+      this.gamepadService.buttonsMapping = {
+        one,
+        two,
+        onePlusTwo
+      };
+
+      this.changeMapping = false;
+      counter = 1;
+      this.currentButtonToMap$.next('1');
+    });
+
+    // watch pressed buttons for mapper
+    this.gamepadService.pressedButtons$.pipe(
+      filter((buttons) => buttons.some(b => b.pressed)),
+      filter(_ => this.changeMapping),
+      takeUntil(this.isDestroyed$)
+    ).subscribe(buttons => {
+      const pressedButton = buttons.findIndex(button => button.pressed);
+      this.buttonsToMap$.next(pressedButton);
+    });
+
+    // pressed buttons for throw break
+    this.pressedButtons$ = combineLatest([
+      this.gamepadService.pressedButtons$,
+      this.gamepadService.buttonsMapping$,
+    ]).pipe(
+      map(([buttons, mapping]) => {
         return buttons.reduce((acc, curr, index) => {
-          // todo custom mapping
-          if (index === 2 && curr.pressed) {
+          if (index === (mapping?.one ?? 2) && curr.pressed) {
             acc[0] = true;
           }
-          if (index === 3 && curr.pressed) {
+          if (index === (mapping?.two ?? 3) && curr.pressed) {
             acc[1] = true;
           }
-          if (index === 5 && curr.pressed) {
+          if (index === (mapping?.onePlusTwo ?? 5) && curr.pressed) {
             acc[0] = true;
             acc[1] = true;
           }
@@ -79,6 +131,7 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
       })
     );
 
+    // init timeline
     this.timeline = createTimeline(this.neutralRange, this.decoyRange.from, this.desiredThrows);
     this.currentTimelineItem$ = new BehaviorSubject<TimelineItem>(this.timeline.shift());
 
@@ -118,9 +171,42 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  private prefetchVideos(): void {
+    // shared
+    const list: string[] = [
+      `assets/videos/throw-breaks/paul/decoy-1.mp4`,
+      `assets/videos/throw-breaks/paul/decoy-2.mp4`,
+      `assets/videos/throw-breaks/paul/decoy-3.mp4`,
+      `assets/videos/throw-breaks/paul/neutral.mp4`,
+    ];
+
+    // throw
+    const throws = ['throw-1', 'throw-1+2', 'throw-2'];
+    for (const t of throws) {
+      const assets = [
+        `assets/videos/throw-breaks/paul/${t}/break.mp4`,
+        `assets/videos/throw-breaks/paul/${t}/result-fail.mp4`,
+        `assets/videos/throw-breaks/paul/${t}/result-success.mp4`,
+        `assets/videos/throw-breaks/paul/${t}/start.mp4`,
+      ];
+      list.push(...assets);
+    }
+
+    const promises = list.map(url => fetch(url));
+    Promise.all(promises)
+      .then(res => {
+        console.log('fetch all success', res);
+      })
+      .catch(e => {
+        console.log('fetch all error', e);
+      });
+  }
+
+
   private onThrowBreakSuccess(item: TimelineItem): void {
     // console.log('GOOD GUESS');
     this.score.breaks.success += 1;
+    this.playAudioEffect(true);
 
     // we play immediately, not pushing to timeline
     this.videoElementRef.nativeElement.src = item.resultSrc.success;
@@ -130,6 +216,7 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
   private onThrowBreakFail(item: TimelineItem): void {
     // console.log('WRONG GUESS');
     this.score.breaks.fail += 1;
+    this.playAudioEffect(false);
 
     // we push to timeline and let it play after 'break' ends
     this.timeline.push({
@@ -141,6 +228,8 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
   private onThrowBreakMissed(item: TimelineItem): void {
     // console.log('MISSED WINDOW')
     this.score.breaks.miss += 1;
+    this.playAudioEffect(false);
+
     // missed window
     this.timeline.push({
       type: 'result-fail',
@@ -151,13 +240,25 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
   private onDecoyFail(): void {
     // console.log('PRESSED DURING DECOY');
     this.score.decoys.fail += 1;
+    this.playAudioEffect(false);
   }
 
   private onDecoySuccess(): void {
     // console.log('GUARDED DURING DECOY');
     this.score.decoys.success += 1;
+    this.playAudioEffect(true);
+
   }
 
+  private playAudioEffect(success: boolean): void {
+    if (this.playSoundEffects) {
+      if (success) {
+        this.audioSuccess.play();
+      } else {
+        this.audioFail.play();
+      }
+    }
+  }
 
   ngAfterViewInit(): void {
     // set first item
@@ -211,7 +312,6 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
   }
 
   public onGamepadSelected(gamepad: Gamepad): void {
-    console.log('selected', gamepad);
     this.gamepadService.selectedGamepad = gamepad;
   }
 

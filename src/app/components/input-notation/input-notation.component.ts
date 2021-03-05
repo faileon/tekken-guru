@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {parseNotation} from '../../utils/notation-parser';
 import {SettingsService} from '../../services/settings.service';
 import {Observable} from 'rxjs';
@@ -9,7 +9,7 @@ import {PlatformInput} from '../../types/buttons.type';
   templateUrl: './input-notation.component.html',
   styleUrls: ['./input-notation.component.scss']
 })
-export class InputNotationComponent implements OnInit {
+export class InputNotationComponent implements OnInit, OnChanges {
 
   @Input()
   public notation!: string;
@@ -24,8 +24,18 @@ export class InputNotationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.parsedNotation = parseNotation(this.notation);
+    // this.parsedNotation = parseNotation(this.notation);
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const notationChange = changes.notation;
+
+    if (notationChange) {
+      const {currentValue} = notationChange;
+      this.parsedNotation = parseNotation(currentValue);
+    }
+  }
+
 
 }
 
