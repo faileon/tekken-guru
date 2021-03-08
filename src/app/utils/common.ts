@@ -44,3 +44,20 @@ export const getRandomNumber = (lower: number, upper: number) => Math.floor(Math
     return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
   }, []);
 };*/
+
+/**
+ * Compares if both arrays are truthfully equal (e.g. [true, true] === [true, true] would result in true)
+ * @param a1 boolean array of size N
+ * @param a2 boolean array of size N
+ * @return boolean result if arrays
+ */
+export const compareBoolArrays = (a1: boolean[], a2: boolean[]): boolean => {
+  // assumes a1 and a2 are equal length
+  for (let i = 0; i < a1.length; i++) {
+    if (a1[i] !== a2[i]) {
+      return false;
+    }
+  }
+
+  return true;
+};

@@ -1,10 +1,13 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GamepadService} from '../../../services/gamepad.service';
-import {BehaviorSubject, combineLatest, Observable, Subject} from 'rxjs';
-import {bufferCount, count, distinct, distinctUntilChanged, filter, map, startWith, take, takeUntil, tap} from 'rxjs/operators';
-import {NumberRange} from '../../../types';
-import {getRandomNumber, getToggledProperties} from '../../../utils/common';
+import {BehaviorSubject, combineLatest, forkJoin, interval, Observable, Subject} from 'rxjs';
+import {bufferCount, filter, map, pairwise, skip, startWith, take, takeUntil, tap} from 'rxjs/operators';
+import {NumberRange, PlayerSide, ThrowType, TimelineItem} from '../../../types';
+import {compareBoolArrays, getRandomNumber, getToggledProperties} from '../../../utils/common';
 import {ButtonsMapping} from '../../../types/buttons.type';
+import {HttpClient} from '@angular/common/http';
+import {appendBufferAsync, createSequenceSourceBuffer} from '../../../utils/media-source.utils';
+import {getBreakRule} from '../../../utils/practice.utils';
 
 @Component({
   selector: 'tg-practice-screen',
@@ -14,7 +17,7 @@ import {ButtonsMapping} from '../../../types/buttons.type';
     GamepadService
   ]
 })
-export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
+export class PracticeScreenComponent implements OnDestroy, OnInit {
   private isDestroyed$ = new Subject<boolean>();
 
   public gamepads$: Observable<Gamepad[]>;
@@ -22,16 +25,11 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
   public pressedButtons$: Observable<boolean[]>; // max-size:2, notation press: [one, two]
   public buttonsMapping$: Observable<ButtonsMapping>;
 
-  @ViewChild('canvasElement')
-  private canvasElement!: ElementRef<HTMLCanvasElement>;
-
-  @ViewChild('videoElement')
-  private videoElementRef!: ElementRef<HTMLVideoElement>;
-
   // settings
   public neutralRange: NumberRange = {from: 1, to: 3}; // 1 - 5
-  public decoyRange: NumberRange = {from: 0.15}; // 0 - 1
+  public decoyRange: NumberRange = {from: 0.0}; // 0 - 1
   public desiredThrows: ThrowType[] = ['throw-1', 'throw-2', 'throw-1+2'];
+  public desiredPlayerSide: PlayerSide[] = ['p1'];
   public playSoundEffects = true;
   public playbackSpeed: NumberRange = {from: 1.0};
 
@@ -41,9 +39,10 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
   // flag about mapping
   public changeMapping = false;
 
-  // track timeline and current item
-  private timeline: TimelineItem[];
-  public currentTimelineItem$: BehaviorSubject<TimelineItem>;
+  private timeline$: Subject<TimelineItem[]>;
+  public video: HTMLVideoElement;
+  private sourceBuffer: SourceBuffer;
+  private mediaSource = new MediaSource();
 
   // sound effects
   private audioSuccess = new Audio('/assets/audio/effects/success.mp4');
@@ -59,6 +58,10 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
     decoys: {
       success: 0,
       fail: 0
+    },
+    reactionTime: {
+      last: 0,
+      cumulative: 0
     }
   };
 
@@ -67,7 +70,7 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
   public currentButtonToMap$: BehaviorSubject<string> = new BehaviorSubject<string>('1');
 
 
-  constructor(private gamepadService: GamepadService) {
+  constructor(private gamepadService: GamepadService, private http: HttpClient) {
     this.gamepads$ = this.gamepadService.gamepadList$.pipe(map(list => Object.values(list).filter(gamepad => !!gamepad)));
     this.selectedGamepad$ = this.gamepadService.selectedGamepad$;
     this.buttonsMapping$ = this.gamepadService.buttonsMapping$;
@@ -131,86 +134,132 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
       })
     );
 
-    // init timeline
-    this.timeline = createTimeline(this.neutralRange, this.decoyRange.from, this.desiredThrows);
-    this.currentTimelineItem$ = new BehaviorSubject<TimelineItem>(this.timeline.shift());
+    // timeline v2
+    this.timeline$ = new Subject<TimelineItem[]>();
 
-    // THROW BREAK INPUT QUEUE
+
+    // INPUT QUEUE
     combineLatest([
       this.pressedButtons$,
-      this.currentTimelineItem$
+      this.timeline$
     ]).pipe(
       takeUntil(this.isDestroyed$),
-      filter(([_, item]) => item.type === 'break'), // only break window
-      filter(([buttons, _]) => buttons.some(b => b) && !this.guessedAlready) // pressed something and haven't guessed yet
-    ).subscribe(([buttons, item]) => {
-      // now you guessed
-      this.guessedAlready = true;
+      map(([buttons, timeline]) => {
+        const {currentTime} = this.video;
+        const currentTimelineItem = timeline.find(t => t.start < currentTime && t.end > currentTime);
+        return {
+          currentTimelineItem,
+          buttons,
+          timeline
+        };
+      }),
+      filter(({buttons}) => buttons.some(b => b) && !this.guessedAlready) // pressed something and haven't guessed yet
+    ).subscribe(({buttons, currentTimelineItem}) => {
+      // console.log('pressed during break', currentTimelineItem);
 
-      // did you guess right tho? compare buttons if they match
-      if (compareBooleans(buttons, item.breakButtons)) {
-        this.onThrowBreakSuccess(item);
-      } else {
-        this.onThrowBreakFail(item);
+      switch (currentTimelineItem?.type) {
+        case 'break':
+          this.guessedAlready = true;
+          // did you guess right tho? compare buttons if they match
+          if (compareBoolArrays(buttons, currentTimelineItem.breakButtons)) {
+            return this.onThrowBreakSuccess(currentTimelineItem);
+          } else {
+            return this.onThrowBreakFail(currentTimelineItem);
+          }
+        case 'decoy':
+          // pressed during decoy... no no
+          this.guessedAlready = true;
+          return this.onDecoyFail();
+      }
+    });
+  }
+
+  async ngOnInit(): Promise<void> {
+
+    // create media source
+    this.video = document.getElementById('media-source-test') as HTMLVideoElement;
+    this.video.src = URL.createObjectURL(this.mediaSource);
+
+    // append to media source and update timline with start and end
+    this.mediaSource.onsourceopen = async () => {
+      // console.log('media source open');
+      this.watchCurrentEndWindow();
+      this.guessedAlready = false;
+
+      // generate timeline
+      const timeline = await this.createTimeline(this.neutralRange, this.decoyRange.from, this.desiredThrows);
+
+      this.sourceBuffer = createSequenceSourceBuffer(this.mediaSource);
+      for (const item of timeline) {
+        // start of the current timeline item
+        const start = this.mediaSource.duration || 0;
+        // append buffer to media source (this will update the duration and other attributes)
+        await appendBufferAsync(this.sourceBuffer, item.buffer);
+        // end of the current timeline item
+        const end = this.mediaSource.duration;
+
+        // inject time range to timeline item
+        item.start = start;
+        item.end = end;
       }
 
-    });
+      console.log('timeline is', timeline);
+      this.timeline$.next(timeline);
+    };
 
-    // DECOY INPUT QUEUE
-    combineLatest([
-      this.pressedButtons$,
-      this.currentTimelineItem$
-    ]).pipe(
-      takeUntil(this.isDestroyed$),
-      filter(([_, item]) => item.type === 'decoy'), // only decoy window
-      filter(([buttons, _]) => buttons.some(b => b) && !this.guessedAlready) // pressed something and haven't pressed yet
-    ).subscribe(([buttons, item]) => {
-      this.guessedAlready = true;
-      // interrupt immediately ?
-      this.onDecoyFail();
-    });
+    this.video.onended = ev => {
+      // console.log('video ended, generate new loop?');
+      this.video.src = URL.createObjectURL(this.mediaSource);
+      this.video.play();
+    };
   }
 
-  private prefetchVideos(): void {
-    // shared
-    const list: string[] = [
-      `assets/videos/throw-breaks/paul/decoy-1.mp4`,
-      `assets/videos/throw-breaks/paul/decoy-2.mp4`,
-      `assets/videos/throw-breaks/paul/decoy-3.mp4`,
-      `assets/videos/throw-breaks/paul/neutral.mp4`,
-    ];
+  private watchCurrentEndWindow(): void {
+    combineLatest([
+      this.timeline$,
+      interval(16).pipe(
+        takeUntil(this.isDestroyed$),
+        map(() => this.video.currentTime),
+        pairwise(),
+        filter(([prev, curr]) => {
+          return curr > 0.5 && prev > 0.5 && curr === prev;
+        }),
+      ),
+    ])
+      .pipe(take(1))
+      .subscribe(([timeline, [prev, curr]]) => {
+        // console.log('video ended');
+        const currentTimelineItem = timeline.find(t => t.start < curr && t.end > curr);
 
-    // throw
-    const throws = ['throw-1', 'throw-1+2', 'throw-2'];
-    for (const t of throws) {
-      const assets = [
-        `assets/videos/throw-breaks/paul/${t}/break.mp4`,
-        `assets/videos/throw-breaks/paul/${t}/result-fail.mp4`,
-        `assets/videos/throw-breaks/paul/${t}/result-success.mp4`,
-        `assets/videos/throw-breaks/paul/${t}/start.mp4`,
-      ];
-      list.push(...assets);
-    }
-
-    const promises = list.map(url => fetch(url));
-    Promise.all(promises)
-      .then(res => {
-        console.log('fetch all success', res);
-      })
-      .catch(e => {
-        console.log('fetch all error', e);
+        // video ended and he hasnt guessed
+        if (currentTimelineItem?.type === 'break' && !this.guessedAlready) {
+          this.onThrowBreakMissed(currentTimelineItem);
+        } else if (currentTimelineItem?.type === 'decoy' && !this.guessedAlready) {
+          this.onDecoySuccess();
+        } else {
+          // console.log('ups', currentTimelineItem, this.guessedAlready);
+        }
       });
   }
-
 
   private onThrowBreakSuccess(item: TimelineItem): void {
     // console.log('GOOD GUESS');
     this.score.breaks.success += 1;
     this.playAudioEffect(true);
 
-    // we play immediately, not pushing to timeline
-    this.videoElementRef.nativeElement.src = item.resultSrc.success;
-    this.videoElementRef.nativeElement.play();
+    appendBufferAsync(this.sourceBuffer, item.resultBuffers?.success)
+      .then(_ => {
+        // lets skip the video till the remainder of break window and play break animation immediately
+        const timeTillBreakWindowEnds = item.end - this.video.currentTime;
+        const reactionTime = this.video.currentTime - item.start;
+
+        // also measure reaction time
+        this.score.reactionTime.last = reactionTime;
+        this.score.reactionTime.cumulative += reactionTime;
+
+        this.video.currentTime = this.video.currentTime + timeTillBreakWindowEnds;
+        this.mediaSource.endOfStream();
+      });
   }
 
   private onThrowBreakFail(item: TimelineItem): void {
@@ -218,11 +267,10 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
     this.score.breaks.fail += 1;
     this.playAudioEffect(false);
 
-    // we push to timeline and let it play after 'break' ends
-    this.timeline.push({
-      type: 'result-fail',
-      src: item.resultSrc.fail
-    });
+    appendBufferAsync(this.sourceBuffer, item.resultBuffers?.fail)
+      .then(_ => {
+        this.mediaSource.endOfStream();
+      });
   }
 
   private onThrowBreakMissed(item: TimelineItem): void {
@@ -231,16 +279,18 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
     this.playAudioEffect(false);
 
     // missed window
-    this.timeline.push({
-      type: 'result-fail',
-      src: item.resultSrc.fail
-    });
+    appendBufferAsync(this.sourceBuffer, item.resultBuffers?.fail)
+      .then(_ => {
+        this.mediaSource.endOfStream();
+      });
   }
 
   private onDecoyFail(): void {
     // console.log('PRESSED DURING DECOY');
     this.score.decoys.fail += 1;
     this.playAudioEffect(false);
+
+    this.mediaSource.endOfStream();
   }
 
   private onDecoySuccess(): void {
@@ -248,6 +298,7 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
     this.score.decoys.success += 1;
     this.playAudioEffect(true);
 
+    this.mediaSource.endOfStream();
   }
 
   private playAudioEffect(success: boolean): void {
@@ -260,56 +311,11 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  ngAfterViewInit(): void {
-    // set first item
-    this.videoElementRef.nativeElement.src = this.currentTimelineItem$.getValue().src;
-
-    this.videoElementRef.nativeElement.onended = (ev) => {
-      // notify hook
-      const item = this.currentTimelineItem$.getValue();
-      const {type} = item;
-      if (type === 'break' && !this.guessedAlready) {
-        this.onThrowBreakMissed(item);
-      } else if (type === 'decoy' && !this.guessedAlready) {
-        this.onDecoySuccess();
-      }
-
-      // generate new timeline if we reached end, reset guess flag
-      if (this.timeline.length === 0) {
-        // this.canvasElement.nativeElement.getContext('2d');
-        this.guessedAlready = false;
-        this.timeline = createTimeline(this.neutralRange, this.decoyRange.from, this.desiredThrows);
-      }
-
-      // otherwise get new item
-      const nextItem = this.timeline.shift();
-      this.currentTimelineItem$.next(nextItem);
-
-      // set it as a source
-      this.videoElementRef.nativeElement.src = nextItem.src;
-      this.videoElementRef.nativeElement.play();
-    };
-
-    // necessary canvas setup
-    const ctx = this.canvasElement.nativeElement.getContext('2d');
-    const {width, height} = this.videoElementRef.nativeElement;
-    this.canvasElement.nativeElement.width = width;
-    this.canvasElement.nativeElement.height = height;
-
-    // start drawing
-    this.draw(ctx, width, height);
-
-  }
-
   ngOnDestroy(): void {
     this.isDestroyed$.next(true);
     this.isDestroyed$.unsubscribe();
   }
 
-  public draw(ctx: CanvasRenderingContext2D, width: number, height: number): void {
-    ctx.drawImage(this.videoElementRef.nativeElement, 0, 0, width, height);
-    requestAnimationFrame(() => this.draw(ctx, width, height));
-  }
 
   public onGamepadSelected(gamepad: Gamepad): void {
     this.gamepadService.selectedGamepad = gamepad;
@@ -319,94 +325,74 @@ export class PracticeScreenComponent implements AfterViewInit, OnDestroy {
     this.desiredThrows = getToggledProperties(this.desiredThrows, throwType, true);
   }
 
-}
-
-type TimelineType = 'neutral' | 'start' | 'break' | 'result-fail' | 'result-success' | 'decoy';
-
-interface TimelineItem {
-  type: TimelineType;
-  src: string;
-  breakButtons?: boolean[];
-  resultSrc?: { // only when type is break
-    fail: string;
-    success: string;
-  };
-}
-
-const createTimeline = (neutralRange: NumberRange, decoyChance: number, desiredThrows: ThrowType[] = ['throw-1', 'throw-1+2', 'throw-2']): TimelineItem[] => {
-  const timeline: TimelineItem[] = [];
-
-  let neutralCount;
-  if (neutralRange.from === neutralRange.to) {
-    neutralCount = neutralRange.from;
-  } else {
-    neutralCount = getRandomNumber(neutralRange.from, neutralRange.to);
+  public toggleDesiredSide(side: PlayerSide): void {
+    this.desiredPlayerSide = getToggledProperties(this.desiredPlayerSide, side, false);
   }
 
-  // generate n amount of neutral steps
-  for (let i = 0; i < neutralCount; i++) {
-    timeline.push({
-      type: 'neutral',
-      src: 'assets/videos/throw-breaks/paul/neutral.mp4'
-    });
-  }
+  private async createTimeline(neutralRange: NumberRange, decoyChance: number, desiredThrows: ThrowType[] = ['throw-1', 'throw-1+2', 'throw-2']): Promise<TimelineItem[]> {
+    const timeline: TimelineItem[] = [];
+    const character = 'drag';
 
-  // add decoy based on chance
-  if (decoyChance > 0) {
-    const rand = Math.random();
-    if (rand < decoyChance) {
+    const neutralCount = (neutralRange.from === neutralRange.to) ? neutralRange.from : getRandomNumber(neutralRange.from, neutralRange.to);
+    // generate n amount of neutral steps
+    const neutralAB = await this.fetchAsArrayBuffer(`assets/videos/throw-breaks/${character}/neutral.mp4`);
+    for (let i = 0; i < neutralCount; i++) {
       timeline.push({
-        type: 'decoy',
-        src: `assets/videos/throw-breaks/paul/decoy-${getRandomNumber(1, 3)}.mp4`
+        type: 'neutral',
+        buffer: neutralAB,
       });
-      return timeline;
     }
-  }
 
-  // add throw attempt
-  const randThrow = desiredThrows[Math.floor(Math.random() * desiredThrows.length)];
-  // const randThrow: ThrowType = 'throw-1';
-
-  // startup
-  timeline.push({
-    type: 'start',
-    src: `assets/videos/throw-breaks/paul/${randThrow}/start.mp4`
-  });
-
-  // break window
-  timeline.push({
-    type: 'break',
-    src: `assets/videos/throw-breaks/paul/${randThrow}/break.mp4`,
-    resultSrc: {
-      fail: `assets/videos/throw-breaks/paul/${randThrow}/result-fail.mp4`,
-      success: `assets/videos/throw-breaks/paul/${randThrow}/result-success.mp4`,
-    },
-    breakButtons: getBreakRule(randThrow)
-  });
-
-  return timeline;
-};
-
-const getBreakRule = (throwType: ThrowType): boolean[] => {
-  switch (throwType) {
-    case 'throw-1':
-      return [true, false];
-    case 'throw-2':
-      return [false, true];
-    case 'throw-1+2':
-      return [true, true];
-  }
-};
-
-type ThrowType = 'throw-1' | 'throw-1+2' | 'throw-2';
-
-export const compareBooleans = (a1: boolean[], a2: boolean[]): boolean => {
-  // assumes a1 and a2 are equal length
-  for (let i = 0; i < a1.length; i++) {
-    if (a1[i] !== a2[i]) {
-      return false;
+    // add decoy based on chance
+    if (decoyChance > 0) {
+      const rand = Math.random();
+      if (rand < decoyChance) {
+        const decoyAB = await this.fetchAsArrayBuffer(`assets/videos/throw-breaks/${character}/decoy-${getRandomNumber(1, 3)}.mp4`);
+        timeline.push({
+          type: 'decoy',
+          buffer: decoyAB
+        });
+        return timeline;
+      }
     }
+
+    // add throw attempt
+    const randThrow = desiredThrows[Math.floor(Math.random() * desiredThrows.length)];
+
+    // startup
+    const startAB = await this.fetchAsArrayBuffer(`assets/videos/throw-breaks/${character}/${randThrow}/start.mp4`);
+    timeline.push({
+      type: 'start',
+      buffer: startAB
+    });
+
+    // break window
+    const breakAB = await this.fetchAsArrayBuffer(`assets/videos/throw-breaks/${character}/${randThrow}/break.mp4`);
+    const successAB = await this.fetchAsArrayBuffer(`assets/videos/throw-breaks/${character}/${randThrow}/result-success.mp4`);
+    const failAB = await this.fetchAsArrayBuffer(`assets/videos/throw-breaks/${character}/${randThrow}/result-fail.mp4`);
+    timeline.push({
+      type: 'break',
+      buffer: breakAB,
+      resultBuffers: {
+        fail: failAB,
+        success: successAB,
+      },
+      breakButtons: getBreakRule(randThrow)
+    });
+
+    return timeline;
   }
 
-  return true;
-};
+  private fetchAsArrayBuffer(src: string): Promise<ArrayBuffer> {
+    return this.http.get(src, {responseType: 'arraybuffer'}).toPromise();
+  }
+}
+
+
+
+
+
+
+
+
+

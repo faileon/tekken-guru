@@ -17,6 +17,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {SettingsScreenComponent} from './settings-screen/settings-screen.component';
 import { PracticeScreenComponent } from './practice/practice-screen/practice-screen.component';
 import {PipeModule} from '../pipes/pipe.module';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {PipeModule} from '../pipes/pipe.module';
     RoutingModule,
     FontAwesomeModule,
     PipeModule,
+    HttpClientModule
   ],
   exports: [
     CharacterSelectScreenComponent,

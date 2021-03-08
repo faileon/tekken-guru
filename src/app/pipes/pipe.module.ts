@@ -13,6 +13,7 @@ import { InputPathPipe } from './input-path.pipe';
 import { IsKnownInputPipe } from './is-known-input.pipe';
 import { ComboNotationPipe } from './combo-notation.pipe';
 import { ComboNamePipe } from './combo-name.pipe';
+import { MililisecondsPipe } from './mililiseconds.pipe';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { ComboNamePipe } from './combo-name.pipe';
     IsKnownInputPipe,
     ComboNotationPipe,
     ComboNamePipe,
+    MililisecondsPipe,
   ],
   imports: [
     CommonModule
@@ -47,7 +49,8 @@ import { ComboNamePipe } from './combo-name.pipe';
         IsKnownInputPipe,
         InputPathPipe,
         ComboNotationPipe,
-        ComboNamePipe
+        ComboNamePipe,
+        MililisecondsPipe
     ]
 })
 export class PipeModule {
