@@ -1,4 +1,4 @@
-<tg-search-bar (searched)="onTextSearch($event)"></tg-search-bar>
+<tg-search-bar *ngIf="withSearchbar" (searched)="onTextSearch($event)"></tg-search-bar>
 
 <div class="items">
   <ng-container *ngIf="withRouting; else noRouting">

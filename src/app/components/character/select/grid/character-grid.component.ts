@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, SkipSelf} from '@angular/core';
+import {Component, EventEmitter, Input, Output, SkipSelf} from '@angular/core';
 import {Character} from '../../../../types';
 import {CharacterService} from '../../../../services/character.service';
 
@@ -9,6 +9,12 @@ import {CharacterService} from '../../../../services/character.service';
 })
 export class CharacterGridComponent {
   public _selectedCharacters: Character[] = [];
+
+  @Input()
+  public selectable = true;
+
+  @Input()
+  public withSearchbar = true;
 
   @Input()
   public withRouting = true;
@@ -24,7 +30,9 @@ export class CharacterGridComponent {
 
   public onCharacterClick(character: Character): void {
     this.characterSelected.emit(character);
-    this._selectedCharacters.push(character);
+    if (this.selectable) {
+      this._selectedCharacters.push(character);
+    }
   }
 
   public onTextSearch(text: string): void {

@@ -17,7 +17,7 @@
       <div class="secondary" *ngIf="gamepads.length === 0">Connect your gamepad and press a button to initialize it.
       </div>
 
-      <div class="gamepad-lists">
+      <div class="fx col centered spaced">
         <div class="gamepad fx row centered"
              (click)="onGamepadSelected(gamepad)"
              [class.selected]="gamepad === (selectedGamepad$ | async)"
@@ -49,24 +49,49 @@
   </tg-card>
 
   <tg-card title="Throw Breaking">
-    <div header class="fx fluid row centered">
+    <div header class="fx fluid row centered spaced">
+
+      <div class="spacer" style="margin-left: auto;"></div>
+
+      <!-- PLAYER SIDE SELeCT -->
+      <tg-button
+        *ngIf="selectedPlayerSide$ | async as playerSide"
+        (click)="onDesiredSideSelected(playerSide === 'p1' ? 'p2' : 'p1')"
+        [outlined]="false"
+        [icon]="playerSide === 'p1' ? player1Icon : player2Icon">
+      </tg-button>
+
+      <!-- CHARACTER SELECT CAUSE IM SERIOUS BOUT THIS -->
       <tg-pop-over-button
-        style="margin-left: auto;"
+        title="Character settings"
+        icon="user-cog"
+      >
+        <tg-character-grid
+          style="padding: 1rem"
+          [selectable]="false"
+          [characters]="availableCharacters"
+          (characterSelected)="onCharacterSelected($event)"
+          [withRouting]="false"
+          [withSearchbar]="false">
+
+        </tg-character-grid>
+      </tg-pop-over-button>
+
+      <!-- SOUNDS EFFECTS YAY OR NAY -->
+      <tg-button
+        [icon]="playSoundEffects ? 'volume-up' : 'volume-mute'"
+        [outlined]="false"
+        (click)="playSoundEffects = !playSoundEffects"
+        [active]="playSoundEffects">
+      </tg-button>
+
+      <!-- TIMELINE SETTINGS -->
+      <tg-pop-over-button
         title="Settings"
         icon="cog"
       >
         <!-- THROW SETTINGS -->
         <div class="settings fx col spaced" style="padding: 1rem;">
-          <!-- SOUND EFFECTS -->
-          <div class="section">
-            <span class="small title highlighted">Sound effects:</span>
-            <div class="fx row">
-              <tg-button (click)="playSoundEffects = !playSoundEffects" [active]="playSoundEffects">
-                {{playSoundEffects ? 'On' : 'Off'}}
-              </tg-button>
-            </div>
-          </div>
-
           <!-- PLAYBAK SPEED -->
           <div class="section">
             <span class="small title highlighted">Playback speed:</span>
@@ -97,29 +122,11 @@
               <tg-button (click)="toggleDesiredThrow('throw-1+2')" [active]="desiredThrows | includes:'throw-1+2'">1+2
               </tg-button>
             </div>
-
-            <!-- DESIRED PLAYER SIDE -->
-            <div class="section">
-              <span class="small title highlighted">Player side:</span>
-              <div class="fx row spaced">
-                <!-- p1 -->
-                <tg-button
-                  (click)="toggleDesiredSide('p1')"
-                  [active]="desiredPlayerSide | includes:'p1'">
-                  Player 1
-                </tg-button>
-
-                <!-- p2 -->
-                <tg-button
-                  (click)="toggleDesiredSide('p2')"
-                  [active]="desiredPlayerSide | includes:'p2'">
-                  Player 2
-                </tg-button>
-              </div>
           </div>
         </div>
       </tg-pop-over-button>
     </div>
+
     <div content>
       <div class="fx row centered" style="min-height: 140px">
         <div class="fx col">
@@ -170,18 +177,27 @@
             </tr>
           </table>
           <div class="fx col" style="align-items: flex-end">
-            <span class="subtitle" >
+            <span class="subtitle">
               Reaction time (last | avg)
             </span>
             <span class="subtitle">
               {{score.reactionTime.last | ms}}
-            | {{(score.reactionTime.cumulative / score.breaks.success) | ms}}
+              | {{(score.reactionTime.cumulative / score.breaks.success) | ms}}
             </span>
           </div>
         </div>
       </div>
 
-      <video [defaultPlaybackRate]="playbackSpeed.from" width="1250" height="690" id="media-source-test"></video>
+      <div class="video-wrapper">
+        <video
+          [defaultPlaybackRate]="playbackSpeed.from"
+          [playbackRate]="playbackSpeed.from"
+          id="media-source-test"></video>
+
+        <div class="loading" *ngIf="isLoading">
+          <fa-icon size="2x" icon="spinner" [pulse]="true"></fa-icon>
+        </div>
+      </div>
     </div>
   </tg-card>
 </div>

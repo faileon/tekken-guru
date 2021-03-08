@@ -29,7 +29,9 @@ import {
   faCircle,
   faCheckCircle,
   faCog,
-  faWrench
+  faWrench,
+  faUserCog,
+  faVolumeMute, faVolumeUp
 } from '@fortawesome/free-solid-svg-icons';
 import {faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 import {ScreenModule} from './screens/screen.module';
@@ -81,7 +83,10 @@ export class AppModule {
       faCog,
       faCircle,
       faCheckCircle,
-      faWrench
+      faWrench,
+      faUserCog,
+      faVolumeMute,
+      faVolumeUp
     );
     faConfig.fixedWidth = true;
   }

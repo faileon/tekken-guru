@@ -38,8 +38,10 @@
     .score-table {
       font-family: 'Roboto Condensed', sans-serif;
       border-spacing: 0;
+
       td, th {
         padding: $xs-padding $sm-padding;
+
         &:nth-child(2) {
           background-color: #204b54;
         }
@@ -87,7 +89,29 @@
 
   .settings {
     padding: 1rem;
+  }
 
+  .video-wrapper {
+    padding: 0 !important;
+    position: relative;
+
+    #media-source-test {
+      width: 100%;
+      height: auto;
+    }
+
+    .loading {
+      position: absolute;
+      top: 0;
+      padding: 0 !important;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(25, 25, 25, 0.875);
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
 }
