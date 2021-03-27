@@ -59,6 +59,7 @@
       }
 
       .main {
+        order: var(--notation-order);
         display: flex;
         flex-direction: column;
         margin-right: auto;
@@ -85,15 +86,17 @@
       }
 
       tg-video {
+        order: var(--video-order);
         z-index: 20;
-        margin: $lg-margin $lg-margin 0 $lg-margin;
+        margin: $md-margin $md-margin 0 $md-margin;
         @media(min-width: $bp-mobile) {
           margin: $xs-margin $md-margin 0 $md-margin;
         }
       }
 
       .frame-data {
-        margin-top: auto;
+        order: var(--frame-data-order);
+        margin: auto $md-margin 0 $md-margin;
         font-family: Roboto Condensed, "Helvetica Neue", sans-serif;
         font-weight: 300;
 

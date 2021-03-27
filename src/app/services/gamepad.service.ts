@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, interval, Observable, Subject} from 'rxjs';
 import {distinctUntilChanged, map, switchMap} from 'rxjs/operators';
-import {ButtonsMapping,} from '../types/buttons.type';
+import {ButtonsMapping} from '../types/buttons.type';
+import {getDefaultValueFromLocalStorage} from '../utils/common';
 
 @Injectable()
 export class GamepadService {
@@ -21,7 +22,7 @@ export class GamepadService {
   }
 
   set buttonsMapping(mapping: ButtonsMapping) {
-    console.log('setting mappoing', mapping);
+    // console.log('setting mapping', mapping);
     localStorage.setItem('buttonsMapping', JSON.stringify(mapping));
     this._buttonsMapping.next(mapping);
   }
@@ -30,7 +31,7 @@ export class GamepadService {
     this._gamepadList = new BehaviorSubject<{ [key: number]: Gamepad }>(navigator.getGamepads());
     this.gamepadList$ = this._gamepadList.asObservable();
 
-    const defaultButtonsMapping = getDefaultButtonMapping();
+    const defaultButtonsMapping = getDefaultValueFromLocalStorage<ButtonsMapping>('buttonsMapping') ?? {one: 2, two: 3, onePlusTwo: 5};
     this._buttonsMapping = new BehaviorSubject<ButtonsMapping>(defaultButtonsMapping);
     this.buttonsMapping$ = this._buttonsMapping.asObservable();
 
@@ -55,14 +56,5 @@ export class GamepadService {
     });
   }
 }
-
-const getDefaultButtonMapping = (): ButtonsMapping => {
-  const storageMapping = localStorage.getItem('buttonsMapping');
-  console.log('STORAGE MAPPING', storageMapping);
-  if (storageMapping) {
-    return JSON.parse(storageMapping) as ButtonsMapping;
-  }
-  return null;
-};
 
 

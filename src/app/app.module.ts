@@ -31,11 +31,12 @@ import {
   faCog,
   faWrench,
   faUserCog,
-  faVolumeMute, faVolumeUp
+  faVolumeMute, faVolumeUp, faColumns
 } from '@fortawesome/free-solid-svg-icons';
 import {faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 import {ScreenModule} from './screens/screen.module';
 import {ComponentModule} from './components/component.module';
+import {AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService} from '@angular/fire/analytics';
 
 
 @NgModule({
@@ -50,13 +51,17 @@ import {ComponentModule} from './components/component.module';
     RoutingModule,
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAnalyticsModule,
     AngularFirestoreModule.enablePersistence(),
     AngularFirestoreModule,
     ScreenModule,
     ComponentModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [
+    ScreenTrackingService,
+    UserTrackingService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
@@ -86,7 +91,8 @@ export class AppModule {
       faWrench,
       faUserCog,
       faVolumeMute,
-      faVolumeUp
+      faVolumeUp,
+      faColumns
     );
     faConfig.fixedWidth = true;
   }

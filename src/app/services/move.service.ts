@@ -281,7 +281,7 @@ export class MoveService implements OnDestroy {
                   return data;
                 }
 
-                const searchedMoveIds = searchIndex.search(searchText).map(item => item.ref);
+                const searchedMoveIds = searchIndex.search(searchText, {expand: true}).map(item => item.ref);
                 // console.log('searching for', searchText);
 
                 // filter moves

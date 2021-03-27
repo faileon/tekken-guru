@@ -14,6 +14,7 @@ import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, SkipSelf, 
 import {FilterType, HitLevel, HitProperty, Move, MoveProperty, NumberRange} from '../../../types';
 import {SearchBarComponent} from '../../ui/search-bar/search-bar.component';
 import {SettingsService} from '../../../services/settings.service';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'tg-move-list',
@@ -34,7 +35,13 @@ export class MoveListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+    this.settingsService.contentOrder$.pipe(
+      takeUntil(this.isDestroyed$))
+      .subscribe(({notation, video, frameData}) => {
+        document.documentElement.style.setProperty('--notation-order', notation.toString());
+        document.documentElement.style.setProperty('--video-order', video.toString());
+        document.documentElement.style.setProperty('--frame-data-order', frameData.toString());
+      });
   }
 
   ngOnDestroy(): void {

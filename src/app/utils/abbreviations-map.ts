@@ -129,5 +129,11 @@ export const abbreviationsMap = {
   'duringsetsunagake': 'set',
 
   // marduk
-  'duringreadyposition': 'vts'
+  'duringreadyposition': 'vts',
+
+  // lidia
+  'duringcatfootstancei': 'cfo',
+  'duringcatfootstanceii': 'cft',
+  'duringheavenandearth': 'hae',
+  'duringpouncingtigerstalkingwolf': 'taw',
 };

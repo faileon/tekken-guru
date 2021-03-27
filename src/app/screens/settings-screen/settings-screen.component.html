@@ -3,8 +3,10 @@
 
   <tg-card title="Site">
     <div content>
-
-      <p class="title small"><fa-icon icon="gamepad"></fa-icon> Chose your preferred button layout:</p>
+      <p class="title small">
+        <fa-icon icon="gamepad"></fa-icon>
+        Chose your preferred button layout:
+      </p>
       <div class="fx spaced row" *ngIf="settingsService.platformInput$ | async as platformInput">
         <!-- PS4 -->
         <tg-button
@@ -31,6 +33,18 @@
           (click)="settingsService.platformInput = 'steam'"
         >
           Arcade
+        </tg-button>
+      </div>
+
+      <p class="title small">
+        <fa-icon icon="columns"></fa-icon>
+        Drag & drop preferred content order:
+        <span class="subtitle"><br>This applies to the content of cards displaying individual moves.</span>
+      </p>
+      <div class="fx spaced row" cdkDropList cdkDropListOrientation="horizontal"
+           (cdkDropListDropped)="onContentOrderChanged($event)">
+        <tg-button *ngFor="let item of contentOrder; index as i" cdkDrag>
+          {{i + 1}}. {{item}}
         </tg-button>
       </div>
     </div>

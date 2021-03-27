@@ -8,6 +8,8 @@ export type MoveProperty =
   'HOMING' |
   'LOW CRUSH' |
   'HIGH CRUSH' |
+  'WALL BREAK' |
+  'FLOOR BREAK' |
   'THROW 1' |
   'THROW 2' |
   'THROW 1+2';

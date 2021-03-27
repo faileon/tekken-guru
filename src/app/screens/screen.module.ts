@@ -18,6 +18,7 @@ import {SettingsScreenComponent} from './settings-screen/settings-screen.compone
 import { PracticeScreenComponent } from './practice/practice-screen/practice-screen.component';
 import {PipeModule} from '../pipes/pipe.module';
 import {HttpClientModule} from '@angular/common/http';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -34,15 +35,16 @@ import {HttpClientModule} from '@angular/common/http';
     SettingsScreenComponent,
     PracticeScreenComponent,
   ],
-  imports: [
-    CommonModule,
-    ComponentModule,
-    DirectiveModule,
-    RoutingModule,
-    FontAwesomeModule,
-    PipeModule,
-    HttpClientModule
-  ],
+    imports: [
+        CommonModule,
+        ComponentModule,
+        DirectiveModule,
+        RoutingModule,
+        FontAwesomeModule,
+        PipeModule,
+        HttpClientModule,
+        DragDropModule
+    ],
   exports: [
     CharacterSelectScreenComponent,
     DashboardScreenComponent,

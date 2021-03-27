@@ -1,4 +1,6 @@
 // tslint:disable-next-line:no-any
+import {ContentOrder} from '../types';
+
 export const debounce = <F extends (...args: any[]) => any>(func: F, waitFor: number) => {
   let timeout: number;
 
@@ -60,4 +62,12 @@ export const compareBoolArrays = (a1: boolean[], a2: boolean[]): boolean => {
   }
 
   return true;
+};
+
+export const getDefaultValueFromLocalStorage = <T>(key: string): T => {
+  const value = localStorage.getItem(key);
+  if (value) {
+    return JSON.parse(value) as T;
+  }
+  return null;
 };

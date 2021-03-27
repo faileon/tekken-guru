@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GamepadService} from '../../../services/gamepad.service';
 import {BehaviorSubject, combineLatest, interval, Observable, Subject, Subscription} from 'rxjs';
-import {bufferCount, filter, map, pairwise, take, takeUntil, tap} from 'rxjs/operators';
+import {bufferCount, debounceTime, filter, map, pairwise, take, takeUntil, tap} from 'rxjs/operators';
 import {Character, NumberRange, PlayerSide, ThrowType, TimelineItem} from '../../../types';
 import {compareBoolArrays, getRandomNumber, getToggledProperties} from '../../../utils/common';
 import {ButtonsMapping} from '../../../types/buttons.type';
@@ -84,6 +84,7 @@ export class PracticeScreenComponent implements OnDestroy, OnInit {
   public changeMapping = false;
 
   private currentLoop$ = new BehaviorSubject<number>(1);
+  private currentFrame$ = new Subject<number>();
   private currentVideoEndSubscription: Subscription;
   private timeline$: Subject<TimelineItem[]>;
   public video: HTMLVideoElement;
@@ -165,13 +166,13 @@ export class PracticeScreenComponent implements OnDestroy, OnInit {
     ]).pipe(
       map(([buttons, mapping]) => {
         return buttons.reduce((acc, curr, index) => {
-          if (index === (mapping?.one ?? 2) && curr.pressed) {
+          if (index === (mapping?.one) && curr.pressed) {
             acc[0] = true;
           }
-          if (index === (mapping?.two ?? 3) && curr.pressed) {
+          if (index === (mapping?.two) && curr.pressed) {
             acc[1] = true;
           }
-          if (index === (mapping?.onePlusTwo ?? 5) && curr.pressed) {
+          if (index === (mapping?.onePlusTwo) && curr.pressed) {
             acc[0] = true;
             acc[1] = true;
           }
@@ -190,6 +191,10 @@ export class PracticeScreenComponent implements OnDestroy, OnInit {
       this.timeline$
     ]).pipe(
       takeUntil(this.isDestroyed$),
+      /*multicast(new Subject(), s => merge(
+        s.pipe(take(1)), // let first thru
+          s.pipe(skip(1), debounceTime(50)), // debounce all after first
+      )),*/
       map(([buttons, timeline]) => {
         const {currentTime} = this.video;
         const currentTimelineItem = timeline.find(t => t.start < currentTime && t.end > currentTime);
@@ -199,7 +204,7 @@ export class PracticeScreenComponent implements OnDestroy, OnInit {
           timeline
         };
       }),
-      filter(({buttons}) => buttons.some(b => b) && !this.guessedAlready) // pressed something and haven't guessed yet
+      filter(({buttons}) => buttons.some(b => b) && !this.guessedAlready), // pressed something and haven't guessed yet,
     ).subscribe(({buttons, currentTimelineItem}) => {
       // console.log('pressed during break', currentTimelineItem);
 
@@ -221,7 +226,6 @@ export class PracticeScreenComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    // create media source
     this.video = document.getElementById('media-source-test') as HTMLVideoElement;
 
     const mainLoop$ = combineLatest([
@@ -241,11 +245,12 @@ export class PracticeScreenComponent implements OnDestroy, OnInit {
         // remake sourceopen function
         this.mediaSource.onsourceopen = async () => {
           // console.log('media source open');
+          // // https://web.dev/requestvideoframecallback-rvfc/ im just gonna keep this here...
           if (this.currentVideoEndSubscription && !this.currentVideoEndSubscription.closed) {
             this.currentVideoEndSubscription.unsubscribe();
           }
-
           this.currentVideoEndSubscription = this.watchCurrentEndWindow();
+
           this.guessedAlready = false;
 
           this.sourceBuffer = createSequenceSourceBuffer(this.mediaSource);
@@ -318,34 +323,38 @@ export class PracticeScreenComponent implements OnDestroy, OnInit {
   }
 
   private onThrowBreakSuccess(item: TimelineItem): void {
-    // console.log('GOOD GUESS');
-    this.score.breaks.success += 1;
-    this.playAudioEffect(true);
+    if (this.mediaSource.readyState === 'open' && !this.sourceBuffer.updating) {
+      // console.log('GOOD GUESS');
+      this.score.breaks.success += 1;
+      this.playAudioEffect(true);
 
-    appendBufferAsync(this.sourceBuffer, item.resultBuffers?.success)
-      .then(_ => {
-        // lets skip the video till the remainder of break window and play break animation immediately
-        const timeTillBreakWindowEnds = item.end - this.video.currentTime;
-        const reactionTime = this.video.currentTime - item.start;
+      appendBufferAsync(this.sourceBuffer, item.resultBuffers?.success)
+        .then(_ => {
+          // lets skip the video till the remainder of break window and play break animation immediately
+          const timeTillBreakWindowEnds = item.end - this.video.currentTime;
+          const reactionTime = this.video.currentTime - item.start;
 
-        // also measure reaction time
-        this.score.reactionTime.last = reactionTime;
-        this.score.reactionTime.cumulative += reactionTime;
+          // also measure reaction time
+          this.score.reactionTime.last = reactionTime;
+          this.score.reactionTime.cumulative += reactionTime;
 
-        this.video.currentTime = this.video.currentTime + timeTillBreakWindowEnds;
-        this.mediaSource.endOfStream();
-      });
+          this.video.currentTime = this.video.currentTime + timeTillBreakWindowEnds;
+          this.mediaSource.endOfStream();
+        });
+    }
   }
 
   private onThrowBreakFail(item: TimelineItem): void {
-    // console.log('WRONG GUESS');
-    this.score.breaks.fail += 1;
-    this.playAudioEffect(false);
+    if (this.mediaSource.readyState === 'open' && !this.sourceBuffer.updating) {
+      // console.log('WRONG GUESS');
+      this.score.breaks.fail += 1;
+      this.playAudioEffect(false);
 
-    appendBufferAsync(this.sourceBuffer, item.resultBuffers?.fail)
-      .then(_ => {
-        this.mediaSource.endOfStream();
-      });
+      appendBufferAsync(this.sourceBuffer, item.resultBuffers?.fail)
+        .then(_ => {
+          this.mediaSource.endOfStream();
+        });
+    }
   }
 
   private onThrowBreakMissed(item: TimelineItem): void {
