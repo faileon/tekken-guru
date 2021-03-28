@@ -1,0 +1,9 @@
+<div class="header ripple fx row centered" (click)="isOpen = !isOpen">
+  <fa-icon
+    [icon]="isOpen ? 'chevron-down' : 'chevron-right'"
+  ></fa-icon>
+  <ng-content select="[header]"></ng-content>
+</div>
+<ng-container *ngIf="isOpen">
+  <ng-content select="[content]"></ng-content>
+</ng-container>

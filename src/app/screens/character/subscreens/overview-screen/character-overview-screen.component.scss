@@ -9,6 +9,12 @@
     margin-bottom: $md-margin;
   }
 
+  .spaced {
+    >* {
+      margin-bottom: $md-margin;
+    }
+  }
+
   .content {
     padding: $sm-padding;
   }

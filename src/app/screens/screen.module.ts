@@ -15,7 +15,7 @@ import {MatchupSelectComponent} from './character/matchup/select/matchup-select.
 import {MovelistScreenComponent} from './character/subscreens/movelist-screen/movelist-screen.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {SettingsScreenComponent} from './settings-screen/settings-screen.component';
-import { PracticeScreenComponent } from './practice/practice-screen/practice-screen.component';
+import {PracticeScreenComponent} from './practice/practice-screen/practice-screen.component';
 import {PipeModule} from '../pipes/pipe.module';
 import {HttpClientModule} from '@angular/common/http';
 import {DragDropModule} from '@angular/cdk/drag-drop';
@@ -35,16 +35,16 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     SettingsScreenComponent,
     PracticeScreenComponent,
   ],
-    imports: [
-        CommonModule,
-        ComponentModule,
-        DirectiveModule,
-        RoutingModule,
-        FontAwesomeModule,
-        PipeModule,
-        HttpClientModule,
-        DragDropModule
-    ],
+  imports: [
+    CommonModule,
+    ComponentModule,
+    DirectiveModule,
+    RoutingModule,
+    FontAwesomeModule,
+    PipeModule,
+    HttpClientModule,
+    DragDropModule
+  ],
   exports: [
     CharacterSelectScreenComponent,
     DashboardScreenComponent,

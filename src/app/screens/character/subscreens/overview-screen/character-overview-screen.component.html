@@ -20,4 +20,26 @@
   </div>
 
   <!-- ######### NEW STUFF PROTOTYPE - ANTIGUIDE -->
+  <ng-container *ngIf="characterAntiGuide$ | async as characterAG">
+    <h1 class="secondary">Anti-guide</h1>
+    <tg-collapsible>
+      <!-- GENERAL TAB -->
+      <h2 header>General</h2>
+      <div class="spaced" content>
+        <!-- MOVEMENT -->
+        <tg-card title="Movement">
+          <div class="content" content [innerHTML]="characterAG.movement">
+          </div>
+        </tg-card>
+
+        <!-- THROW GAME -->
+        <tg-card title="Throw game">
+          <div class="content" content [innerHTML]="characterAG.throwGame">
+          </div>
+        </tg-card>
+      </div>
+    </tg-collapsible>
+
+
+  </ng-container>
 </ng-container>

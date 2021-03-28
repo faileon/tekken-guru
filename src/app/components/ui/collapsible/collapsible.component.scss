@@ -1,0 +1,12 @@
+@import "src/scss/variables";
+
+
+:host{
+  .header {
+    cursor: pointer;
+
+    >fa-icon {
+      margin-right: $xs-margin;
+    }
+  }
+}

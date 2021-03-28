@@ -20,6 +20,7 @@ import {
   faFilm,
   faVideo,
   faChevronRight,
+  faChevronDown,
   faExpand,
   faPlay,
   faPause,
@@ -36,7 +37,6 @@ import {
 import {faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 import {ScreenModule} from './screens/screen.module';
 import {ComponentModule} from './components/component.module';
-import {AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService} from '@angular/fire/analytics';
 
 
 @NgModule({
@@ -51,17 +51,13 @@ import {AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService} 
     RoutingModule,
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAnalyticsModule,
     AngularFirestoreModule.enablePersistence(),
     AngularFirestoreModule,
     ScreenModule,
     ComponentModule,
     FontAwesomeModule
   ],
-  providers: [
-    ScreenTrackingService,
-    UserTrackingService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
@@ -79,6 +75,7 @@ export class AppModule {
       faVideo,
       faFilm,
       faChevronRight,
+      faChevronDown,
       faExpand,
       faPlay,
       faPause,
