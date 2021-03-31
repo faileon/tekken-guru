@@ -23,6 +23,8 @@ export class MovePropertyImgPipe implements PipeTransform {
         return `${prefix}/high-crush.png`;
       case 'WALL BREAK':
         return `${prefix}/wall-break.png`;
+      case 'WALL SPLAT':
+        return `${prefix}/wall-splat.png`;
       case 'FLOOR BREAK':
         return `${prefix}/floor-break.png`;
       case 'THROW 1':

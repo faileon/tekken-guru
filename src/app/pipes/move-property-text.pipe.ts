@@ -22,6 +22,8 @@ export class MovePropertyTextPipe implements PipeTransform {
         return '<strong>Low Crush</strong><br>Avoids low attacks by putting fighter in technically jumping state.';
       case 'WALL BREAK':
         return '<strong>Wall Break</strong><br>Indicating that this move will break a breakable wall.';
+      case 'WALL SPLAT':
+        return '<strong>Wall Splat</strong><br>Indicating that this move will splat enemy on the wall.';
       case 'FLOOR BREAK':
         return '<strong>Floor Break</strong><br>Indicating that this move will break a breakable floor.';
       case 'THROW 1':

@@ -9,6 +9,7 @@ export type MoveProperty =
   'LOW CRUSH' |
   'HIGH CRUSH' |
   'WALL BREAK' |
+  'WALL SPLAT' |
   'FLOOR BREAK' |
   'THROW 1' |
   'THROW 2' |
