@@ -47,6 +47,19 @@
           {{i + 1}}. {{item}}
         </tg-button>
       </div>
+
+      <p class="title small">
+        <fa-icon icon="sync"></fa-icon>
+        Site doesn't feel fresh?
+      </p>
+      <div class="fx spaced row">
+        <!-- PS4 -->
+        <tg-button
+          (click)="forceUpdate()"
+        >
+          Force update
+        </tg-button>
+      </div>
     </div>
   </tg-card>
 </div>

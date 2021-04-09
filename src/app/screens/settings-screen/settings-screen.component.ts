@@ -36,5 +36,9 @@ export class SettingsScreenComponent implements OnInit {
 
     this.settingsService.contentOrder = newOrder as ContentOrder;
   }
+
+  public forceUpdate(): void {
+    window.location.reload();
+  }
 }
 
