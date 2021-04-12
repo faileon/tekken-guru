@@ -8,8 +8,8 @@ import {CategorizedCombo, Combo} from '../../../types/combo.type';
 })
 export class ComboListComponent implements OnInit {
 
-  @Input()
-  public combolist!: Combo[];
+  /*@Input()
+  public combolist!: Combo[];*/
 
   @Input()
   public categorizedCombos!: CategorizedCombo[];
@@ -18,7 +18,7 @@ export class ComboListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.categorizedCombos);
+    // console.log(this.categorizedCombos);
   }
 
 }

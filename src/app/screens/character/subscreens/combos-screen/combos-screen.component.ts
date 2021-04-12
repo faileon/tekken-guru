@@ -24,7 +24,7 @@ export class CombosScreenComponent implements OnInit {
     const {params} = route.parent.snapshot;
     const characterId = getCharacterIdFromRoute(data, params);
 
-    this.combos$ = this.combosService.getCombos$(characterId);
+    // this.combos$ = this.combosService.getCombos$(characterId);
     this.categorizedCombos$ = this.combosService.getCategorizedCombos$(characterId);
   }
 

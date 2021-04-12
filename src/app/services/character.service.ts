@@ -1,12 +1,12 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {BehaviorSubject, combineLatest, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable, of, Subject} from 'rxjs';
 import {Character, Move} from '../types';
-import {map, switchMap, takeUntil} from 'rxjs/operators';
+import {distinct, distinctUntilChanged, map, skip, switchMap, takeUntil} from 'rxjs/operators';
 import * as elasticlunr from 'elasticlunr';
 import {Index} from 'elasticlunr';
 import {Combo} from '../types/combo.type';
-import {Category} from '../types/category.type';
+import {isDateAfterInDays} from '../utils/common';
 
 @Injectable({
   providedIn: 'root'
@@ -66,7 +66,7 @@ export class CharacterService implements OnDestroy { // consider renaming this t
         takeUntil(this.isDestroyed$) // if in root then as long as app is running.
       )
       .subscribe(characters => {
-        console.log('Got characters from server, updating runtime cache.');
+        console.log('Got characters from server, updating runtime cache.', characters.length);
 
         const searchIndex = elasticlunr((idx: Index<Character>) => {
           idx.addField('_id');
@@ -127,14 +127,13 @@ export class CharacterService implements OnDestroy { // consider renaming this t
   public getMoves(characterId: string): Observable<Data<Move>> {
     if (!this.moves[characterId]) {
       // todo this would be a good place to introduce loading screen - on fetch from server, for local data loading screen is pointless
-      console.log(`didnt find moves for ${characterId}, fetching it from server and will keep listening for updates`);
-      this.firestore.collection<Move>(`characters/${characterId}/movelist`)
-        .valueChanges({idField: '_id'})
+      // console.log(`didnt find moves for ${characterId}, fetching it from server and will keep listening for updates`);
+      this.fetchData<Move>(`characters/${characterId}/movelist`)
         .pipe(
           takeUntil(this.isDestroyed$)
         )
         .subscribe(moves => {
-            console.log(`Fetched ${moves.length} moves from firestore for ${characterId}`);
+            console.log(`Fetched ${moves.length} moves for ${characterId}`);
 
             // create search indexes on fields
             const searchIndex = elasticlunr((idx: Index<Move>) => {
@@ -201,6 +200,35 @@ export class CharacterService implements OnDestroy { // consider renaming this t
     );
   }
 
+  private fetchDataFromSource<T>(path: string, source: 'default' | 'server' | 'cache'): Observable<T[]> {
+    return this.firestore.collection<T>(path)
+      .get({source})
+      .pipe(
+        map(res => res.docs.map(doc => ({
+          ...doc.data(),
+          _id: doc.id
+        } as T))),
+      );
+  }
+
+  private fetchData<T>(path: string): Observable<T[]> {
+    return this.fetchDataFromSource<T>(path, 'cache').pipe(
+      switchMap(data => {
+        const lastUpdatedAt = parseInt(localStorage.getItem('lastUpdatedAt'), 10) || 0;
+        const now = Date.now();
+        if (data.length === 0 || isDateAfterInDays(now, lastUpdatedAt, 3)) {
+          // nothing in cache, get it from server, update timestamp
+          console.log(`returning ${path} from server`, lastUpdatedAt);
+          localStorage.setItem('lastUpdatedAt', Date.now().toString());
+          return this.fetchDataFromSource<T>(path, 'server');
+        } else {
+          // from cache
+          console.log(`returning ${path} from cache`);
+          return of(data);
+        }
+      })
+    );
+  }
 
 }
 

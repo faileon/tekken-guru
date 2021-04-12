@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, SkipSelf} from '@angular/core';
 import {CharacterService} from '../../../../services/character.service';
 import {Character} from '../../../../types';
 import {Observable} from 'rxjs';
@@ -12,7 +12,7 @@ export class CharacterSelectScreenComponent implements OnInit {
 
   public characters$: Observable<Character[]>;
 
-  constructor(public characterService: CharacterService) {
+  constructor(@SkipSelf() public characterService: CharacterService) {
     this.characters$ = this.characterService.getCharacters();
   }
 

@@ -45,7 +45,6 @@ export class AppComponent implements OnInit {
 
 
   constructor(/*private firestore: AngularFirestore*/) {
-
   }
 
 

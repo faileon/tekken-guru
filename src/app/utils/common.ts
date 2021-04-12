@@ -71,3 +71,5 @@ export const getDefaultValueFromLocalStorage = <T>(key: string): T => {
   }
   return null;
 };
+
+export const isDateAfterInDays = (date1: number, date2: number, days: number) => (date1 - date2) > (days * 24 * 60 * 60 * 1000);
