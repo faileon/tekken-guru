@@ -172,13 +172,9 @@ export class CharacterService implements OnDestroy { // consider renaming this t
   public getCombos(characterId: string): Observable<Data<Combo>> {
     if (!this.combos[characterId]) {
       // combos for character not in runtime cachem hookup to firestore live updates
-      this.firestore.collection<Combo>(`characters/${characterId}/combos`)
-        .valueChanges({idField: '_id'})
-        .pipe(
-          takeUntil(this.isDestroyed$),
-        )
+      this.fetchData<Combo>(`characters/${characterId}/combos`)
         .subscribe(combos => {
-          console.log(`Fetched ${combos.length} moves from firestore for ${characterId}`);
+          console.log(`Fetched ${combos.length} moves for ${characterId}`);
           console.log(combos);
 
           // emit to our combos data map observable
@@ -214,12 +210,12 @@ export class CharacterService implements OnDestroy { // consider renaming this t
   private fetchData<T>(path: string): Observable<T[]> {
     return this.fetchDataFromSource<T>(path, 'cache').pipe(
       switchMap(data => {
-        const lastUpdatedAt = parseInt(localStorage.getItem('lastUpdatedAt'), 10) || 0;
+        const lastUpdatedAt = parseInt(localStorage.getItem('TG-lastUpdatedAt'), 10) || 0;
         const now = Date.now();
         if (data.length === 0 || isDateAfterInDays(now, lastUpdatedAt, 3)) {
           // nothing in cache, get it from server, update timestamp
           console.log(`returning ${path} from server`, lastUpdatedAt);
-          localStorage.setItem('lastUpdatedAt', Date.now().toString());
+          localStorage.setItem('TG-lastUpdatedAt', Date.now().toString());
           return this.fetchDataFromSource<T>(path, 'server');
         } else {
           // from cache
