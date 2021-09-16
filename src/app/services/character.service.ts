@@ -1,5 +1,5 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore, QueryFn} from '@angular/fire/firestore';
 import {BehaviorSubject, combineLatest, Observable, of, Subject} from 'rxjs';
 import {Character, Move, PersistenceTimestamps} from '../types';
 import {distinct, distinctUntilChanged, map, skip, switchMap, takeUntil, tap} from 'rxjs/operators';
@@ -52,18 +52,10 @@ export class CharacterService implements OnDestroy { // consider renaming this t
     this._combos = new BehaviorSubject({});
     this.combos$ = this._combos.asObservable();
 
-    /**
-     * trying to reduce firestore calls, but still keep some freshness:
-     *  - subscribe to firestore until app dies for live updates from serve to users.
-     *  -  send back cached characters during single app lifespan
-     */
-    this.firestore
-      .collection<Character>('characters', ref =>
-        ref.orderBy('position')
-      )
-      .valueChanges({idField: '_id'})
+
+    this.fetchData<Character>('characters', ref => ref.orderBy('position'))
       .pipe(
-        takeUntil(this.isDestroyed$) // if in root then as long as app is running.
+        takeUntil(this.isDestroyed$)
       )
       .subscribe(characters => {
         console.log('Got characters from server, updating runtime cache.', characters.length);
@@ -193,8 +185,8 @@ export class CharacterService implements OnDestroy { // consider renaming this t
     );
   }
 
-  private fetchDataFromSource<T>(path: string, source: 'default' | 'server' | 'cache'): Observable<T[]> {
-    return this.firestore.collection<T>(path)
+  private fetchDataFromSource<T>(path: string, source: 'default' | 'server' | 'cache', queryFn?: QueryFn): Observable<T[]> {
+    return this.firestore.collection<T>(path, queryFn)
       .get({source})
       .pipe(
         map(res => res.docs.map(doc => ({
@@ -204,8 +196,8 @@ export class CharacterService implements OnDestroy { // consider renaming this t
       );
   }
 
-  private fetchData<T>(path: string): Observable<T[]> {
-    return this.fetchDataFromSource<T>(path, 'cache').pipe(
+  private fetchData<T>(path: string, queryFn?: QueryFn): Observable<T[]> {
+    return this.fetchDataFromSource<T>(path, 'cache', queryFn).pipe(
       switchMap(data => {
         // get timestamps dictionary from local storage and get last updated at for given path
         const timestamps = getValueFromLocalStorage<PersistenceTimestamps>('TG-lastUpdatedAt') ?? {};
@@ -218,7 +210,7 @@ export class CharacterService implements OnDestroy { // consider renaming this t
         if (data.length === 0 || isDateAfterInDays(now, lastUpdatedAt, dayInterval)) {
           // fetch data from the server, which updates the cache
           console.log(`Returning "${path}" from server. Last updated at ${lastUpdatedAt}. Days interval ${dayInterval}`);
-          return this.fetchDataFromSource<T>(path, 'server')
+          return this.fetchDataFromSource<T>(path, 'server', queryFn)
             .pipe(
               tap(() => {
                 // update the timestamp for this path

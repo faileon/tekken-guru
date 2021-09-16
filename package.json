@@ -1,6 +1,6 @@
 {
   "name": "tekken-guru",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "sideEffects": false,
   "scripts": {
     "ng": "ng",
