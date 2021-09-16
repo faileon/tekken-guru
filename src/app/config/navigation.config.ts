@@ -66,6 +66,12 @@ export const DEFAULT_CHARACTER_TABS: TGMenuItem[] = [
 
 // helper function for character matchup tabs
 const createCharacterMatchupTabs = (outletName: string): TGMenuItem[] => {
+  // todo replace static paths with object generated from DEFAULT_CHAR_TABS
+  const pathz = DEFAULT_CHARACTER_TABS.reduce((acc, curr) => {
+    acc[curr.routeTo as string] = curr.title;
+    return acc;
+  }, {} as Record<string, unknown>);
+
   const paths = {
     movelist: 'Moves',
     keymoves: 'Key moves',

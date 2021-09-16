@@ -6,6 +6,17 @@
   height: 100%;
   justify-content: center;
 
+  input {
+    border: none;
+    border-radius: $border-radius;
+    min-height: 1.5rem;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
+
   .tg-container {
     overflow-y: auto;
     .tarrget-title {

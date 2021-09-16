@@ -49,6 +49,14 @@
       </div>
 
       <p class="title small">
+        <fa-icon icon="database"></fa-icon>
+        For how many days do you wish to prefer local data over server data?
+      </p>
+      <div class="fx spaced row">
+        <input type="number" [value]="dayInterval" (blur)="saveDayInterval($event)">
+      </div>
+
+      <p class="title small">
         <fa-icon icon="sync"></fa-icon>
         Site doesn't feel fresh?
       </p>

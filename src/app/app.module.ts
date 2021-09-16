@@ -32,7 +32,8 @@ import {
   faCog,
   faWrench,
   faUserCog,
-  faVolumeMute, faVolumeUp, faColumns, faSync
+  faVolumeMute, faVolumeUp, faColumns, faSync,
+  faDatabase
 } from '@fortawesome/free-solid-svg-icons';
 import {faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 import {ScreenModule} from './screens/screen.module';
@@ -94,7 +95,8 @@ export class AppModule {
       faVolumeMute,
       faVolumeUp,
       faColumns,
-      faSync
+      faSync,
+      faDatabase
     );
     faConfig.fixedWidth = true;
   }

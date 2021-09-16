@@ -1,12 +1,12 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {BehaviorSubject, combineLatest, Observable, of, Subject} from 'rxjs';
-import {Character, Move} from '../types';
-import {distinct, distinctUntilChanged, map, skip, switchMap, takeUntil} from 'rxjs/operators';
+import {Character, Move, PersistenceTimestamps} from '../types';
+import {distinct, distinctUntilChanged, map, skip, switchMap, takeUntil, tap} from 'rxjs/operators';
 import * as elasticlunr from 'elasticlunr';
 import {Index} from 'elasticlunr';
 import {Combo} from '../types/combo.type';
-import {isDateAfterInDays} from '../utils/common';
+import {getValueFromLocalStorage, isDateAfterInDays} from '../utils/common';
 
 @Injectable({
   providedIn: 'root'
@@ -125,15 +125,15 @@ export class CharacterService implements OnDestroy { // consider renaming this t
   }
 
   public getMoves(characterId: string): Observable<Data<Move>> {
+    // this is now rather obsolete as we lost the Realtime update, but its better than paying 3k CZK per month...
     if (!this.moves[characterId]) {
-      // todo this would be a good place to introduce loading screen - on fetch from server, for local data loading screen is pointless
       // console.log(`didnt find moves for ${characterId}, fetching it from server and will keep listening for updates`);
       this.fetchData<Move>(`characters/${characterId}/movelist`)
         .pipe(
           takeUntil(this.isDestroyed$)
         )
         .subscribe(moves => {
-            console.log(`Fetched ${moves.length} moves for ${characterId}`);
+            // console.log(`Fetched ${moves.length} moves for ${characterId}`);
 
             // create search indexes on fields
             const searchIndex = elasticlunr((idx: Index<Move>) => {
@@ -163,7 +163,7 @@ export class CharacterService implements OnDestroy { // consider renaming this t
         );
     }
 
-    console.log(`Returning [${this.moves[characterId]?.data.length ?? '?'}] moves from cache for`, characterId);
+    console.log(`Returning [${this.moves[characterId]?.data.length ?? '?'}] moves for`, characterId);
     return this.moves$.pipe(
       map(moves => moves[characterId])
     );
@@ -187,10 +187,7 @@ export class CharacterService implements OnDestroy { // consider renaming this t
         });
     }
 
-    // first proc here will be undefined,
-    // then firestore kicks in and fetches the data (from server or indexed db preferably?? i hope, they claim so),
-    // then it should always return runtime cached data (that firestore observable refreshes on change)
-    console.log(`Returning [${this.combos[characterId]?.data.length ?? '?'}] moves from cache for`, characterId);
+    console.log(`Returning [${this.combos[characterId]?.data.length ?? '?'}] combos for`, characterId);
     return this.combos$.pipe(
       map(combos => combos[characterId])
     );
@@ -210,16 +207,28 @@ export class CharacterService implements OnDestroy { // consider renaming this t
   private fetchData<T>(path: string): Observable<T[]> {
     return this.fetchDataFromSource<T>(path, 'cache').pipe(
       switchMap(data => {
-        const lastUpdatedAt = parseInt(localStorage.getItem('TG-lastUpdatedAt'), 10) || 0;
+        // get timestamps dictionary from local storage and get last updated at for given path
+        const timestamps = getValueFromLocalStorage<PersistenceTimestamps>('TG-lastUpdatedAt') ?? {};
+        const dayInterval = parseInt(localStorage.getItem('TG-dataFreshnessInterval') ?? '1', 10) ?? 1;
+        const parsedPath = path.replace(new RegExp(/\//, 'g'), ''); // replace the slashes because production build has problems with object keys containing slashes
+        const lastUpdatedAt = timestamps[parsedPath] ?? 0;
         const now = Date.now();
-        if (data.length === 0 || isDateAfterInDays(now, lastUpdatedAt, 3)) {
-          // nothing in cache, get it from server, update timestamp
-          console.log(`returning ${path} from server`, lastUpdatedAt);
-          localStorage.setItem('TG-lastUpdatedAt', Date.now().toString());
-          return this.fetchDataFromSource<T>(path, 'server');
+
+        // if data from cache is empty or if the last updated timestamp is expired
+        if (data.length === 0 || isDateAfterInDays(now, lastUpdatedAt, dayInterval)) {
+          // fetch data from the server, which updates the cache
+          console.log(`Returning "${path}" from server. Last updated at ${lastUpdatedAt}. Days interval ${dayInterval}`);
+          return this.fetchDataFromSource<T>(path, 'server')
+            .pipe(
+              tap(() => {
+                // update the timestamp for this path
+                timestamps[parsedPath] = Date.now();
+                localStorage.setItem('TG-lastUpdatedAt', JSON.stringify(timestamps));
+              })
+            );
         } else {
           // from cache
-          console.log(`returning ${path} from cache`);
+          console.log(`Returning "${path}" from cache. Last updated at ${lastUpdatedAt}`);
           return of(data);
         }
       })

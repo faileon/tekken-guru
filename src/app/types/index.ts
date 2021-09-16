@@ -6,3 +6,4 @@ export * from './filter.type';
 export * from './punishment.type';
 export * from './common.types';
 export * from './timeline.type';
+export * from './persistence.type';

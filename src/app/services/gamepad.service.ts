@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, interval, Observable, Subject} from 'rxjs';
 import {distinctUntilChanged, map, switchMap} from 'rxjs/operators';
 import {ButtonsMapping} from '../types/buttons.type';
-import {getDefaultValueFromLocalStorage} from '../utils/common';
+import {getValueFromLocalStorage} from '../utils/common';
 
 @Injectable()
 export class GamepadService {
@@ -31,7 +31,7 @@ export class GamepadService {
     this._gamepadList = new BehaviorSubject<{ [key: number]: Gamepad }>(navigator.getGamepads());
     this.gamepadList$ = this._gamepadList.asObservable();
 
-    const defaultButtonsMapping = getDefaultValueFromLocalStorage<ButtonsMapping>('buttonsMapping') ?? {one: 2, two: 3, onePlusTwo: 5};
+    const defaultButtonsMapping = getValueFromLocalStorage<ButtonsMapping>('buttonsMapping') ?? {one: 2, two: 3, onePlusTwo: 5};
     this._buttonsMapping = new BehaviorSubject<ButtonsMapping>(defaultButtonsMapping);
     this.buttonsMapping$ = this._buttonsMapping.asObservable();
 

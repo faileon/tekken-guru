@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {ButtonsMapping, PlatformInput} from '../types/buttons.type';
 import {ContentOrder} from '../types';
-import {getDefaultValueFromLocalStorage} from '../utils/common';
+import {getValueFromLocalStorage} from '../utils/common';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class SettingsService {
     this._platformInput = new BehaviorSubject<PlatformInput>(defaultPlatformInput);
     this.platformInput$ = this._platformInput.asObservable();
 
-    const defaultContentOrder = getDefaultValueFromLocalStorage<ContentOrder>('contentOrder') ?? {notation: 0, video: 1, frameData: 2};
+    const defaultContentOrder = getValueFromLocalStorage<ContentOrder>('contentOrder') ?? {notation: 0, video: 1, frameData: 2};
     this._contentOrder = new BehaviorSubject<ContentOrder>(defaultContentOrder);
     this.contentOrder$ = this._contentOrder.asObservable();
   }

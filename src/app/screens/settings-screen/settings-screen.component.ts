@@ -3,6 +3,7 @@ import {SettingsService} from '../../services/settings.service';
 import {map, take} from 'rxjs/operators';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {ContentOrder} from '../../types';
+import {getValueFromLocalStorage} from '../../utils/common';
 
 
 @Component({
@@ -13,6 +14,7 @@ import {ContentOrder} from '../../types';
 export class SettingsScreenComponent implements OnInit {
 
   public contentOrder: string[];
+  public dayInterval: number;
 
   constructor(public settingsService: SettingsService) {
     this.settingsService.contentOrder$.pipe(
@@ -24,6 +26,8 @@ export class SettingsScreenComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dayInterval = parseInt(localStorage.getItem('TG-dataFreshnessInterval') ?? '1', 10) ?? 1;
+
   }
 
   public onContentOrderChanged(event: CdkDragDrop<string[]>): void {
@@ -37,7 +41,14 @@ export class SettingsScreenComponent implements OnInit {
     this.settingsService.contentOrder = newOrder as ContentOrder;
   }
 
+  public saveDayInterval(event: FocusEvent): void {
+    const {target} = event;
+    const {value} = target as HTMLInputElement;
+    localStorage.setItem('TG-dataFreshnessInterval', value);
+  }
+
   public forceUpdate(): void {
+    localStorage.removeItem('TG-lastUpdatedAt');
     window.location.reload();
   }
 }

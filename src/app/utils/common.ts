@@ -64,7 +64,7 @@ export const compareBoolArrays = (a1: boolean[], a2: boolean[]): boolean => {
   return true;
 };
 
-export const getDefaultValueFromLocalStorage = <T>(key: string): T => {
+export const getValueFromLocalStorage = <T>(key: string): T => {
   const value = localStorage.getItem(key);
   if (value) {
     return JSON.parse(value) as T;
