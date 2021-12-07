@@ -18,7 +18,7 @@ import {IconProp} from '@fortawesome/fontawesome-svg-core';
   styleUrls: ['./video.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
+export class VideoComponent implements AfterViewInit {
 
   public playbackSpeedIcon = {
     prefix: 'tg',
@@ -34,8 +34,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     // tslint:disable-next-line:no-any
   } as any;
 
-  // private _currentIcon: Subject<IconProp>;
-  // public currentIcon$: Observable<IconProp>;
   public currentIcon: IconProp;
 
   @Input()
@@ -56,7 +54,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input()
   public fixedHeight = true;
 
-  public isPlaying = false;
+  // public isPlaying = false;
   public isFullscreen = false;
   public isPlaybackOverlayOpen = false;
 
@@ -66,13 +64,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   constructor(private elementRef: ElementRef<HTMLElement>, private changeDetectionRef: ChangeDetectorRef) {
-    // this._currentIcon = new Subject();
-    // this.currentIcon$ = this._currentIcon.asObservable();
     this.currentIcon = 'play';
-  }
-
-  ngOnInit(): void {
-
   }
 
   ngAfterViewInit(): void {
@@ -87,7 +79,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     // setup seekbar -> video interaction
     this.seekbarElementRef.nativeElement.oninput = () => {
 
-
       const {duration} = this.videoElementRef.nativeElement;
       const {value, max} = this.seekbarElementRef.nativeElement;
 
@@ -97,28 +88,25 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     };
   }
 
-  ngOnDestroy(): void {
-    this.isPlaying = false;
-  }
-
   public togglePlay(): void {
-    if (!this.isPlaying) {
+    const {nativeElement} = this.videoElementRef;
+    const isPlaying = nativeElement.currentTime > 0 && !nativeElement.paused && !nativeElement.ended && nativeElement.readyState > nativeElement.HAVE_CURRENT_DATA;
+    if (!isPlaying) {
       this.currentIcon = 'spinner';
+      console.log('video element', this.videoElementRef);
       // play and on success set playing to true
-      this.videoElementRef.nativeElement.play().then(_ => {
-        this.isPlaying = true;
-        this.currentIcon = null;
-        this.changeDetectionRef.detectChanges();
-      });
+      nativeElement.play()
+        .then(_ => {
+          this.currentIcon = null;
+          this.changeDetectionRef.detectChanges();
+        })
+        .catch(e => {
+          console.log('video failed to play', e);
+        });
 
-      // hookup onended function to turn off isPlaying
-      this.videoElementRef.nativeElement.onended = () => {
-        this.isPlaying = false;
-      };
     } else {
       // pause and turn off isPlaying
-      this.videoElementRef.nativeElement.pause();
-      this.isPlaying = false;
+      nativeElement.pause();
       this.currentIcon = 'play';
     }
   }

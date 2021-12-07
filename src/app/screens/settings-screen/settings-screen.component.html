@@ -37,6 +37,38 @@
       </div>
 
       <p class="title small">
+        <fa-icon icon="gamepad"></fa-icon>
+        Chose default character sort:
+      </p>
+      <div class="fx spaced row" *ngIf="settingsService.defaultCharacterSort$ | async as defaultSort">
+        <!-- POSITION -->
+        <tg-button
+          [active]="defaultSort === 'position'"
+          (click)="settingsService.defaultCharacterSort = 'position'"
+        >
+          In game like
+        </tg-button>
+
+        <!-- Alphabetical -->
+        <tg-button
+          [toggleable]="true"
+          [active]="defaultSort === 'fullName LTR'"
+          (click)="settingsService.defaultCharacterSort = 'fullName LTR'"
+        >
+          Alphabetical (A-Z)
+        </tg-button>
+
+        <!-- Alphabetical -->
+        <tg-button
+          [toggleable]="true"
+          [active]="defaultSort === 'fullName RTL'"
+          (click)="settingsService.defaultCharacterSort = 'fullName RTL'"
+        >
+          Alphabetical (Z-A)
+        </tg-button>
+      </div>
+
+      <p class="title small">
         <fa-icon icon="columns"></fa-icon>
         Drag & drop preferred content order:
         <span class="subtitle"><br>This applies to the content of cards displaying individual moves.</span>

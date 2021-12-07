@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import {Form, FormControl} from '@angular/forms';
 import {debounceTime, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
@@ -9,6 +9,9 @@ import {Subject} from 'rxjs';
   styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
+  @ViewChild('inputElement', {static: true})
+  private inputElement!: ElementRef<HTMLInputElement>;
+
   private isDestroyed$ = new Subject<boolean>();
 
   @Input()
@@ -39,6 +42,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   public resetText(): void {
     this.searchControl.setValue('');
+  }
+
+  public onSubmit(event: Event): void {
+    console.log('SUBMIT', event);
+    this.inputElement.nativeElement.blur();
   }
 
 }

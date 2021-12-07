@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output, SkipSelf} from '@angular/core';
 import {Character} from '../../../../types';
 import {CharacterService} from '../../../../services/character.service';
+import {SettingsService} from '../../../../services/settings.service';
 
 @Component({
   selector: 'tg-character-grid',
@@ -25,7 +26,7 @@ export class CharacterGridComponent {
   @Output()
   public characterSelected = new EventEmitter<Character>();
 
-  constructor(@SkipSelf() private characterService: CharacterService) {
+  constructor(@SkipSelf() public characterService: CharacterService, public settingService: SettingsService) {
   }
 
   public onCharacterClick(character: Character): void {

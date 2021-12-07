@@ -15,6 +15,10 @@
     flex-wrap: wrap-reverse;
     justify-content: center;
 
+    &.flex-wrap {
+      flex-wrap: wrap !important;
+    }
+
     .character-card {
       width: $character-avatar-width;
       background-color: $primary-color-light;

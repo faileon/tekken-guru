@@ -1,5 +1,8 @@
 <fa-icon class="blue-icon" icon="search"></fa-icon>
-<input type="text" [formControl]="searchControl" placeholder="Search...">
+<form (submit)="onSubmit($event)">
+  <input #inputElement type="text" [formControl]="searchControl" placeholder="Search...">
+</form>
+
 <tg-button
   icon="times"
   class="blue-icon"

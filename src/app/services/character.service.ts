@@ -7,6 +7,7 @@ import * as elasticlunr from 'elasticlunr';
 import {Index} from 'elasticlunr';
 import {Combo} from '../types/combo.type';
 import {getValueFromLocalStorage, isDateAfterInDays} from '../utils/common';
+import {SettingsService} from './settings.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,11 @@ export class CharacterService implements OnDestroy { // consider renaming this t
     this._searchText.next(text);
   }
 
-  constructor(private firestore: AngularFirestore) {
+  get searchText(): string {
+    return this._searchText.getValue();
+  }
+
+  constructor(private firestore: AngularFirestore, private settingsService: SettingsService) {
     console.log('character service create');
     this._searchText = new BehaviorSubject('');
     this.searchText$ = this._searchText.asObservable();
@@ -53,29 +58,29 @@ export class CharacterService implements OnDestroy { // consider renaming this t
     this.combos$ = this._combos.asObservable();
 
 
-    this.fetchData<Character>('characters', ref => ref.orderBy('position'))
-      .pipe(
-        takeUntil(this.isDestroyed$)
-      )
-      .subscribe(characters => {
-        console.log('Got characters from server, updating runtime cache.', characters.length);
+    const {defaultCharacterSort$} = this.settingsService;
+    defaultCharacterSort$.pipe(
+      takeUntil(this.isDestroyed$),
+      map(sort => sort.split(' ')[0] ?? 'position'),
+      switchMap(sort => this.fetchData<Character>('characters', ref => ref.orderBy(sort))),
+    ).subscribe(characters => {
+      console.log('Got characters from server, updating runtime cache.', characters.length);
 
-        const searchIndex = elasticlunr((idx: Index<Character>) => {
-          idx.addField('_id');
-          idx.addField('fullName');
-
-          idx.setRef('_id');
-        });
-
-        for (const character of characters) {
-          searchIndex.addDoc(character);
-        }
-
-        this._characters.next({
-          data: characters,
-          searchIndex
-        });
+      const searchIndex = elasticlunr((idx: Index<Character>) => {
+        idx.addField('_id');
+        idx.addField('fullName');
+        idx.setRef('_id');
       });
+
+      for (const character of characters) {
+        searchIndex.addDoc(character);
+      }
+
+      this._characters.next({
+        data: characters,
+        searchIndex
+      });
+    });
 
     // clear elastic stop words - todo call this elsewhere?
     elasticlunr.clearStopWords();

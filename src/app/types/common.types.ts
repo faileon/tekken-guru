@@ -8,3 +8,5 @@ export type ContentOrder = {
   video: number;
   frameData: number;
 };
+
+export type CharacterSort = 'position' | 'fullName RTL' | 'fullName LTR' | string;
