@@ -1,18 +1,16 @@
-<video
-       [class.fullscreen]="isFullscreen"
+<video preload="metadata"
        [poster]="poster"
        muted
-       #videoElement
+       controls
        [class.fixed-height]="fixedHeight"
-
 >
   <source [src]="src" [type]="mediaType">
 </video>
 
-<div class="controls ripple" (click)="togglePlay(); $event.stopPropagation()">
-  <!-- TOP ROW: playback speed, expand -->
+<!--<div class="controls ripple" (click)="togglePlay(); $event.stopPropagation()">
+  &lt;!&ndash; TOP ROW: playback speed, expand &ndash;&gt;
   <div class="row top">
-    <!-- playback speed -->
+    &lt;!&ndash; playback speed &ndash;&gt;
     <tg-button
       id="playback-speed-btn"
       (outOfBoundsClicked)="isPlaybackOverlayOpen = false"
@@ -33,7 +31,7 @@
       </div>
     </tg-button>
 
-    <!-- expand -->
+    &lt;!&ndash; expand &ndash;&gt;
     <tg-button
       id="expand"
       [outlined]="false"
@@ -42,12 +40,12 @@
     </tg-button>
   </div>
 
-  <!-- CENTER ROW: play/pause display -->
+  &lt;!&ndash; CENTER ROW: play/pause display &ndash;&gt;
   <div class="row center">
     <fa-icon *ngIf="currentIcon" [icon]="currentIcon" [pulse]="currentIcon === 'spinner'" class="current-icon" size="2x"></fa-icon>
   </div>
 
-  <!-- BOTTOM ROW: track bar -->
+  &lt;!&ndash; BOTTOM ROW: track bar &ndash;&gt;
   <div class="row bottom">
     <input
       class="tg-range"
@@ -62,4 +60,4 @@
     >
   </div>
 
-</div>
+</div>-->
