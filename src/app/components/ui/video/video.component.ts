@@ -54,7 +54,7 @@ export class VideoComponent implements AfterViewInit {
   @Input()
   public fixedHeight = true;
 
-  // public isPlaying = false;
+  public isPlaying = false;
   public isFullscreen = false;
   public isPlaybackOverlayOpen = false;
 
@@ -86,28 +86,31 @@ export class VideoComponent implements AfterViewInit {
         this.videoElementRef.nativeElement.currentTime = duration * parseInt(value, 10) / parseInt(max, 10);
       }
     };
+
+    this.videoElementRef.nativeElement.onended = () => {
+      this.currentIcon = 'play';
+      this.changeDetectionRef.detectChanges();
+    };
   }
 
   public togglePlay(): void {
     const {nativeElement} = this.videoElementRef;
-    const isPlaying = nativeElement.currentTime > 0 && !nativeElement.paused && !nativeElement.ended && nativeElement.readyState > nativeElement.HAVE_CURRENT_DATA;
-    if (!isPlaying) {
+    if (!this.isPlaying) {
       this.currentIcon = 'spinner';
-      console.log('video element', this.videoElementRef);
+
       // play and on success set playing to true
       nativeElement.play()
         .then(_ => {
+          this.isPlaying = true;
           this.currentIcon = null;
           this.changeDetectionRef.detectChanges();
-        })
-        .catch(e => {
-          console.log('video failed to play', e);
         });
 
     } else {
       // pause and turn off isPlaying
       nativeElement.pause();
       this.currentIcon = 'play';
+      this.changeDetectionRef.detectChanges();
     }
   }
 

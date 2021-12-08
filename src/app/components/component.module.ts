@@ -31,9 +31,10 @@ import {HitLevelFilterComponent} from './ui/filters/hit-level-filter/hit-level-f
 import {EmptyCardComponent} from './common/empty-card/empty-card.component';
 import {NavigationBackComponent} from './ui/navigation-back/navigation-back.component';
 import {NamedRouterComponent} from './matchup/named-router/named-router.component';
-import { CardWithActionsComponent } from './ui/card-with-actions/card-with-actions.component';
-import { ComboListComponent } from './combo/list/combo-list.component';
-import { CollapsibleComponent } from './ui/collapsible/collapsible.component';
+import {CardWithActionsComponent} from './ui/card-with-actions/card-with-actions.component';
+import {ComboListComponent} from './combo/list/combo-list.component';
+import {CollapsibleComponent} from './ui/collapsible/collapsible.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -76,33 +77,34 @@ import { CollapsibleComponent } from './ui/collapsible/collapsible.component';
     DirectiveModule,
     VirtualScrollerModule,
     FormsModule,
+    ScrollingModule
   ],
-    exports: [
-        InputNotationComponent,
-        CharacterGridComponent,
-        ButtonComponent,
-        CharacterHeaderComponent,
-        MoveGridComponent,
-        TabsComponent,
-        CardComponent,
-        VideoComponent,
-        PopOverButtonComponent,
-        SearchBarComponent,
-        SliderComponent,
-        FilterTemplateComponent,
-        StartUpFrameFilterComponent,
-        NormalFrameFilterComponent,
-        BlockFrameFilterComponent,
-        CounterFrameFilterComponent,
-        MovePropertiesFilterComponent,
-        MoveListComponent,
-        NavigationBackComponent,
-        NamedRouterComponent,
-        CardWithActionsComponent,
-        EmptyCardComponent,
-        ComboListComponent,
-        CollapsibleComponent,
-    ]
+  exports: [
+    InputNotationComponent,
+    CharacterGridComponent,
+    ButtonComponent,
+    CharacterHeaderComponent,
+    MoveGridComponent,
+    TabsComponent,
+    CardComponent,
+    VideoComponent,
+    PopOverButtonComponent,
+    SearchBarComponent,
+    SliderComponent,
+    FilterTemplateComponent,
+    StartUpFrameFilterComponent,
+    NormalFrameFilterComponent,
+    BlockFrameFilterComponent,
+    CounterFrameFilterComponent,
+    MovePropertiesFilterComponent,
+    MoveListComponent,
+    NavigationBackComponent,
+    NamedRouterComponent,
+    CardWithActionsComponent,
+    EmptyCardComponent,
+    ComboListComponent,
+    CollapsibleComponent,
+  ]
 })
 export class ComponentModule {
 }

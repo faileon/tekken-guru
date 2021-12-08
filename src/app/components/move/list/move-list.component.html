@@ -99,10 +99,9 @@
   </div>
 </div>
 
-
-<virtual-scroller *ngIf="movelist?.length > 0; else noMoves" #scroll [items]="movelist" class="list">
+<cdk-virtual-scroll-viewport *ngIf="movelist?.length > 0; else noMoves" [itemSize]="movelist.length" class="list">
   <tg-card-with-actions
-    *ngFor="let move of scroll.viewPortItems; trackBy: trackByMoveId"
+    *cdkVirtualFor="let move of movelist; trackBy: trackByMoveId"
     [title]="move._id"
     [subtitle]="move.name"
   >
@@ -184,7 +183,8 @@
 
 
   </tg-card-with-actions>
-</virtual-scroller>
+</cdk-virtual-scroll-viewport>
+
 
 <!-- EMPTY LIST -->
 <ng-template #noMoves>
