@@ -13,8 +13,7 @@ export class CombosService {
   public getCombos$(characterId: string): Observable<Combo[]> {
     // now just useless proxy, but just in case we need filters and others for combos (like in move.service), I am laying down proper infrastructure
     return this.characterService.getCombos(characterId).pipe(
-      filter((combos) => !!combos),
-      map(({data}) => data),
+      filter((combos) => !!combos)
     );
   }
 

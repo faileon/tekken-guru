@@ -250,7 +250,7 @@ export class MoveService implements OnDestroy {
           this.characterService.getMoves(characterId)
             .pipe(
               filter((moves) => !!moves),
-              map(({data, searchIndex}) => {
+              map((data) => {
                 // determine what will be filtered - see if there are filters set
                 const byStartupFrame = shouldFilterStartupFrame(startUpRange);
                 const byNormalFrame = shouldFilterNormalFrame(normalRange);
@@ -281,7 +281,7 @@ export class MoveService implements OnDestroy {
                   return data;
                 }
 
-                const searchedMoveIds = searchIndex.search(searchText, {expand: true}).map(item => item.ref);
+                // const searchedMoveIds = searchIndex.search(searchText, {expand: true}).map(item => item.ref);
                 // console.log('searching for', searchText);
 
                 // filter moves
@@ -305,7 +305,7 @@ export class MoveService implements OnDestroy {
                     const includesHitLevel = joinedHitLevels.includes(strippedSearchText.toLowerCase());
 
                     // combine it with elastic
-                    satisfiesFilter.push(searchedMoveIds.includes(_id) || isPartOfNotation || includesHitLevel);
+                    satisfiesFilter.push(/*searchedMoveIds.includes(_id) ||*/ isPartOfNotation || includesHitLevel);
                   }
 
                   if (byStartupFrame) {

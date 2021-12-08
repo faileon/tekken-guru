@@ -3,8 +3,6 @@ import {AngularFirestore, QueryFn} from '@angular/fire/firestore';
 import {BehaviorSubject, combineLatest, Observable, of, Subject} from 'rxjs';
 import {Character, Move, PersistenceTimestamps} from '../types';
 import {distinct, distinctUntilChanged, map, skip, switchMap, takeUntil, tap} from 'rxjs/operators';
-import * as elasticlunr from 'elasticlunr';
-import {Index} from 'elasticlunr';
 import {Combo} from '../types/combo.type';
 import {getValueFromLocalStorage, isDateAfterInDays} from '../utils/common';
 import {SettingsService} from './settings.service';
@@ -18,8 +16,8 @@ export class CharacterService implements OnDestroy { // consider renaming this t
   private _searchText: BehaviorSubject<string>;
   public searchText$: Observable<string>;
 
-  private readonly _characters: BehaviorSubject<Data<Character>>;
-  private readonly characters$: Observable<Data<Character>>;
+  private readonly _characters: BehaviorSubject<Character[]>;
+  private readonly characters$: Observable<Character[]>;
 
   private readonly _moves: BehaviorSubject<DataMap<Move>>;
   public readonly moves$: Observable<DataMap<Move>>;
@@ -48,7 +46,7 @@ export class CharacterService implements OnDestroy { // consider renaming this t
     this._searchText = new BehaviorSubject('');
     this.searchText$ = this._searchText.asObservable();
 
-    this._characters = new BehaviorSubject({data: []});
+    this._characters = new BehaviorSubject([]);
     this.characters$ = this._characters.asObservable();
 
     this._moves = new BehaviorSubject({});
@@ -65,25 +63,8 @@ export class CharacterService implements OnDestroy { // consider renaming this t
       switchMap(sort => this.fetchData<Character>('characters', ref => ref.orderBy(sort))),
     ).subscribe(characters => {
       console.log('Got characters from server, updating runtime cache.', characters.length);
-
-      const searchIndex = elasticlunr((idx: Index<Character>) => {
-        idx.addField('_id');
-        idx.addField('fullName');
-        idx.setRef('_id');
-      });
-
-      for (const character of characters) {
-        searchIndex.addDoc(character);
-      }
-
-      this._characters.next({
-        data: characters,
-        searchIndex
-      });
+      this._characters.next(characters);
     });
-
-    // clear elastic stop words - todo call this elsewhere?
-    elasticlunr.clearStopWords();
   }
 
   ngOnDestroy(): void {
@@ -100,17 +81,15 @@ export class CharacterService implements OnDestroy { // consider renaming this t
 
         // nothing to search
         if (text.length === 0) {
-          return this.characters$.pipe(
-            map(({data}) => data)
-          );
+          return this.characters$;
         }
 
-        // search for character
         return this.characters$.pipe(
-          map(({data, searchIndex}) => {
-            const result = searchIndex.search(text, {expand: true});
-            return data.filter(character => result.some(r => r.ref === character._id));
-          })
+          map((characters) => characters.filter(char => {
+            const searchText = text.toLowerCase();
+            const {_id, fullName} = char;
+            return _id.includes(searchText) || fullName.toLowerCase().includes(searchText);
+          }))
         );
       })
     );
@@ -118,10 +97,10 @@ export class CharacterService implements OnDestroy { // consider renaming this t
 
   public getCharacter(_id: string): Observable<Character> {
     return this.characters$.pipe(
-      map(characters => characters.data.find(char => char._id === _id)));
+      map(characters => characters.find(char => char._id === _id)));
   }
 
-  public getMoves(characterId: string): Observable<Data<Move>> {
+  public getMoves(characterId: string): Observable<Move[]> {
     // this is now rather obsolete as we lost the Realtime update, but its better than paying 3k CZK per month...
     if (!this.moves[characterId]) {
       // console.log(`didnt find moves for ${characterId}, fetching it from server and will keep listening for updates`);
@@ -131,42 +110,22 @@ export class CharacterService implements OnDestroy { // consider renaming this t
         )
         .subscribe(moves => {
             // console.log(`Fetched ${moves.length} moves for ${characterId}`);
-
-            // create search indexes on fields
-            const searchIndex = elasticlunr((idx: Index<Move>) => {
-              idx.addField('name');
-              idx.addField('hit');
-              idx.addField('properties');
-              idx.addField('notation');
-              idx.addField('tags');
-
-              idx.setRef('_id');
-            });
-
-            // add all moves
-            for (const move of moves) {
-              searchIndex.addDoc(move);
-            }
-
             // notify our subject
             this._moves.next({
               ...this._moves.getValue(),
-              [characterId]: {
-                data: moves,
-                searchIndex
-              }
+              [characterId]: moves
             });
           }
         );
     }
 
-    console.log(`Returning [${this.moves[characterId]?.data.length ?? '?'}] moves for`, characterId);
+    console.log(`Returning [${this.moves[characterId]?.length ?? '?'}] moves for`, characterId);
     return this.moves$.pipe(
       map(moves => moves[characterId])
     );
   }
 
-  public getCombos(characterId: string): Observable<Data<Combo>> {
+  public getCombos(characterId: string): Observable<Combo[]> {
     if (!this.combos[characterId]) {
       // combos for character not in runtime cachem hookup to firestore live updates
       this.fetchData<Combo>(`characters/${characterId}/combos`)
@@ -177,14 +136,12 @@ export class CharacterService implements OnDestroy { // consider renaming this t
           // emit to our combos data map observable
           this._combos.next({
             ...this._combos.getValue(),
-            [characterId]: {
-              data: combos
-            }
+            [characterId]: combos
           });
         });
     }
 
-    console.log(`Returning [${this.combos[characterId]?.data.length ?? '?'}] combos for`, characterId);
+    console.log(`Returning [${this.combos[characterId]?.length ?? '?'}] combos for`, characterId);
     return this.combos$.pipe(
       map(combos => combos[characterId])
     );
@@ -235,10 +192,10 @@ export class CharacterService implements OnDestroy { // consider renaming this t
 }
 
 interface DataMap<T> {
-  [_id: string]: Data<T>;
+  [_id: string]: T[];
 }
 
-interface Data<T> {
+/*interface Data<T> {
   data: T[];
   searchIndex?: Index<T>;
-}
+}*/

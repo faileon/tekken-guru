@@ -2,7 +2,7 @@ import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/c
 import {animate, style, transition, trigger} from '@angular/animations';
 import {TGMenuItem} from './types/ui.types';
 import {APP_MENU} from './config/navigation.config';
-import {version} from '../../package.json';
+// import * as packageInfo from '../../package.json';
 
 
 @Component({
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
   @ViewChild('mobileNav')
   private mobileNav!: ElementRef;
 
-  public appVersion: string = version;
+  public appVersion: string = 'packageInfo.version';
 
   @HostListener('document:mousedown', ['$event'])
   public outsideClick(event: MouseEvent): void {

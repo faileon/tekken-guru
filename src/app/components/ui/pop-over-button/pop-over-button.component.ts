@@ -57,7 +57,7 @@ export class PopOverButtonComponent implements AfterViewInit, OnDestroy {
       .withPositions(positions);
 
     // create overlay
-    this.overlayRef = this.overlay.create({positionStrategy, excludeFromOutsideClick: [this._elementRef.nativeElement]});
+    this.overlayRef = this.overlay.create({positionStrategy});
 
     // subscribe to outside click
     this.overlayRef.outsidePointerEvents()
