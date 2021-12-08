@@ -97,6 +97,13 @@ export class VideoComponent implements AfterViewInit {
     const {nativeElement} = this.videoElementRef;
     if (!this.isPlaying) {
       this.currentIcon = 'spinner';
+      console.log(this.videoElementRef);
+
+      if (!nativeElement.paused && (!nativeElement.src || nativeElement.readyState !== nativeElement.HAVE_CURRENT_DATA)) {
+        // dont ask me why...
+        nativeElement.src = this.src;
+        nativeElement.load();
+      }
 
       // play and on success set playing to true
       nativeElement.play()
@@ -104,6 +111,12 @@ export class VideoComponent implements AfterViewInit {
           this.isPlaying = true;
           this.currentIcon = null;
           this.changeDetectionRef.detectChanges();
+        })
+        .catch(e => {
+          this.isPlaying = false;
+          this.currentIcon = 'play';
+          this.changeDetectionRef.detectChanges();
+          console.log('video play promise error', e);
         });
 
     } else {

@@ -1,6 +1,6 @@
 {
   "name": "tekken-guru",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "sideEffects": false,
   "scripts": {
     "ng": "ng",
@@ -29,6 +29,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-regular-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "ngx-virtual-scroller": "^4.0.3",
     "firebase": "^8.3.3",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
