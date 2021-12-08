@@ -9,4 +9,4 @@ export type ContentOrder = {
   frameData: number;
 };
 
-export type CharacterSort = 'position' | 'fullName RTL' | 'fullName LTR' | string;
+export type CharacterSort = 'position' | 'name RTL' | 'name LTR' | string;

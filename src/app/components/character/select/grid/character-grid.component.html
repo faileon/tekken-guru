@@ -1,6 +1,6 @@
 <tg-search-bar *ngIf="withSearchbar" (searched)="onTextSearch($event)" [searchText]="characterService.searchText"></tg-search-bar>
 
-<div class="items" [class.flex-wrap]="settingService.defaultCharacterSort === 'fullName LTR'">
+<div class="items" [class.flex-wrap]="settingService.defaultCharacterSort === 'name LTR'">
   <ng-container *ngIf="withRouting; else noRouting">
     <ng-container *ngFor="let character of characters">
       <a [routerLink]="character._id + '/movelist'">

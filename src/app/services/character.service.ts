@@ -59,8 +59,9 @@ export class CharacterService implements OnDestroy { // consider renaming this t
     const {defaultCharacterSort$} = this.settingsService;
     defaultCharacterSort$.pipe(
       takeUntil(this.isDestroyed$),
-      map(sort => sort.split(' ')[0] ?? 'position'),
-      switchMap(sort => this.fetchData<Character>('characters', ref => ref.orderBy(sort))),
+      map(sort => sort.split(' ')[0] ?? 'position'), // default position
+      map(sort => sort !== 'position' ? undefined : sort), // if not position, remove sort all together - default is by ID, and IDs are names of characters
+      switchMap(sort => this.fetchData<Character>('characters', ref => sort ? ref.orderBy(sort) : ref)),
     ).subscribe(characters => {
       console.log('Got characters from server, updating runtime cache.', characters.length);
       this._characters.next(characters);

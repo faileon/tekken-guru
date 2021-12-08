@@ -109,6 +109,7 @@ export class VideoComponent implements AfterViewInit {
     } else {
       // pause and turn off isPlaying
       nativeElement.pause();
+      this.isPlaying = false;
       this.currentIcon = 'play';
       this.changeDetectionRef.detectChanges();
     }

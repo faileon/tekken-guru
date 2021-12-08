@@ -52,19 +52,19 @@
         <!-- Alphabetical -->
         <tg-button
           [toggleable]="true"
-          [active]="defaultSort === 'fullName LTR'"
-          (click)="settingsService.defaultCharacterSort = 'fullName LTR'"
+          [active]="defaultSort === 'name LTR'"
+          (click)="settingsService.defaultCharacterSort = 'name LTR'"
         >
-          Alphabetical (A-Z)
+          Alphabetical (LTR)
         </tg-button>
 
         <!-- Alphabetical -->
         <tg-button
           [toggleable]="true"
-          [active]="defaultSort === 'fullName RTL'"
-          (click)="settingsService.defaultCharacterSort = 'fullName RTL'"
+          [active]="defaultSort === 'name RTL'"
+          (click)="settingsService.defaultCharacterSort = 'name RTL'"
         >
-          Alphabetical (Z-A)
+          Alphabetical (RTL)
         </tg-button>
       </div>
 
