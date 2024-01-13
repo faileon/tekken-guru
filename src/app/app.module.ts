@@ -6,8 +6,7 @@ import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {AngularFireModule} from '@angular/fire';
-import {AngularFirestoreModule} from '@angular/fire/firestore';
+
 import {RoutingModule} from './modules/routing/routing.module';
 import {FaConfig, FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {
@@ -38,7 +37,9 @@ import {
 import {faStar as farStar} from '@fortawesome/free-regular-svg-icons';
 import {ScreenModule} from './screens/screen.module';
 import {ComponentModule} from './components/component.module';
-import {AngularFireAnalyticsModule, ScreenTrackingService} from '@angular/fire/analytics';
+import {getAnalytics, provideAnalytics, ScreenTrackingService} from '@angular/fire/analytics';
+import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
+import {getFirestore, provideFirestore, enableIndexedDbPersistence} from '@angular/fire/firestore';
 
 
 @NgModule({
@@ -47,10 +48,17 @@ import {AngularFireAnalyticsModule, ScreenTrackingService} from '@angular/fire/a
   ],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireAnalyticsModule,
-    AngularFirestoreModule.enablePersistence(),
+    // AngularFireModule.initializeApp(environment.firebase),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    // AngularFirestoreModule,
+    provideFirestore(() => {
+      const firestore = getFirestore();
+      enableIndexedDbPersistence(firestore);
+      return firestore;
+    }),
+    // AngularFireAnalyticsModule,,
+    provideAnalytics(() => getAnalytics()),
+    // AngularFirestoreModule.enablePersistence(),
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     BrowserAnimationsModule,

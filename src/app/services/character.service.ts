@@ -1,11 +1,11 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {AngularFirestore, QueryFn} from '@angular/fire/firestore';
 import {BehaviorSubject, combineLatest, Observable, of, Subject} from 'rxjs';
 import {Character, Move, PersistenceTimestamps} from '../types';
 import {distinct, distinctUntilChanged, map, skip, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {Combo} from '../types/combo.type';
 import {getValueFromLocalStorage, isDateAfterInDays} from '../utils/common';
 import {SettingsService} from './settings.service';
+import {AngularFirestore, QueryFn} from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root'
