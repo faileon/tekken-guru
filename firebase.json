@@ -12,5 +12,16 @@
         "destination": "/index.html"
       }
     ]
-  }
+  },
+  "firestore": [
+    {
+      "database": "default",
+      "rules": "firestore.rules"
+    },
+    {
+      "database": "tekken8",
+      "rules": "firestore.rules"
+    }
+  ]
 }
+
