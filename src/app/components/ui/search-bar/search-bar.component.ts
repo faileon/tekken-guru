@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
-import {Form, FormControl} from '@angular/forms';
+import {Form, UntypedFormControl} from '@angular/forms';
 import {debounceTime, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 
@@ -23,11 +23,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   @Output()
   public searched = new EventEmitter<string>();
 
-  public searchControl: FormControl;
+  public searchControl: UntypedFormControl;
 
 
   ngOnInit(): void {
-    this.searchControl = new FormControl(this.searchText ?? '');
+    this.searchControl = new UntypedFormControl(this.searchText ?? '');
 
     this.searchControl.valueChanges.pipe(
       takeUntil(this.isDestroyed$),

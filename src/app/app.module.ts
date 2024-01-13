@@ -40,6 +40,9 @@ import {ComponentModule} from './components/component.module';
 import {getAnalytics, provideAnalytics, ScreenTrackingService} from '@angular/fire/analytics';
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {getFirestore, provideFirestore, enableIndexedDbPersistence} from '@angular/fire/firestore';
+import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
+import {AngularFireAnalyticsModule} from '@angular/fire/compat/analytics';
+import {AngularFireModule} from '@angular/fire/compat';
 
 
 @NgModule({
@@ -48,17 +51,17 @@ import {getFirestore, provideFirestore, enableIndexedDbPersistence} from '@angul
   ],
   imports: [
     BrowserModule,
-    // AngularFireModule.initializeApp(environment.firebase),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    // AngularFirestoreModule,
-    provideFirestore(() => {
-      const firestore = getFirestore();
-      enableIndexedDbPersistence(firestore);
-      return firestore;
-    }),
-    // AngularFireAnalyticsModule,,
-    provideAnalytics(() => getAnalytics()),
-    // AngularFirestoreModule.enablePersistence(),
+    AngularFireModule.initializeApp(environment.firebase),
+    // provideFirebaseApp(() => initializeApp(environment.firebase)),
+    AngularFirestoreModule,
+    // provideFirestore(() => {
+    //   const firestore = getFirestore();
+    //   enableIndexedDbPersistence(firestore);
+    //   return firestore;
+    // }),
+    AngularFireAnalyticsModule,
+    // provideAnalytics(() => getAnalytics()),
+    AngularFirestoreModule.enablePersistence(),
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     BrowserAnimationsModule,
