@@ -1,9 +1,13 @@
-<select [name]="name" [id]="id" (change)="onOptionChanged($event)">
-  <option
-    *ngFor="let option of options"
-    [value]="option.value"
-    [selected]="option.value === defaultValue"
-  >
-    {{ option.label }}
-  </option>
-</select>
+<div class="custom-select">
+  <div class="select">
+    <select [name]="name" [id]="id" (change)="onOptionChanged($event)">
+      <option
+        *ngFor="let option of options"
+        [value]="option.value"
+        [selected]="option.value === defaultValue"
+      >
+        {{ option.label }}
+      </option>
+    </select>
+  </div>
+</div>

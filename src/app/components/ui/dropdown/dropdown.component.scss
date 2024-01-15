@@ -3,52 +3,60 @@
 :host {
   display: flex;
 
-  // div {
-  //   color: whitesmoke;
-  //   border-radius: $border-radius;
-  //   text-decoration: none;
-  //   cursor: pointer;
-  //   display: flex;
-  //   align-items: center;
-  // }
-  //
-  // .icon {
-  //   justify-content: space-between;
-  //
-  //   .dark {
-  //     color: $primary-color-dark;
-  //   }
-  //
-  //   &.toggle {
-  //     color: $primary-color;
-  //
-  //   }
-  // }
-  //
-  // .text {
-  //   margin: $sm-margin $md-margin;
-  //   &.with-icon {
-  //     margin: $sm-margin $sm-margin;
-  //   }
-  //
-  //   &:empty {
-  //     display: none;
-  //   }
-  // }
-  //
-  //
-  // .outlined {
-  //   border: 1px solid whitesmoke;
-  //   background-color: transparent;
-  // }
-  //
-  // .active {
-  //   background-color: $secondary-color;
-  //   flex: 1 0 0;
-  //
-  //   &.icon {
-  //     background-color: initial;
-  //     color: white;
-  //   }
-  // }
+  .custom-select {
+    display: flex;
+    justify-content: center;
+    align-items: absolute;
+  }
+
+  select {
+    /* Reset Select */
+    appearance: none;
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    flex: 1;
+    padding: 0 1rem;
+    color: whitesmoke;
+    background-color: $primary-color-dark;
+    background-image: none;
+    cursor: pointer;
+  }
+
+  /* Remove IE arrow */
+  select::-ms-expand {
+    display: none;
+  }
+
+  /* Custom Select wrapper */
+  .select {
+    position: relative;
+    display: flex;
+    width: 8rem;
+    height: 2.25rem;
+    border-radius: $border-radius;
+    overflow: hidden;
+  }
+
+  /* Arrow */
+  .select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $primary-color;
+    transition: .25s all ease;
+    pointer-events: none;
+  }
+
+  /* Transition */
+  .select:hover::after {
+    color: $ternary-color;
+  }
+
 }
