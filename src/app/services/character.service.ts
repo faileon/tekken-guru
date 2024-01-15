@@ -97,8 +97,10 @@ export class CharacterService implements OnDestroy {
       filter((selectedGame) => !!selectedGame),
       map((selectedGame) => {
         return this.firestores.find((store) => {
+          const database =
+            selectedGame.value === 'tekken7' ? '(default)' : selectedGame.value;
           const firestore = store.toJSON() as FirestoreInstance;
-          return firestore.databaseId.database === selectedGame.value;
+          return firestore.databaseId.database === database;
         });
       }),
       map((firestore) => firestore ?? this.firestores[0]),

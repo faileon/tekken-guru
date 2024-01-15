@@ -1,21 +1,26 @@
 <div class="option-bar">
   <!-- search bar -->
-  <tg-search-bar #searchBar
-                 (searched)="onTextSearch($event)"
-                 [searchText]="moveService.searchText$ | async">
+  <tg-search-bar
+    #searchBar
+    (searched)="onTextSearch($event)"
+    [searchText]="moveService.searchText$ | async"
+  >
   </tg-search-bar>
 
   <!-- filters -->
   <tg-pop-over-button
-    [tgBadge]="(moveService.activeFiltersCount$ | async)"
+    [tgBadge]="moveService.activeFiltersCount$ | async"
     [tgBadgeHidden]="(moveService.activeFiltersCount$ | async) === 0"
     title="Filters"
     icon="filter"
   >
-
     <div buttons>
-      <tg-button tgTooltip="Reset current filters" icon="sync-alt" (click)="resetFilters()"
-                 [outlined]="false"></tg-button>
+      <tg-button
+        tgTooltip="Reset current filters"
+        icon="sync-alt"
+        (click)="resetFilters()"
+        [outlined]="false"
+      ></tg-button>
     </div>
 
     <div class="filters" style="height: 100%; overflow-y: auto">
@@ -26,7 +31,6 @@
           (rangeChange)="filterByStartUpFrame($event)"
         ></tg-start-up-frame-filter>
       </div>
-
 
       <!-- block hit frame filter -->
       <div class="section">
@@ -82,13 +86,11 @@
         ></tg-hit-level-filter>
       </div>
     </div>
-
-
   </tg-pop-over-button>
 
   <div class="right-menu">
     <tg-button
-      *ngIf="{value: settingsService.displayVideos$ | async} as context"
+      *ngIf="{ value: settingsService.displayVideos$ | async } as context"
       [tgTooltip]="context.value ? 'Hide videos' : 'Display videos'"
       icon="video"
       [outlined]="false"
@@ -99,7 +101,12 @@
   </div>
 </div>
 
-<virtual-scroller *ngIf="movelist?.length > 0; else noMoves" #scroll [items]="movelist" class="list">
+<virtual-scroller
+  *ngIf="movelist?.length > 0; else noMoves"
+  #scroll
+  [items]="movelist"
+  class="list"
+>
   <tg-card-with-actions
     *ngFor="let move of scroll.viewPortItems; trackBy: trackByMoveId"
     [title]="move._id"
@@ -107,13 +114,22 @@
   >
     <!-- HEADER PROPS -->
     <div class="properties" properties>
-      <img [tgTooltip]="property | movePropertyText" *ngFor="let property of move.properties"
-           [src]="property | movePropertyImg" alt="Move property {{property}}" class="property">
+      <img
+        [tgTooltip]="property | movePropertyText"
+        *ngFor="let property of move.properties"
+        [src]="property | movePropertyImg"
+        alt="Move property {{ property }}"
+        class="property"
+      />
     </div>
 
     <!-- actions for auth user - favorite -->
     <div actions class="actions">
-      <tg-button [outlined]="false" [icon]="['far','star']" iconSize="lg"></tg-button>
+      <tg-button
+        [outlined]="false"
+        [icon]="['far', 'star']"
+        iconSize="lg"
+      ></tg-button>
     </div>
 
     <!-- CONTENT -->
@@ -126,15 +142,15 @@
         </div>
         <!-- move hits -->
         <div class="hits">
-          <div class="move">{{move.hit.move | hitMove}}</div>
-          <div class="damage">{{move.hit.damage | hitDamage}}</div>
+          <div class="move">{{ move.hit.move | hitMove }}</div>
+          <div class="damage">{{ move.hit.damage | hitDamage }}</div>
         </div>
       </div>
 
       <!-- video with the move -->
       <tg-video
         *ngIf="settingsService.displayVideos$ | async"
-        [src]="move.video | mediaPath"
+        [src]="move.video | mediaPath | async"
         [poster]="move.video | thumbnailPath"
       ></tg-video>
 
@@ -145,27 +161,46 @@
             <td>Start:</td>
             <td
               class="right-aligned"
-              [colSpan]="move.frameData.onBlock.frames.length">
-              {{move.frameData.startUp.frames}}
+              [colSpan]="move.frameData.onBlock.frames.length"
+            >
+              {{ move.frameData.startUp.frames }}
             </td>
           </tr>
 
           <!-- ON BLOCK -->
           <ng-container
             [ngTemplateOutlet]="frameDataRow"
-            [ngTemplateOutletContext]="{data:{title:'Block:', frames: move.frameData.onBlock.frames, property: move.frameData.onBlock.property}}"
+            [ngTemplateOutletContext]="{
+              data: {
+                title: 'Block:',
+                frames: move.frameData.onBlock.frames,
+                property: move.frameData.onBlock.property
+              }
+            }"
           ></ng-container>
 
           <!-- ON HIT -->
           <ng-container
             [ngTemplateOutlet]="frameDataRow"
-            [ngTemplateOutletContext]="{data:{title:'Hit:', frames: move.frameData.onHit.frames, property: move.frameData.onHit.property}}"
+            [ngTemplateOutletContext]="{
+              data: {
+                title: 'Hit:',
+                frames: move.frameData.onHit.frames,
+                property: move.frameData.onHit.property
+              }
+            }"
           ></ng-container>
 
           <!-- ON COUNTER HIT -->
           <ng-container
             [ngTemplateOutlet]="frameDataRow"
-            [ngTemplateOutletContext]="{data:{title:'Counter hit:', frames: move.frameData.onCounterHit.frames, property: move.frameData.onCounterHit.property}}"
+            [ngTemplateOutletContext]="{
+              data: {
+                title: 'Counter hit:',
+                frames: move.frameData.onCounterHit.frames,
+                property: move.frameData.onCounterHit.property
+              }
+            }"
           ></ng-container>
 
           <tr *ngIf="move.punishment">
@@ -174,14 +209,11 @@
               class="right-aligned"
               [innerHTML]="move.punishment | punishmentText"
               [colSpan]="move.frameData.onBlock.frames.length"
-            >
-            </td>
+            ></td>
           </tr>
         </table>
       </div>
     </ng-container>
-
-
   </tg-card-with-actions>
 </virtual-scroller>
 
@@ -197,16 +229,21 @@ property: string[]}
 -->
 <ng-template #frameDataRow let-data="data">
   <tr>
-    <td>{{data.title}}</td>
-    <ng-container *ngFor="let blockFrame of data.frames; index as i; last as isLast">
+    <td>{{ data.title }}</td>
+    <ng-container
+      *ngFor="let blockFrame of data.frames; index as i; last as isLast"
+    >
       <td class="right-aligned">
-                  <span class="hit-property" *ngIf="data.property[i].length > 0">
-                    {{data.property[i]}}
-                  </span>
+        <span class="hit-property" *ngIf="data.property[i].length > 0">
+          {{ data.property[i] }}
+        </span>
 
-        <span [class.positive]="blockFrame > 0"
-              [class.neutral]="blockFrame >= -4 && blockFrame < 0"
-              [class.negative]="blockFrame < -4">{{blockFrame}}</span>
+        <span
+          [class.positive]="blockFrame > 0"
+          [class.neutral]="blockFrame >= -4 && blockFrame < 0"
+          [class.negative]="blockFrame < -4"
+          >{{ blockFrame }}</span
+        >
         <ng-container *ngIf="!isLast">,</ng-container>
       </td>
     </ng-container>

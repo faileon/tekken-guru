@@ -71,7 +71,7 @@ export const DEFAULT_CHARACTER_TABS: TGMenuItem[] = [
 
 export const AVAILABLE_GAMES: Game[] = [
   {
-    value: '(default)',
+    value: 'tekken7',
     label: 'Tekken 7',
   },
   {

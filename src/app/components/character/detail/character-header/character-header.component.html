@@ -1,11 +1,14 @@
 <div class="avatar">
-  <img alt="Avatar of {{character._id}}" [src]="character.avatar | mediaPath"/>
+  <img
+    alt="Avatar of {{ character._id }}"
+    [src]="character.avatar | mediaPath | async"
+  />
 </div>
 
 <div class="info">
   <!-- FULLNAME -->
   <div class="title">
-    {{character.fullName}}
+    {{ character.fullName }}
   </div>
 
   <!-- DIFFICULTY -->
@@ -16,10 +19,9 @@
       [class.medium]="character.difficulty === 2"
       [class.hard]="character.difficulty === 3"
     >
-  </span>
-    <div class="text">{{character.difficulty | characterDifficulty}}</div>
+    </span>
+    <div class="text">{{ character.difficulty | characterDifficulty }}</div>
   </div>
-
 </div>
 
 <ng-content></ng-content>

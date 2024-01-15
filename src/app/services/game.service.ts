@@ -23,7 +23,6 @@ export class GameService {
           return queryParams['game'] ?? urlParams.get('game');
         }),
         distinctUntilChanged(),
-        map((game) => (game === 'tekken7' ? '(default)' : game)),
         map(
           (game) =>
             AVAILABLE_GAMES.find(

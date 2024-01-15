@@ -1,33 +1,44 @@
-<tg-search-bar *ngIf="withSearchbar" (searched)="onTextSearch($event)" [searchText]="characterService.searchText"></tg-search-bar>
+<tg-search-bar
+  *ngIf="withSearchbar"
+  (searched)="onTextSearch($event)"
+  [searchText]="characterService.searchText"
+></tg-search-bar>
 
-<div class="items" [class.flex-wrap]="settingService.defaultCharacterSort === 'name LTR'">
+<div
+  class="items"
+  [class.flex-wrap]="settingService.defaultCharacterSort === 'name LTR'"
+>
   <ng-container *ngIf="withRouting; else noRouting">
     <ng-container *ngFor="let character of characters">
       <a [routerLink]="character._id + '/movelist'">
-        <ng-container [ngTemplateOutlet]="char"
-                      [ngTemplateOutletContext]="{character: character}"
+        <ng-container
+          [ngTemplateOutlet]="char"
+          [ngTemplateOutletContext]="{ character: character }"
         ></ng-container>
       </a>
     </ng-container>
   </ng-container>
 
-
   <ng-template #noRouting>
     <ng-container *ngFor="let character of characters">
-      <ng-container [ngTemplateOutlet]="char"
-                    [ngTemplateOutletContext]="{character: character}"
+      <ng-container
+        [ngTemplateOutlet]="char"
+        [ngTemplateOutletContext]="{ character: character }"
       ></ng-container>
-
     </ng-container>
   </ng-template>
 </div>
 
 <!-- character avatar -->
 <ng-template #char let-character="character">
-  <div class="character-card"
-       [class.selected]="_selectedCharacters.includes(character)"
-       (click)="onCharacterClick(character)"
+  <div
+    class="character-card"
+    [class.selected]="_selectedCharacters.includes(character)"
+    (click)="onCharacterClick(character)"
   >
-    <img alt="Avatar of {{character._id}}" [src]="character.avatar | mediaPath"/>
+    <img
+      alt="Avatar of {{ character._id }}"
+      [src]="character.avatar | mediaPath | async"
+    />
   </div>
 </ng-template>

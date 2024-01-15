@@ -16,5 +16,5 @@ export interface Breadcrumb {
 
 export interface Game {
   label: string;
-  value: '(default)' | 'tekken8';
+  value: 'tekken7' | 'tekken8';
 }
