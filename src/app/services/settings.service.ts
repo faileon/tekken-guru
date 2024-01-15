@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {PlatformInput} from '../types/buttons.type';
-import {CharacterSort, ContentOrder} from '../types';
-import {getValueFromLocalStorage} from '../utils/common';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { PlatformInput } from '../types/buttons.type';
+import { CharacterSort, ContentOrder } from '../types';
+import { getValueFromLocalStorage } from '../utils/common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SettingsService {
   private _defaultCharacterSort: BehaviorSubject<CharacterSort>;
@@ -21,17 +21,24 @@ export class SettingsService {
   public contentOrder$: Observable<ContentOrder>;
 
   constructor() {
-    this._defaultCharacterSort = new BehaviorSubject<string>(localStorage.getItem('defaultCharacterSort') ?? 'position');
+    this._defaultCharacterSort = new BehaviorSubject<string>(
+      localStorage.getItem('defaultCharacterSort') ?? 'position',
+    );
     this.defaultCharacterSort$ = this._defaultCharacterSort.asObservable();
 
     this._displayVideos = new BehaviorSubject<boolean>(true);
     this.displayVideos$ = this._displayVideos.asObservable();
 
-    const defaultPlatformInput = localStorage.getItem('platformInput') as PlatformInput ?? 'ps4';
-    this._platformInput = new BehaviorSubject<PlatformInput>(defaultPlatformInput);
+    const defaultPlatformInput =
+      (localStorage.getItem('platformInput') as PlatformInput) ?? 'ps4';
+    this._platformInput = new BehaviorSubject<PlatformInput>(
+      defaultPlatformInput,
+    );
     this.platformInput$ = this._platformInput.asObservable();
 
-    const defaultContentOrder = getValueFromLocalStorage<ContentOrder>('contentOrder') ?? {notation: 0, video: 1, frameData: 2};
+    const defaultContentOrder = getValueFromLocalStorage<ContentOrder>(
+      'contentOrder',
+    ) ?? { notation: 0, video: 1, frameData: 2 };
     this._contentOrder = new BehaviorSubject<ContentOrder>(defaultContentOrder);
     this.contentOrder$ = this._contentOrder.asObservable();
   }

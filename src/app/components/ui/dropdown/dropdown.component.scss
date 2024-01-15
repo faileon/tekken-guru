@@ -1,0 +1,54 @@
+@import "src/scss/variables";
+
+:host {
+  display: flex;
+
+  // div {
+  //   color: whitesmoke;
+  //   border-radius: $border-radius;
+  //   text-decoration: none;
+  //   cursor: pointer;
+  //   display: flex;
+  //   align-items: center;
+  // }
+  //
+  // .icon {
+  //   justify-content: space-between;
+  //
+  //   .dark {
+  //     color: $primary-color-dark;
+  //   }
+  //
+  //   &.toggle {
+  //     color: $primary-color;
+  //
+  //   }
+  // }
+  //
+  // .text {
+  //   margin: $sm-margin $md-margin;
+  //   &.with-icon {
+  //     margin: $sm-margin $sm-margin;
+  //   }
+  //
+  //   &:empty {
+  //     display: none;
+  //   }
+  // }
+  //
+  //
+  // .outlined {
+  //   border: 1px solid whitesmoke;
+  //   background-color: transparent;
+  // }
+  //
+  // .active {
+  //   background-color: $secondary-color;
+  //   flex: 1 0 0;
+  //
+  //   &.icon {
+  //     background-color: initial;
+  //     color: white;
+  //   }
+  // }
+}

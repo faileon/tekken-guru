@@ -4,27 +4,43 @@
     <span class="logo small">TG</span>
   </div>
 
-  <a class="item fixed-size"
-     routerLinkActive="active"
-     [routerLink]="menuItem.routeTo"
-     *ngFor="let menuItem of menuItems">
+  <a
+    class="item fixed-size"
+    routerLinkActive="active"
+    [routerLink]="menuItem.routeTo"
+    *ngFor="let menuItem of menuItems"
+  >
     <fa-icon *ngIf="menuItem.icon" [icon]="menuItem.icon" size="2x"></fa-icon>
   </a>
 </div>
 
 <!-- MOBILE SIDEBAR -->
-<div class="side-bar mobile" *ngIf="isMobileSidebarOpen" [@inOutAnimation] #mobileNav>
-  <div style="display: flex; align-items: center;">
+<div
+  class="side-bar mobile"
+  *ngIf="isMobileSidebarOpen"
+  [@inOutAnimation]
+  #mobileNav
+>
+  <div style="display: flex; align-items: center">
     <div class="item fixed-size">
-      <tg-button [outlined]="false" icon="times" iconSize="2x" (click)="isMobileSidebarOpen = false"></tg-button>
+      <tg-button
+        [outlined]="false"
+        icon="times"
+        iconSize="2x"
+        (click)="isMobileSidebarOpen = false"
+      ></tg-button>
     </div>
     <span style="margin-left: 3px" class="logo">TG</span>
   </div>
-  <a class="item mobile"
-     routerLinkActive="active"
-     [routerLink]="menuItem.routeTo"
-     *ngFor="let menuItem of menuItems">
-    <tg-button [outlined]="false" [icon]="menuItem.icon" iconSize="2x">{{menuItem.title}}</tg-button>
+  <a
+    class="item mobile"
+    routerLinkActive="active"
+    [routerLink]="menuItem.routeTo"
+    *ngFor="let menuItem of menuItems"
+  >
+    <tg-button [outlined]="false" [icon]="menuItem.icon" iconSize="2x">{{
+      menuItem.title
+    }}</tg-button>
   </a>
 </div>
 
@@ -33,14 +49,26 @@
   <!-- TOOLBAR -->
   <div class="toolbar">
     <div fxShow fxHide.gt-sm class="menu left">
-      <tg-button [outlined]="false" icon="bars" iconSize="2x" (click)="isMobileSidebarOpen = true"></tg-button>
+      <tg-button
+        [outlined]="false"
+        icon="bars"
+        iconSize="2x"
+        (click)="isMobileSidebarOpen = true"
+      ></tg-button>
       <span class="logo">TG</span>
     </div>
 
     <tg-navigation-back></tg-navigation-back>
 
     <div class="menu right">
-      v{{appVersion}}
+      <tg-dropdown
+        name="game-select"
+        id="game-select"
+        [options]="availableGames"
+        (optionChanged)="onGameChanged($event)"
+        [defaultValue]="(defaultGame$ | async)?.value"
+      ></tg-dropdown>
+      <span> v{{ appVersion }} </span>
       <!--<tg-button>SIGN IN</tg-button>-->
     </div>
   </div>

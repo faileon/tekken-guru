@@ -1,14 +1,18 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {ServiceWorkerModule} from '@angular/service-worker';
-import {environment} from '../environments/environment';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
-import {RoutingModule} from './modules/routing/routing.module';
-import {FaConfig, FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { RoutingModule } from './modules/routing/routing.module';
+import {
+  FaConfig,
+  FaIconLibrary,
+  FontAwesomeModule,
+} from '@fortawesome/angular-fontawesome';
 import {
   faBars,
   faStar as fasStar,
@@ -31,53 +35,71 @@ import {
   faCog,
   faWrench,
   faUserCog,
-  faVolumeMute, faVolumeUp, faColumns, faSync,
-  faDatabase
+  faVolumeMute,
+  faVolumeUp,
+  faColumns,
+  faSync,
+  faDatabase,
 } from '@fortawesome/free-solid-svg-icons';
-import {faStar as farStar} from '@fortawesome/free-regular-svg-icons';
-import {ScreenModule} from './screens/screen.module';
-import {ComponentModule} from './components/component.module';
-import {getAnalytics, provideAnalytics, ScreenTrackingService} from '@angular/fire/analytics';
-import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
-import {getFirestore, provideFirestore, enableIndexedDbPersistence} from '@angular/fire/firestore';
-import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
-import {AngularFireAnalyticsModule} from '@angular/fire/compat/analytics';
-import {AngularFireModule} from '@angular/fire/compat';
-
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+import { ScreenModule } from './screens/screen.module';
+import { ComponentModule } from './components/component.module';
+import {
+  getAnalytics,
+  provideAnalytics,
+  ScreenTrackingService,
+} from '@angular/fire/analytics';
+import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import {
+  getFirestore,
+  provideFirestore,
+  enableIndexedDbPersistence,
+} from '@angular/fire/firestore';
+import { getStorage, provideStorage } from '@angular/fire/storage';
+import { LocationStrategy } from '@angular/common';
+import { PathPreserveQueryLocationStrategy } from './utils/preserve-query-params';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    // provideFirebaseApp(() => initializeApp(environment.firebase)),
-    AngularFirestoreModule,
-    // provideFirestore(() => {
-    //   const firestore = getFirestore();
-    //   enableIndexedDbPersistence(firestore);
-    //   return firestore;
-    // }),
-    AngularFireAnalyticsModule,
-    // provideAnalytics(() => getAnalytics()),
-    AngularFirestoreModule.enablePersistence(),
+
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => {
+      // tekken 8 firestore
+      const firestore = getFirestore('tekken8');
+      enableIndexedDbPersistence(firestore);
+      return firestore;
+    }),
+    provideFirestore(() => {
+      // default firestore = tekken 7
+      const firestore = getFirestore();
+      enableIndexedDbPersistence(firestore);
+      return firestore;
+    }),
+    provideStorage(() => getStorage()),
+    provideAnalytics(() => getAnalytics()),
     AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
     BrowserAnimationsModule,
     RoutingModule,
     FlexLayoutModule,
     ScreenModule,
     ComponentModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   providers: [
-    ScreenTrackingService
+    ScreenTrackingService,
+    {
+      provide: LocationStrategy,
+      useClass: PathPreserveQueryLocationStrategy,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
-
   constructor(iconLibrary: FaIconLibrary, faConfig: FaConfig) {
     // create icon library to use in app
     iconLibrary.addIcons(
@@ -107,7 +129,7 @@ export class AppModule {
       faVolumeUp,
       faColumns,
       faSync,
-      faDatabase
+      faDatabase,
     );
     faConfig.fixedWidth = true;
   }

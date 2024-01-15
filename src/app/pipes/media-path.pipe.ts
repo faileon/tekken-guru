@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {FirestoreBucketPath} from '../config/storage.config';
+import {FirestoreBucketPath, FirestoreBucketPathT8} from '../config/storage.config';
 
 @Pipe({
   name: 'mediaPath'

@@ -2,7 +2,7 @@
 import {ContentOrder} from '../types';
 
 export const debounce = <F extends (...args: any[]) => any>(func: F, waitFor: number) => {
-  let timeout: number;
+  let timeout: any;
 
   return (...args: Parameters<F>): Promise<ReturnType<F>> =>
     new Promise(resolve => {
