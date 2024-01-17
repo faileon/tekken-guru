@@ -48,4 +48,5 @@ Thumbs.db
 .angular
 .log
 firebase-service-account.json
+.firebase/*
 
