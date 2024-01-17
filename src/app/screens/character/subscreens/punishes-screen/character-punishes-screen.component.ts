@@ -4,6 +4,7 @@ import { MovelistScreenComponent } from '../movelist-screen/movelist-screen.comp
 import { ActivatedRoute } from '@angular/router';
 import { MoveService } from '../../../../services/move.service';
 import { map } from 'rxjs/operators';
+import { GameService } from '../../../../services/game.service';
 
 @Component({
   selector: 'tg-character-punishes-screen',
@@ -11,8 +12,12 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./character-punishes-screen.component.scss'],
 })
 export class CharacterPunishesScreenComponent extends MovelistScreenComponent {
-  constructor(route: ActivatedRoute, moveService: MoveService) {
-    super(route, moveService);
+  constructor(
+    route: ActivatedRoute,
+    moveService: MoveService,
+    gameService: GameService,
+  ) {
+    super(route, moveService, gameService);
     this.movelist$ = this.movelist$.pipe(
       map((moves) =>
         moves.filter(

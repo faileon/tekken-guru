@@ -11,10 +11,7 @@ import { Game } from '../types/ui.types';
   name: 'mediaPath',
 })
 export class MediaPathPipe implements PipeTransform {
-  constructor(private gameService: GameService) {}
-
-  async transform(url: string): Promise<string> {
-    const selectedGame = await firstValueFrom(this.gameService.selectedGame$);
+  transform(url: string, selectedGame: Game): string {
     const basePath =
       selectedGame?.value === 'tekken7'
         ? FirestoreBucketPath

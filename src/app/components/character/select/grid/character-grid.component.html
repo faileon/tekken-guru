@@ -38,7 +38,8 @@
   >
     <img
       alt="Avatar of {{ character._id }}"
-      [src]="character.avatar | mediaPath | async"
+      *ngIf="selectedGame$ | async as selectedGame"
+      [src]="character.avatar | mediaPath: selectedGame"
     />
   </div>
 </ng-template>

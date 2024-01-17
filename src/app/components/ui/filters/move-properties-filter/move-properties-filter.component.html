@@ -1,15 +1,69 @@
-<tg-filter-template
-  title="Move properties:"
->
+<tg-filter-template title="Move properties:">
   <ng-container properties-presets>
-    <tg-button (click)="toggleProperty('HIGH CRUSH')" [active]="moveProperties | includes:'HIGH CRUSH'">HIGH CRUSH</tg-button>
-    <tg-button (click)="toggleProperty('LOW CRUSH')" [active]="moveProperties | includes:'LOW CRUSH'">LOW CRUSH</tg-button>
-    <tg-button (click)="toggleProperty('HOMING')" [active]="moveProperties | includes:'HOMING'">HOMING</tg-button>
-    <tg-button (click)="toggleProperty('POWER CRUSH')" [active]="moveProperties | includes:'POWER CRUSH'">POWER CRUSH</tg-button>
-    <tg-button (click)="toggleProperty('SCREW')" [active]="moveProperties | includes:'SCREW'">SCREW</tg-button>
-    <tg-button (click)="toggleProperty('WALL BOUNCE')" [active]="moveProperties | includes:'WALL BOUNCE'">WALL BOUNCE</tg-button>
-    <tg-button (click)="toggleProperty('WALL SPLAT')" [active]="moveProperties | includes:'WALL SPLAT'">WALL SPLAT</tg-button>
-    <tg-button (click)="toggleProperty('WALL BREAK')" [active]="moveProperties | includes:'WALL BREAK'">WALL BREAK</tg-button>
-    <tg-button (click)="toggleProperty('FLOOR BREAK')" [active]="moveProperties | includes:'FLOOR BREAK'">FLOOR BREAK</tg-button>
+    <tg-button
+      (click)="toggleProperty('HIGH CRUSH')"
+      [active]="moveProperties | includes: 'HIGH CRUSH'"
+      >HIGH CRUSH</tg-button
+    >
+    <tg-button
+      (click)="toggleProperty('LOW CRUSH')"
+      [active]="moveProperties | includes: 'LOW CRUSH'"
+      >LOW CRUSH</tg-button
+    >
+    <tg-button
+      (click)="toggleProperty('HOMING')"
+      [active]="moveProperties | includes: 'HOMING'"
+      >HOMING</tg-button
+    >
+    <tg-button
+      (click)="toggleProperty('POWER CRUSH')"
+      [active]="moveProperties | includes: 'POWER CRUSH'"
+      >POWER CRUSH</tg-button
+    >
+    <tg-button
+      (click)="toggleProperty('SCREW')"
+      [active]="moveProperties | includes: 'SCREW'"
+      >SCREW</tg-button
+    >
+    <tg-button
+      (click)="toggleProperty('WALL BOUNCE')"
+      [active]="moveProperties | includes: 'WALL BOUNCE'"
+      >WALL BOUNCE</tg-button
+    >
+    <tg-button
+      (click)="toggleProperty('WALL SPLAT')"
+      [active]="moveProperties | includes: 'WALL SPLAT'"
+      >WALL SPLAT</tg-button
+    >
+    <tg-button
+      (click)="toggleProperty('WALL BREAK')"
+      [active]="moveProperties | includes: 'WALL BREAK'"
+      >WALL BREAK</tg-button
+    >
+    <tg-button
+      (click)="toggleProperty('FLOOR BREAK')"
+      [active]="moveProperties | includes: 'FLOOR BREAK'"
+      >FLOOR BREAK</tg-button
+    >
+    <tg-button
+      (click)="toggleProperty('HEAT ENGAGER')"
+      [active]="moveProperties | includes: 'HEAT ENGAGER'"
+      >HEAT ENGAGER</tg-button
+    >
+    <tg-button
+      (click)="toggleProperty('TORNADO')"
+      [active]="moveProperties | includes: 'TORNADO'"
+      >TORNADO</tg-button
+    >
+    <tg-button
+      (click)="toggleProperty('CHIP')"
+      [active]="moveProperties | includes: 'CHIP'"
+      >CHIP</tg-button
+    >
+    <tg-button
+      (click)="toggleProperty('WALL CRUSH')"
+      [active]="moveProperties | includes: 'WALL CRUSH'"
+      >WALL CRUSH</tg-button
+    >
   </ng-container>
 </tg-filter-template>

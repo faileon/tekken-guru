@@ -1,20 +1,19 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Character} from '../../../../types';
+import { Component, Input, OnInit } from '@angular/core';
+import { GameService } from '../../../../services/game.service';
+import { Character } from '../../../../types';
 
 @Component({
-    selector: 'tg-character-header',
-    templateUrl: './character-header.component.html',
-    styleUrls: ['./character-header.component.scss']
+  selector: 'tg-character-header',
+  templateUrl: './character-header.component.html',
+  styleUrls: ['./character-header.component.scss'],
 })
 export class CharacterHeaderComponent implements OnInit {
+  @Input()
+  public character!: Character;
 
-    @Input()
-    public character!: Character;
+  public selectedGame$ = this.gameService.selectedGame$;
 
-    constructor() {
-    }
+  constructor(private gameService: GameService) {}
 
-    ngOnInit(): void {
-    }
-
+  ngOnInit(): void {}
 }

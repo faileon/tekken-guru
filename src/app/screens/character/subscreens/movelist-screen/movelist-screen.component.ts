@@ -1,10 +1,10 @@
-import {Component, HostBinding, SkipSelf} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {MoveService} from '../../../../services/move.service';
-import {Move} from '../../../../types';
-import {Observable} from 'rxjs';
-import {getCharacterIdFromRoute} from '../../../../utils/routing';
-
+import { Component, HostBinding, SkipSelf } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MoveService } from '../../../../services/move.service';
+import { Move } from '../../../../types';
+import { Observable } from 'rxjs';
+import { getCharacterIdFromRoute } from '../../../../utils/routing';
+import { GameService } from '../../../../services/game.service';
 
 @Component({
   selector: 'tg-movelist-screen',
@@ -17,13 +17,17 @@ export class MovelistScreenComponent {
 
   public movelist$!: Observable<Move[]>;
 
-  constructor(private route: ActivatedRoute, @SkipSelf() private moveService: MoveService) {
-    const {data} = route.snapshot;
-    const {params} = route.parent.snapshot;
+  public selectedGame$ = this.gameService.selectedGame$;
+
+  constructor(
+    private route: ActivatedRoute,
+    @SkipSelf() private moveService: MoveService,
+    private gameService: GameService,
+  ) {
+    const { data } = this.route.snapshot;
+    const { params } = route.parent.snapshot;
     const characterId = getCharacterIdFromRoute(data, params);
 
     this.movelist$ = this.moveService.getMovelist$(characterId);
   }
 }
-
-

@@ -1,7 +1,8 @@
 <div class="avatar">
   <img
+    *ngIf="selectedGame$ | async as selectedGame"
     alt="Avatar of {{ character._id }}"
-    [src]="character.avatar | mediaPath | async"
+    [src]="character.avatar | mediaPath: selectedGame"
   />
 </div>
 
