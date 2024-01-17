@@ -1,11 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {MoveProperty} from '../types';
+import { MoveProperty } from '../types';
 
 @Pipe({
-  name: 'movePropertyImg'
+  name: 'movePropertyImg',
 })
 export class MovePropertyImgPipe implements PipeTransform {
-
   transform(property: MoveProperty): string {
     const prefix = '/assets/img/move-properties';
     switch (property) {
@@ -33,9 +32,16 @@ export class MovePropertyImgPipe implements PipeTransform {
         return `${prefix}/throw-2.png`;
       case 'THROW 1+2':
         return `${prefix}/throw-1+2.png`;
+      case 'HEAT ENGAGER':
+        return `${prefix}/heat-engager.png`;
+      case 'TORNADO':
+        return `${prefix}/tornado.png`;
+      case 'CHIP':
+        return `${prefix}/chip.png`;
+      case 'WALL CRUSH':
+        return `${prefix}/wall-crush.png`;
       default:
         return `${prefix}/low-crush.png`;
     }
   }
-
 }

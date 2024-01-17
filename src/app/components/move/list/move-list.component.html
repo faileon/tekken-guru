@@ -125,11 +125,17 @@
 
     <!-- actions for auth user - favorite -->
     <div actions class="actions">
-      <tg-button
-        [outlined]="false"
-        [icon]="['far', 'star']"
-        iconSize="lg"
-      ></tg-button>
+      <fa-icon
+        *ngIf="move.notes"
+        [tgTooltip]="move.notes"
+        [icon]="['fas', 'info-circle']"
+        size="lg"
+      ></fa-icon>
+      <!-- <tg-button -->
+      <!--   [outlined]="false" -->
+      <!--   [icon]="['far', 'star']" -->
+      <!--   iconSize="lg" -->
+      <!-- ></tg-button> -->
     </div>
 
     <!-- CONTENT -->
@@ -151,7 +157,7 @@
       <tg-video
         *ngIf="settingsService.displayVideos$ | async"
         [src]="move.video | mediaPath | async"
-        [poster]="move.video | thumbnailPath"
+        [poster]="move.video | thumbnailPath | async"
       ></tg-video>
 
       <!--frame data -->
@@ -203,7 +209,9 @@
             }"
           ></ng-container>
 
-          <tr *ngIf="move.punishment">
+          <tr
+            *ngIf="move.punishment?.isStanding || move.punishment?.isCrouching"
+          >
             <td>Punish:</td>
             <td
               class="right-aligned"

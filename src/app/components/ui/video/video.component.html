@@ -1,10 +1,12 @@
-<video preload="metadata"
-       [poster]="poster"
-       muted
-       controls
-       [class.fixed-height]="fixedHeight"
+<video
+  preload="metadata"
+  [poster]="poster"
+  muted
+  controls
+  [class.fixed-height]="fixedHeight"
+  preload="metadata"
 >
-  <source [src]="src" [type]="mediaType">
+  <source [src]="src" [type]="mediaType" />
 </video>
 
 <!--<div class="controls ripple" (click)="togglePlay(); $event.stopPropagation()">

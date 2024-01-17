@@ -1,11 +1,10 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {MoveProperty} from '../types';
+import { Pipe, PipeTransform } from '@angular/core';
+import { MoveProperty } from '../types';
 
 @Pipe({
-  name: 'movePropertyText'
+  name: 'movePropertyText',
 })
 export class MovePropertyTextPipe implements PipeTransform {
-
   transform(property: MoveProperty): string {
     switch (property) {
       case 'SCREW':
@@ -32,7 +31,16 @@ export class MovePropertyTextPipe implements PipeTransform {
         return '<strong>Throw (break with: 1+2)</strong><br>A throw is a type of grabbing move. Throws must be performed within close range of the opponent and cannot be blocked.';
       case 'THROW 2':
         return '<strong>Throw (break with: 2)</strong><br>A throw is a type of grabbing move. Throws must be performed within close range of the opponent and cannot be blocked.';
+      case 'HEAT ENGAGER':
+        return '<strong>Heat engager</strong><br>Attack that puts fighter in heat state, rushing towards the opponent and gaining significant advantage.';
+      case 'TORNADO':
+        return '<strong>Tornado</strong><br>When struck, the opponent is flipped in the air before landing in a bound-like state, open to further follow-ups.';
+      case 'CHIP':
+        return '<strong>Chip damage</strong><br>This attack will deal a recoverable damage on block. The damage can be recovered by dealing damage.';
+      case 'WALL CRUSH':
+        return '<strong>Wall crush</strong><br>Deals a hitstun with large pushback which can bounce the opponent off the wall for a bigger hitstun. Defender is in guardable recovery and recovers in full crouch.';
+      default:
+        return 'Unknown move property';
     }
   }
-
 }

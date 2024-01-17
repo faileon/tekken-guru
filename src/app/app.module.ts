@@ -40,6 +40,7 @@ import {
   faColumns,
   faSync,
   faDatabase,
+  faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import { ScreenModule } from './screens/screen.module';
@@ -130,6 +131,7 @@ export class AppModule {
       faColumns,
       faSync,
       faDatabase,
+      faInfoCircle,
     );
     faConfig.fixedWidth = true;
   }

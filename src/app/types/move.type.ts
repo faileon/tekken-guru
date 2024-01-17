@@ -1,5 +1,5 @@
-import {HitLevel, HitProperty, MoveProperty} from './property.type';
-import {Punishment} from './punishment.type';
+import { HitLevel, HitProperty, MoveProperty } from './property.type';
+import { Punishment } from './punishment.type';
 
 export type Move = {
   _id: string;
@@ -7,20 +7,20 @@ export type Move = {
   notation: string;
   frameData: {
     startUp: {
-      frames: number;
-    },
+      frames: number | number[]; // in t7 i only tracked number, from now on i keep it as number[]
+    };
     onBlock: {
       frames?: number[];
       property?: HitProperty[];
-    },
+    };
     onHit: {
       frames?: number[];
       property?: HitProperty[];
-    },
+    };
     onCounterHit: {
       frames?: number[];
       property?: HitProperty[];
-    }
+    };
   };
   hit: {
     damage: number[];
@@ -31,10 +31,8 @@ export type Move = {
   punishment?: Punishment;
   video: string;
   tags?: string[];
+  notes?: string;
 };
-
-
-
 
 export type OldMove = {
   _id: string;
@@ -52,10 +50,9 @@ export type OldMove = {
     onCounterHit?: number;
     onHit?: number;
     startUp: number;
-  }
+  };
   properties?: MoveProperty[];
   isKeyMove?: boolean;
-  punishment?: Punishment,
+  punishment?: Punishment;
   video: string;
 };
-
