@@ -62,6 +62,9 @@
 
         .tracks-to {
           $spacing: 2px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           font-family: "Roboto Condensed";
           padding: $xs-padding $sm-padding;
           border-radius: $border-radius;
