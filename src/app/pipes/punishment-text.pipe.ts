@@ -1,11 +1,10 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {Punishment} from '../types';
+import { Pipe, PipeTransform } from '@angular/core';
+import { Punishment } from '../types';
 
 @Pipe({
-  name: 'punishmentText'
+  name: 'punishmentText',
 })
 export class PunishmentTextPipe implements PipeTransform {
-
   transform(punish: Punishment): string {
     const standing = '<span class="standing">standing</span>';
     const crouching = '<span class="crouching">crouching</span>';
@@ -19,4 +18,13 @@ export class PunishmentTextPipe implements PipeTransform {
     }
   }
 
+  // transform(punishment: Punishment) {
+  //   if (punishment.isStanding && punishment.isCrouching) {
+  //     return `standing, crouching`;
+  //   } else if (punishment.isStanding) {
+  //     return 'standing';
+  //   } else {
+  //     return 'crouching';
+  //   }
+  // }
 }

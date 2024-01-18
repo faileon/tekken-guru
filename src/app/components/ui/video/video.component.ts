@@ -8,9 +8,9 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'tg-video',
@@ -18,7 +18,6 @@ import {IconProp} from '@fortawesome/fontawesome-svg-core';
   styleUrls: ['./video.component.scss'],
 })
 export class VideoComponent {
-
   @Input()
   public src!: string;
 
@@ -31,5 +30,9 @@ export class VideoComponent {
   @Input()
   public fixedHeight = true;
 
+  public isFullScreen = false;
 
+  onFullScreenChange(event: Event) {
+    this.isFullScreen = !this.isFullScreen;
+  }
 }

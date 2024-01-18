@@ -1,9 +1,12 @@
 <video
+  #video
   preload="none"
   [poster]="poster"
   muted
+  [class.fullscreen]="isFullScreen"
   controls
   [class.fixed-height]="fixedHeight"
+  (fullscreenchange)="onFullScreenChange($event)"
 >
   <source [src]="src" [type]="mediaType" />
 </video>

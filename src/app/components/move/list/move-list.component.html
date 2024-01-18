@@ -245,16 +245,16 @@
 
           <!-- PUNISHMENT -->
           <!-- TODO: move this elsewhere-->
-          <!-- <tr -->
-          <!--   *ngIf="move.punishment?.isStanding || move.punishment?.isCrouching" -->
-          <!-- > -->
-          <!--   <td>Punish:</td> -->
-          <!--   <td -->
-          <!--     class="right-aligned" -->
-          <!--     [innerHTML]="move.punishment | punishmentText" -->
-          <!--     [colSpan]="move.frameData.onBlock.frames.length" -->
-          <!--   ></td> -->
-          <!-- </tr> -->
+          <tr
+            *ngIf="move.punishment?.isStanding || move.punishment?.isCrouching"
+          >
+            <td>Punish:</td>
+            <td
+              class="right-aligned"
+              [innerHTML]="move.punishment | punishmentText"
+              [colSpan]="move.frameData.onBlock.frames.length"
+            ></td>
+          </tr>
         </table>
       </div>
     </ng-container>
