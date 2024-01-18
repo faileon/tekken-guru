@@ -2,7 +2,7 @@
 
 
 :host {
-  > *:not(:last-child) {
+  >*:not(:last-child) {
     margin-bottom: $md-margin;
   }
 
@@ -10,8 +10,9 @@
     display: flex;
     align-items: center;
 
-    > * {
+    >* {
       margin-right: $xs-margin;
+
       @media(min-width: $bp-mobile) {
         // margin-bottom: $md-margin;
       }
@@ -31,7 +32,7 @@
     tg-card-with-actions {
       margin-bottom: $sm-margin;
 
-      ::ng-deep{
+      ::ng-deep {
         tg-card {
           height: $card-height;
         }
@@ -47,7 +48,7 @@
         justify-content: flex-end;
         max-height: 24px;
 
-        > .property {
+        >.property {
           height: 100%;
           width: auto;
           z-index: 30;
@@ -55,6 +56,17 @@
           &:not(:last-child) {
             margin-right: $xs-margin;
           }
+        }
+
+        .tracks-to {
+          $spacing: 2px;
+          padding: $xs-padding $sm-padding;
+          border-radius: $border-radius;
+          font-weight: 600;
+          background: $primary-color-light;
+          font-size: 0.75rem;
+          text-indent: $spacing;
+          letter-spacing: $spacing;
         }
       }
 
@@ -89,6 +101,7 @@
         order: var(--video-order);
         z-index: 20;
         margin: $md-margin $md-margin 0 $md-margin;
+
         @media(min-width: $bp-mobile) {
           margin: $xs-margin $md-margin 0 $md-margin;
         }
@@ -104,18 +117,20 @@
           min-width: 175px;
         }
 
-        > table {
+        >table {
           white-space: nowrap;
           width: 100%;
 
-          > tr {
+          >tr {
 
-            > td {
+            >td {
+              padding: 0;
+
               &.right-aligned {
                 text-align: right;
               }
 
-              > span.hit-property {
+              >span.hit-property {
                 font-size: 0.75rem;
               }
             }

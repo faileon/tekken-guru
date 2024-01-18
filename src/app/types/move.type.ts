@@ -21,6 +21,12 @@ export type Move = {
       frames?: number[];
       property?: HitProperty[];
     };
+    recovery?: {
+      frames: number[];
+    };
+    active?: {
+      frames: number[];
+    };
   };
   hit: {
     damage: number[];
@@ -32,6 +38,7 @@ export type Move = {
   video: string;
   tags?: string[];
   notes?: string;
+  tracksTo?: 'LEFT' | 'RIGHT';
 };
 
 export type OldMove = {

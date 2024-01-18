@@ -114,6 +114,13 @@
   >
     <!-- HEADER PROPS -->
     <div class="properties" properties>
+      <div
+        class="tracks-to"
+        *ngIf="move.tracksTo"
+        [tgTooltip]="move | moveTracksToText"
+      >
+        {{ move.tracksTo }}
+      </div>
       <img
         [tgTooltip]="property | movePropertyText"
         *ngFor="let property of move.properties"
@@ -163,15 +170,16 @@
       <!--frame data -->
       <div class="frame-data">
         <table>
-          <tr>
-            <td>Start:</td>
-            <td
-              class="right-aligned"
-              [colSpan]="move.frameData.onBlock.frames.length"
-            >
-              {{ move.frameData.startUp.frames }}
-            </td>
-          </tr>
+          <!-- STARTUP -->
+          <ng-container
+            [ngTemplateOutlet]="frameDataRow"
+            [ngTemplateOutletContext]="{
+              data: {
+                title: 'Start:',
+                frames: move.frameData.startUp.frames
+              }
+            }"
+          ></ng-container>
 
           <!-- ON BLOCK -->
           <ng-container
@@ -209,16 +217,44 @@
             }"
           ></ng-container>
 
-          <tr
-            *ngIf="move.punishment?.isStanding || move.punishment?.isCrouching"
-          >
-            <td>Punish:</td>
-            <td
-              class="right-aligned"
-              [innerHTML]="move.punishment | punishmentText"
-              [colSpan]="move.frameData.onBlock.frames.length"
-            ></td>
-          </tr>
+          <!-- ON WHIFF (RECOVERY) -->
+          <ng-container
+            *ngIf="move.frameData.recovery?.frames?.length"
+            [ngTemplateOutlet]="frameDataRow"
+            [ngTemplateOutletContext]="{
+              data: {
+                title: 'Recovery:',
+                frames: move.frameData.recovery.frames,
+                property: []
+              }
+            }"
+          ></ng-container>
+
+          <!-- ACTIVE FRAMES -->
+          <ng-container
+            *ngIf="move.frameData.active?.frames?.length"
+            [ngTemplateOutlet]="frameDataRow"
+            [ngTemplateOutletContext]="{
+              data: {
+                title: 'Active:',
+                frames: move.frameData.active.frames,
+                property: []
+              }
+            }"
+          ></ng-container>
+
+          <!-- PUNISHMENT -->
+          <!-- TODO: move this elsewhere-->
+          <!-- <tr -->
+          <!--   *ngIf="move.punishment?.isStanding || move.punishment?.isCrouching" -->
+          <!-- > -->
+          <!--   <td>Punish:</td> -->
+          <!--   <td -->
+          <!--     class="right-aligned" -->
+          <!--     [innerHTML]="move.punishment | punishmentText" -->
+          <!--     [colSpan]="move.frameData.onBlock.frames.length" -->
+          <!--   ></td> -->
+          <!-- </tr> -->
         </table>
       </div>
     </ng-container>
@@ -242,7 +278,7 @@ property: string[]}
       *ngFor="let blockFrame of data.frames; index as i; last as isLast"
     >
       <td class="right-aligned">
-        <span class="hit-property" *ngIf="data.property[i].length > 0">
+        <span class="hit-property" *ngIf="data.property?.[i]?.length > 0">
           {{ data.property[i] }}
         </span>
 

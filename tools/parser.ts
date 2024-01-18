@@ -58,6 +58,7 @@ type CsvMove = {
   'counterhit-frames': string;
   'counterhit-property': string;
   'recovery-frames': string;
+  'active-frames': string;
   notes: string;
   'punishment-standing': string;
   'punishment-crouching': string;
@@ -75,6 +76,7 @@ type CsvMove = {
   'THROW 1': string;
   'THROW 2': string;
   'THROW 1+2': string;
+  'tracks-to': 'LEFT' | 'RIGHT';
 };
 
 const delimiter = ',';
@@ -167,7 +169,14 @@ createReadStream(`./tools/data/${characterName}.csv`)
                 ? convertStrProperties(chproperty)
                 : fillArray<HitProperty>(chframes),
           },
+          recovery: {
+            frames: convertStrFrames(item['recovery-frames']),
+          },
+          active: {
+            frames: convertStrFrames(item['active-frames']),
+          },
         },
+        tracksTo: item['tracks-to'],
         properties: getMoveProperties(item),
         name: item.name,
         video: `moves/${characterName}/${id}.mp4`,

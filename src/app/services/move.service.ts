@@ -255,6 +255,19 @@ export class MoveService implements OnDestroy {
         ]) =>
           this.characterService.getMoves(characterId).pipe(
             filter((moves) => !!moves),
+            map((moves) =>
+              moves.map((move) => ({
+                ...move,
+                frameData: {
+                  ...move.frameData,
+                  startUp: {
+                    frames: Array.isArray(move.frameData.startUp.frames)
+                      ? move.frameData.startUp.frames
+                      : [move.frameData.startUp.frames],
+                  },
+                },
+              })),
+            ),
             map((data) => {
               // determine what will be filtered - see if there are filters set
               const byStartupFrame = shouldFilterStartupFrame(startUpRange);
@@ -336,9 +349,7 @@ export class MoveService implements OnDestroy {
                   satisfiesFilter.push(
                     satisfiesRangeFilter(
                       startUpRange,
-                      Array.isArray(startUp.frames)
-                        ? startUp.frames
-                        : [startUp.frames],
+                      startUp.frames,
                       DEF_STARTUP_MIN_VAL,
                       DEF_STARTUP_MAX_VAL,
                     ),
