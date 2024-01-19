@@ -3,7 +3,11 @@
   justify-content: center;
   height: 100%;
 
-  > .tg-container {
+  .small-grid {
+    max-width: 825px;
+  }
+
+  >.tg-container {
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
   }

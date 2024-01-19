@@ -1,8 +1,8 @@
 <div class="tg-container align-center">
   <div class="tarrget-title">Character select</div>
   <tg-character-grid
+    [class.small-grid]="(selectedGame | async)?.value === 'tekken8'"
     [characters]="characters$ | async"
-    (characterSelected)="onCharacterSelected($event)">
-
+  >
   </tg-character-grid>
 </div>
