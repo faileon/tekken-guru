@@ -76,7 +76,7 @@ type CsvMove = {
   'THROW 1': string;
   'THROW 2': string;
   'THROW 1+2': string;
-  'tracks-to': 'LEFT' | 'RIGHT';
+  'weak-side': 'SSR' | 'SSL' | 'SWR' | 'SWL' | 'SS' | 'SW';
 };
 
 const delimiter = ',';
@@ -176,7 +176,7 @@ createReadStream(`./tools/data/${characterName}.csv`)
             frames: convertStrFrames(item['active-frames']),
           },
         },
-        tracksTo: item['tracks-to'],
+        weakSide: item['weak-side'],
         properties: getMoveProperties(item),
         name: item.name,
         video: `moves/${characterName}/${id}.mp4`,

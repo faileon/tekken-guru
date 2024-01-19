@@ -6,14 +6,19 @@ import { Move, MoveProperty } from '../types';
 })
 export class MoveTracksToTextPipe implements PipeTransform {
   transform(move: Move): string {
-    if (!move.tracksTo) {
+    if (!move.weakSide) {
       return 'This move has no tracking';
     }
 
-    if (move.tracksTo === 'LEFT') {
-      return 'This move has good tracking to the <strong>LEFT </strong> side. <br>You might want to sidestep to the <strong>RIGHT</strong> side.';
-    } else {
-      return 'This move has good tracking to the <strong>RIGHT</strong> side. <br>You might want to sidestep to the <strong>LEFT</strong> side.';
-    }
+    return (
+      {
+        SSR: 'This move is weak to side <strong>step right</strong>.',
+        SSL: 'This move is weak to side <strong>step left</strong>.',
+        SWR: 'This move is weak to side <strong>walk right</strong>.',
+        SWL: 'This move is weak to side <strong>walk left</strong>.',
+        SS: 'This move is weak to side <strong>step in any direction</strong>.',
+        SW: 'This move is weak to side <strong>walk in any direction</strong>.',
+      } as Record<Move['weakSide'], string>
+    )[move.weakSide];
   }
 }

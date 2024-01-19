@@ -115,11 +115,11 @@
     <!-- HEADER PROPS -->
     <div class="properties" properties>
       <div
-        class="tracks-to"
-        *ngIf="move.tracksTo"
+        class="weakside"
+        *ngIf="move.weakSide"
         [tgTooltip]="move | moveTracksToText"
       >
-        {{ move.tracksTo === "RIGHT" ? "SSL" : "SSR" }}
+        {{ move.weakSide }}
       </div>
       <img
         [tgTooltip]="property | movePropertyText"

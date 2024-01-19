@@ -38,7 +38,7 @@ export type Move = {
   video: string;
   tags?: string[];
   notes?: string;
-  tracksTo?: 'LEFT' | 'RIGHT';
+  weakSide?: 'SSR' | 'SSL' | 'SWR' | 'SWL' | 'SS' | 'SW';
 };
 
 export type OldMove = {
