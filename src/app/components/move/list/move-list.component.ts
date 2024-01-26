@@ -36,6 +36,7 @@ import { Game } from '../../../types/ui.types';
   selector: 'tg-move-list',
   templateUrl: './move-list.component.html',
   styleUrls: ['./move-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoveListComponent implements OnInit, OnDestroy {
   private isDestroyed$ = new Subject<boolean>();

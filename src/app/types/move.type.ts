@@ -30,16 +30,19 @@ export type Move = {
   };
   hit: {
     damage: number[];
+    chipDamage?: number[];
     move: HitLevel[];
   };
+  reach?: number[];
   properties?: MoveProperty[];
   isKeyMove?: boolean;
   punishment?: Punishment;
   video: string;
   tags?: string[];
   notes?: string;
-  weakSide?: 'SSR' | 'SSL' | 'SWR' | 'SWL' | 'SS' | 'SW';
+  weakSide?: WeakSide[];
 };
+export type WeakSide = 'SSR' | 'SSL' | 'SWR' | 'SWL' | 'SS' | 'SW';
 
 export type OldMove = {
   _id: string;

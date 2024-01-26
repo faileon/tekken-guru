@@ -50,6 +50,7 @@ type CsvMove = {
   name: string;
   startup: string;
   damage: string;
+  'chip-damage': string;
   range: string;
   'block-frames': string;
   'block-property': string;
@@ -59,6 +60,7 @@ type CsvMove = {
   'counterhit-property': string;
   'recovery-frames': string;
   'active-frames': string;
+  reach: string;
   notes: string;
   'punishment-standing': string;
   'punishment-crouching': string;
@@ -76,7 +78,7 @@ type CsvMove = {
   'THROW 1': string;
   'THROW 2': string;
   'THROW 1+2': string;
-  'weak-side': 'SSR' | 'SSL' | 'SWR' | 'SWL' | 'SS' | 'SW';
+  'weak-side': string;
 };
 
 const delimiter = ',';
@@ -127,6 +129,7 @@ const fillArray = <T>(value: string, defaultValue = '') => {
 };
 
 const results: Move[] = [];
+// TODO: JUST REPLACE CHARACTER NAME HERE, NAME THE CSV THE SAME, ENJOY
 const characterName = 'azucena';
 createReadStream(`./tools/data/${characterName}.csv`)
   .pipe(csv()) //
@@ -142,6 +145,7 @@ createReadStream(`./tools/data/${characterName}.csv`)
         hit: {
           damage: convertStrFrames(item.damage),
           move: convertStrProperties(item.range) as HitLevel[],
+          chipDamage: convertStrFrames(item['chip-damage']),
         },
         frameData: {
           startUp: {
@@ -176,7 +180,8 @@ createReadStream(`./tools/data/${characterName}.csv`)
             frames: convertStrFrames(item['active-frames']),
           },
         },
-        weakSide: item['weak-side'],
+        weakSide: convertStrProperties(item['weak-side']),
+        reach: convertStrFrames(item['reach']),
         properties: getMoveProperties(item),
         name: item.name,
         video: `moves/${characterName}/${id}.mp4`,
@@ -189,6 +194,10 @@ createReadStream(`./tools/data/${characterName}.csv`)
   })
   .on('end', async () => {
     console.log('ITEMS ARE', results.length);
+    // for (const move of results) {
+    //   console.log(move);
+    // }
+    // return;
 
     // create firebase instances
     const app = fbadmin.initializeApp();

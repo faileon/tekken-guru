@@ -1,11 +1,10 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'hitDamage'
+  name: 'hitDamage',
 })
 export class HitDamagePipe implements PipeTransform {
-
-  transform(damage: number[]): string {
+  transform(damage: number[], prefix = 'Damage'): string {
     if (damage.length <= 0) {
       return '0 Damage';
     }
@@ -14,7 +13,6 @@ export class HitDamagePipe implements PipeTransform {
       return acc;
     }, 0);
 
-    return `${dmgSum} Damage (${damage.join(', ')})`;
+    return `${dmgSum} ${prefix} (${damage.join(', ')})`;
   }
-
 }

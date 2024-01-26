@@ -114,13 +114,15 @@
   >
     <!-- HEADER PROPS -->
     <div class="properties" properties>
-      <div
-        class="weakside"
-        *ngIf="move.weakSide"
-        [tgTooltip]="move | moveTracksToText"
-      >
-        {{ move.weakSide }}
-      </div>
+      <ng-container *ngIf="move.weakSide?.length">
+        <div
+          class="weakside"
+          *ngFor="let weakside of move.weakSide"
+          [tgTooltip]="weakside | moveTracksToText"
+        >
+          {{ weakside }}
+        </div>
+      </ng-container>
       <img
         [tgTooltip]="property | movePropertyText"
         *ngFor="let property of move.properties"
@@ -157,6 +159,9 @@
         <div class="hits">
           <div class="move">{{ move.hit.move | hitMove }}</div>
           <div class="damage">{{ move.hit.damage | hitDamage }}</div>
+          <div *ngIf="move.hit.chipDamage?.length" class="chip">
+            {{ move.hit.chipDamage | hitDamage: "Chip" }}
+          </div>
         </div>
       </div>
 
