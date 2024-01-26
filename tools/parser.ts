@@ -1,7 +1,7 @@
 // CSV PARSER FOR FRAME DATA
 import * as csv from 'csv-parser';
 import { createReadStream } from 'fs';
-import { Move } from '../src/app/types/move.type';
+import { Move, WeakSide } from '../src/app/types/move.type';
 import {
   HitLevel,
   HitProperty,
@@ -180,7 +180,9 @@ createReadStream(`./tools/data/${characterName}.csv`)
             frames: convertStrFrames(item['active-frames']),
           },
         },
-        weakSide: convertStrProperties(item['weak-side']),
+        weakSide: convertStrProperties<WeakSide>(item['weak-side']).filter(
+          (ws) => !!ws,
+        ),
         reach: convertStrFrames(item['reach']),
         properties: getMoveProperties(item),
         name: item.name,
