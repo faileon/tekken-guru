@@ -35,4 +35,8 @@ export class VideoComponent {
   onFullScreenChange(event: Event) {
     this.isFullScreen = !this.isFullScreen;
   }
+
+  onError(error: any) {
+    console.log('error', error.name, error.message, error);
+  }
 }

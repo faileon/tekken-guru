@@ -168,7 +168,7 @@
       <!-- video with the move -->
       <tg-video
         *ngIf="settingsService.displayVideos$ | async"
-        [src]="move.video | mediaPath: selectedGame"
+        [src]="move.video | mediaPath: selectedGame : false"
         [poster]="move.video | thumbnailPath | async"
       ></tg-video>
 

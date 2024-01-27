@@ -11,11 +11,11 @@ import { Game } from '../types/ui.types';
   name: 'mediaPath',
 })
 export class MediaPathPipe implements PipeTransform {
-  transform(url: string, selectedGame: Game): string {
+  transform(url: string, selectedGame: Game, byPassSw = false): string {
     const basePath =
       selectedGame?.value === 'tekken7'
         ? FirestoreBucketPath
         : FirestoreBucketPathT8;
-    return `${basePath}${encodeURIComponent(url)}?alt=media`;
+    return `${basePath}${encodeURIComponent(url)}?alt=media${byPassSw ? `&ngsw-bypass=true` : ''}`;
   }
 }

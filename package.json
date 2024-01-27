@@ -1,6 +1,6 @@
 {
   "name": "tekken-guru",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "sideEffects": false,
   "scripts": {
     "ng": "ng",
@@ -15,7 +15,7 @@
   "dependencies": {
     "@angular-slider/ngx-slider": "^2.0.3",
     "@angular/animations": "^14.3.0",
-    "@angular/cdk": "^13.0.3",
+    "@angular/cdk": "^14.2.7",
     "@angular/common": "^14.3.0",
     "@angular/compiler": "^14.3.0",
     "@angular/core": "^14.3.0",
@@ -31,7 +31,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "firebase": "^9.23.0",
-    "ngx-virtual-scroller": "^4.0.3",
+    "@iharbeck/ngx-virtual-scroller":"^14.0.4",
     "rxjs": "~7.8.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.12.0"
