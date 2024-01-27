@@ -1,16 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
-import { FirestoreBucketPath, FirestoreBucketPathT8 } from '../config/storage.config';
-import { GameService } from '../services/game.service';
+import {
+  FirestoreBucketPath,
+  FirestoreBucketPathT8,
+} from '../config/storage.config';
+import { Game } from '../types/ui.types';
 
 @Pipe({
   name: 'thumbnailPath',
 })
 export class ThumbnailPathPipe implements PipeTransform {
-  constructor(private gameService: GameService) {}
-
-  async transform(url: string) {
-    const selectedGame = await firstValueFrom(this.gameService.selectedGame$);
+  transform(url: string, selectedGame: Game) {
     const basePath =
       selectedGame?.value === 'tekken7'
         ? FirestoreBucketPath
