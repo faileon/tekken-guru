@@ -130,7 +130,7 @@ const fillArray = <T>(value: string, defaultValue = '') => {
 
 const results: Move[] = [];
 // TODO: JUST REPLACE CHARACTER NAME HERE, NAME THE CSV THE SAME, ENJOY
-const characterName = 'azucena';
+const characterName = 'victor';
 createReadStream(`./tools/data/${characterName}.csv`)
   .pipe(csv()) //
   .on('data', (item: CsvMove) => {
@@ -139,9 +139,10 @@ createReadStream(`./tools/data/${characterName}.csv`)
       // when counterhit-* is not defined, take hit-*
       const chframes = item['counterhit-frames'] || item['hit-frames'];
       const chproperty = item['counterhit-property'] || item['hit-property'];
+      // console.log('parsing', item);
       results.push({
         _id: id,
-        notation: item.notation,
+        notation: item.notation.trim(),
         hit: {
           damage: convertStrFrames(item.damage),
           move: convertStrProperties(item.range) as HitLevel[],
@@ -183,7 +184,7 @@ createReadStream(`./tools/data/${characterName}.csv`)
         weakSide: convertStrProperties<WeakSide>(item['weak-side']).filter(
           (ws) => !!ws,
         ),
-        reach: convertStrFrames(item['reach']),
+        reach: convertStrFrames(item['reach'] ?? ''),
         properties: getMoveProperties(item),
         name: item.name,
         video: `moves/${characterName}/${id}.mp4`,
@@ -191,11 +192,12 @@ createReadStream(`./tools/data/${characterName}.csv`)
           isStanding: item['punishment-standing'] === 'TRUE',
           isCrouching: item['punishment-crouching'] === 'TRUE',
         },
+        notes: item['notes'] ?? undefined,
       });
     }
   })
   .on('end', async () => {
-    console.log('ITEMS ARE', results.length);
+    // console.log('ITEMS ARE', results.length);
     // for (const move of results) {
     //   console.log(move);
     // }
@@ -208,7 +210,10 @@ createReadStream(`./tools/data/${characterName}.csv`)
     // batch insert
     const batch = db.batch();
     for (const move of results) {
-      batch.set(db.doc(`characters/azucena/movelist/${move._id}`), move);
+      batch.set(
+        db.doc(`characters/${characterName}/movelist/${move._id}`),
+        move,
+      );
     }
     await batch.commit();
     // for (const move of results) {

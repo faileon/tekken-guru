@@ -1,139 +1,142 @@
 // map from common abbreviations to in game terms
 export const abbreviationsMap = {
-  'whilerising': 'ws',
-  'fff': 'wr',
-  'duringsidestep': 'ss',
-  'whilecrouching': 'fc',
-  'backtowardsenemy': 'bt',
-  'fnddf': 'cd',
-  'ddff': 'qcf',
-  'ddbb': 'qcb',
-  'bdbddff': 'hcf',
-  'fdfddbb': 'hcb',
-
+  whilerising: 'ws',
+  fff: 'wr',
+  duringsidestep: 'ss',
+  whilecrouching: 'fc',
+  backtowardsenemy: 'bt',
+  fnddf: 'cd',
+  ddff: 'qcf',
+  ddbb: 'qcb',
+  bdbddff: 'hcf',
+  fdfddbb: 'hcb',
 
   // bob
-  'duringspinnerball': 'bal',
+  duringspinnerball: 'bal',
 
   // steve
-  'duringpeekaboo': 'pab',
-  'duringflickerstance': 'flk',
-  'whileducking': 'dck',
-  'whileduckingin': 'extdck',
-  'duringduckingright': 'rwv',
-  'duringduckingleft': 'lwv',
-  'duringquickspin': 'alb',
-  'whileswaying': 'swy',
+  duringpeekaboo: 'pab',
+  duringflickerstance: 'flk',
+  whileducking: 'dck',
+  whileduckingin: 'extdck',
+  duringduckingright: 'rwv',
+  duringduckingleft: 'lwv',
+  duringquickspin: 'alb',
+  whileswaying: 'swy',
 
   // kazuya:
-  'whileindeviltransformation': 'dvk',
+  whileindeviltransformation: 'dvk',
 
   // josie:
-  'duringswitchstance': 'sws',
-  'duringswayback': 'swb',
+  duringswitchstance: 'sws',
+  duringswayback: 'swb',
 
   // leo
-  'duringjinjiduli': 'knk',
-  'duringjijiduli': 'knk',  // typoindata...
-  'duringfobu': 'bok',
+  duringjinjiduli: 'knk',
+  duringjijiduli: 'knk', // typoindata...
+  duringfobu: 'bok',
 
   // miguel:
-  'duringsavagestance': 'sav',
+  duringsavagestance: 'sav',
 
   // jin
-  'duringmentalalertness2': 'zen',
+  duringmentalalertness2: 'zen',
 
   // katarina
-  'duringharrier': 'har',
+  duringharrier: 'har',
 
   // law:
-  'duringdragoncharge': 'dss',
-  'afterfakestepsucceeds': 'tfs-success',
-  'duringfakestep': 'tfs-whiff',
+  duringdragoncharge: 'dss',
+  afterfakestepsucceeds: 'tfs-success',
+  duringfakestep: 'tfs-whiff',
 
   // gigas
-  'duringgoliath': 'gol',
-  'duringgolemsetup': 'sg',
+  duringgoliath: 'gol',
+  duringgolemsetup: 'sg',
 
   // claudio
-  'duringstarburst': 'stb',
+  duringstarburst: 'stb',
 
   // alisa:
-  'duringboot': 'sbt',
-  'duringdualboot': 'dbt',
-  'duringdestructiveform': 'des',
+  duringboot: 'sbt',
+  duringdualboot: 'dbt',
+  duringdestructiveform: 'des',
 
   // eddy
-  'duringhandstand': 'hsp',
-  'duringnegativa': 'rlx',
+  duringhandstand: 'hsp',
+  duringnegativa: 'rlx',
 
   // mraven
-  'duringhaze': 'haz',
+  duringhaze: 'haz',
 
   // shaheen,
-  'duringstealthstep': 'snk',
+  duringstealthstep: 'snk',
 
   // akuma
-  'duringhyakkishu': 'dflip',
-  'duringverticaljump': 'verticaljump',
-  'duringforwardjump': 'forwardjump',
+  duringhyakkishu: 'dflip',
+  duringverticaljump: 'verticaljump',
+  duringforwardjump: 'forwardjump',
 
   // yoshimitsu
-  'duringkincho': 'kin',
-  'duringmeditation': 'med',
-  'duringflea': 'fle',
-  'duringindianstancehealing': 'ins',
-  'duringmutounokiwami': 'nss',
-  'duringmanjidragonfly': 'dgf',
-  'duringfleastep': 'wfl',
+  duringkincho: 'kin',
+  duringmeditation: 'med',
+  duringflea: 'fle',
+  duringindianstancehealing: 'ins',
+  duringmutounokiwami: 'nss',
+  duringmanjidragonfly: 'dgf',
+  duringfleastep: 'wfl',
 
   // hwo
-  'duringrightflamingo': 'rfs',
-  'duringleftflamingo': 'lfs',
+  duringrightflamingo: 'rfs',
+  duringleftflamingo: 'lfs',
 
   // hei
-  'duringraijinstance': 'rai',
+  duringraijinstance: 'rai',
 
   // kazumi
-  'duringfearlesswarrior': 'rss',
+  duringfearlesswarrior: 'rss',
 
   // xiaoyu
-  'duringhypnotist': 'hyp',
-  'duringphoenix': 'aop',
+  duringhypnotist: 'hyp',
+  duringphoenix: 'aop',
 
   // jack,
-  'duringsit': 'sit',
-  'duringcossackkicks': 'csk',
+  duringsit: 'sit',
+  duringcossackkicks: 'csk',
 
   // lee
-  'duringhitman': 'hms',
-  'duringmiststep': 'ms',
+  duringhitman: 'hms',
+  duringmiststep: 'ms',
 
   // kuma
-  'duringhunting': 'hbs',
-  'duringforwardroll': 'rol',
+  duringhunting: 'hbs',
+  duringforwardroll: 'rol',
 
   // eliza
-  'duringmoonglide': 'mg',
-  'duringexmoonglide': 'exmg',
+  duringmoonglide: 'mg',
+  duringexmoonglide: 'exmg',
 
   // leroy
-  'duringhermit': 'hrm',
+  duringhermit: 'hrm',
 
   // zafina
-  'duringscarecrowstance': 'scr',
-  'duringmantisstance': 'mnt',
-  'duringtarantulastance': 'trt',
+  duringscarecrowstance: 'scr',
+  duringmantisstance: 'mnt',
+  duringtarantulastance: 'trt',
 
   // kuni
-  'duringsetsunagake': 'set',
+  duringsetsunagake: 'set',
 
   // marduk
-  'duringreadyposition': 'vts',
+  duringreadyposition: 'vts',
 
   // lidia
-  'duringcatfootstancei': 'cfo',
-  'duringcatfootstanceii': 'cft',
-  'duringheavenandearth': 'hae',
-  'duringpouncingtigerstalkingwolf': 'taw',
+  duringcatfootstancei: 'cfo',
+  duringcatfootstanceii: 'cft',
+  duringheavenandearth: 'hae',
+  duringpouncingtigerstalkingwolf: 'taw',
+
+  // VICTOR
+  duringperfumerstance: 'prf',
+  duringiaistance: 'iai',
 };
