@@ -15,7 +15,7 @@ export class ThumbnailPathPipe implements PipeTransform {
         ? FirestoreBucketPath
         : FirestoreBucketPathT8;
     // because i am dumbo and for t8 videos i did not name the thumbnails with sufix
-    const sufix = selectedGame.value === 'tekken8' ? '' : '_thumb';
+    const sufix = selectedGame?.value === 'tekken7' ? '_thumb' : '';
     const parts = url.split('/');
 
     const thumbnailUrl = parts
